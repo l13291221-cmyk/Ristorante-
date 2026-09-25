@@ -197,7 +197,7 @@
      ========================================================================== */
   var TABS = [
     ["pagina", "Pagina"], ["dati", "Dati"], ["orari", "Orari"], ["menu", "Menù"],
-    ["recensioni", "Recensioni"], ["immagini", "Immagini"], ["sicurezza", "Sicurezza"], ["pubblica", "Pubblica"]
+    ["recensioni", "Recensioni"], ["immagini", "Immagini"], ["scritte", "Scritte"], ["sicurezza", "Sicurezza"], ["pubblica", "Pubblica"]
   ];
   var currentTab = "pagina";
 
@@ -271,7 +271,7 @@
     $$(".adm__tabs button", ui.panel).forEach(function (b) { b.classList.toggle("is-active", b.dataset.tab === name); });
     ui.body.innerHTML = "";
     ui.body.scrollTop = 0;
-    ({ pagina: tabPage, dati: tabData, orari: tabHours, menu: tabMenu, recensioni: tabReviews, immagini: tabImages, sicurezza: tabSecurity, pubblica: tabPublish })[name]();
+    ({ pagina: tabPage, dati: tabData, orari: tabHours, menu: tabMenu, recensioni: tabReviews, immagini: tabImages, scritte: tabUI, sicurezza: tabSecurity, pubblica: tabPublish })[name]();
     var active = $(".adm__tabs .is-active", ui.panel);
     if (active && active.scrollIntoView) active.scrollIntoView({ block: "nearest", inline: "center" });
   }
@@ -789,9 +789,31 @@
     document.body.classList.remove("adm-editing");
     if (ui.bar) ui.bar.classList.remove("is-on");
   }
+  // scritte che vengono dai Dati del locale: toccandole si apre il campo giusto
+  var CFG_TARGETS = [
+    [".js-name", "name", "Nome del ristorante"], [".js-phone", "phone", "Telefono"], [".js-email", "email", "Email"],
+    [".js-address", "address", "Indirizzo completo"], [".js-vat", "vat", "Partita IVA"]
+  ];
+  // aree che si modificano da una scheda del pannello
+  var TAB_TARGETS = [
+    [".hours__table, .js-open-status", "orari"], ['[data-list="menu"]', "menu"], ['[data-list="reviews"]', "recensioni"],
+    [".pager, .bform__stepinfo, .js-large-group, .bform__error", "scritte"]
+  ];
   function findTarget(t) {
+    for (var i = 0; i < CFG_TARGETS.length; i++) {
+      var c = t.closest(CFG_TARGETS[i][0]);
+      if (c) return { type: "cfg", el: c, key: CFG_TARGETS[i][1], label: CFG_TARGETS[i][2] };
+    }
+    var sel = t.closest("select");
+    if (sel && sel.closest("main")) return { type: "select", el: sel };
     var txt = t.closest("[data-k]");
     if (txt) return { type: "text", el: txt };
+    // timbro rotondo: l'anello è la scritta che gira
+    if (t.closest(".story__badge")) return { type: "text", el: $(".story__badge textPath") };
+    for (var j = 0; j < TAB_TARGETS.length; j++) {
+      var a = t.closest(TAB_TARGETS[j][0]);
+      if (a) return { type: "tab", el: a, tab: TAB_TARGETS[j][1] };
+    }
     var img = t.closest("[data-img]");
     if (img) return { type: "img", el: img };
     if (t.closest(".hero__veil, .hero__content") && !t.closest("a, button")) return { type: "img", el: $(".hero__slide.is-active") };
@@ -805,10 +827,21 @@
     var link = e.target.closest("a[href]");
     if (tg && tg.el) {
       e.preventDefault(); e.stopPropagation();
-      if (tg.type === "text") editText(tg.el); else editImage(tg.el);
+      if (tg.type === "text") editText(tg.el);
+      else if (tg.type === "img") editImage(tg.el);
+      else if (tg.type === "cfg") editConfig(tg.key, tg.label);
+      else if (tg.type === "select") editSelect(tg.el);
+      else if (tg.type === "tab") { stopEditing(); openPanel(); showTab(tg.tab); toast("Questa parte si modifica da qui"); }
     } else if (link) {
       e.preventDefault();
     }
+  }, true);
+  // i menu a tendina non si devono aprire in modalità modifica
+  document.addEventListener("mousedown", function (e) {
+    if (editing && e.target.closest("main select")) e.preventDefault();
+  }, true);
+  document.addEventListener("focusin", function (e) {
+    if (editing && e.target.matches && e.target.matches("main select")) e.target.blur();
   }, true);
   document.addEventListener("mouseover", function (e) {
     if (!editing) return;
@@ -841,13 +874,16 @@
 
   function editText(node) {
     var k = node.getAttribute("data-k");
-    var cur = draft.texts[k] || { it: node.getAttribute("data-it") || node.innerHTML, en: node.getAttribute("data-en") || "" };
+    var num = node.classList.contains("count"); // numeri animati: 25, 400+, 100%
+    var cur = draft.texts[k] || { it: num ? A.DEFAULTS.texts[k].it : (node.getAttribute("data-it") || node.innerHTML), en: node.getAttribute("data-en") || "" };
     var hasEn = node.hasAttribute("data-en");
     var changed = !!draft.texts[k];
-    modal("Modifica testo · " + esc(secName(k)),
-      field("Italiano", toPlain(cur.it), { textarea: true, rows: 4 }) +
-      field("English", toPlain(cur.en), { textarea: true, rows: 4, placeholder: hasEn ? "" : "Facoltativo: se vuoto resta uguale all'italiano" }) +
-      '<p class="adm-note">Suggerimento: scrivi una parola tra *asterischi* per renderla in corsivo dorato.</p>',
+    modal((num ? "Modifica numero · " : "Modifica testo · ") + esc(secName(k)),
+      (num
+        ? field("Numero", toPlain(cur.it), { textarea: true, rows: 1, help: "Es. 25, 400+ oppure 100%: il numero si anima da solo." })
+        : field("Italiano", toPlain(cur.it), { textarea: true, rows: 4 }) +
+          field("English", toPlain(cur.en), { textarea: true, rows: 4, placeholder: hasEn ? "" : "Facoltativo: se vuoto resta uguale all'italiano" }) +
+          '<p class="adm-note">Suggerimento: scrivi una parola tra *asterischi* per renderla in corsivo dorato.</p>'),
       [
         changed ? { label: "Ripristina originale", cls: "adm-btn--ghost adm-btn--danger", fn: function () {
           delete draft.texts[k]; saveDraft(); A.applyText(node, A.DEFAULTS.texts[k]); after(node); toast("Testo originale ripristinato");
@@ -856,7 +892,7 @@
         { label: "Salva", fn: function (m) {
           var t = $$("textarea", m);
           if (!t[0].value.trim()) { toast("Il testo italiano non può essere vuoto.", true); return false; }
-          var v = { it: fromPlain(t[0].value), en: t[1].value.trim() ? fromPlain(t[1].value) : "" };
+          var v = { it: fromPlain(t[0].value), en: t[1] && t[1].value.trim() ? fromPlain(t[1].value) : "" };
           draft.texts[k] = v; saveDraft();
           A.applyText(node, v); after(node); flash();
         } }
@@ -864,8 +900,88 @@
   }
   function after(node) {
     if (node.closest(".marquee")) A.syncMarquee();
+    if (node.closest(".mobile-nav")) A.renderPagers();
     // nel menù admin i nomi delle categorie arrivano dalla pagina
     if (currentTab === "menu" && ui.panel.classList.contains("is-open")) showTab("menu");
+  }
+
+  function editConfig(key, label) {
+    modal("Modifica · " + esc(label),
+      field(label, cfg(key) || "", { help: "Si aggiorna in tutti i punti del sito dove compare." }),
+      [
+        { label: "Annulla", cls: "adm-btn--ghost", fn: function () {} },
+        { label: "Salva", fn: function (m) {
+          var v = $("input", m).value.trim();
+          if (!v && key === "name") { toast("Il nome non può essere vuoto.", true); return false; }
+          draft.config[key] = v; saveDraft(); A.rerender(draft); flash();
+        } }
+      ]);
+  }
+  function editSelect(sel) {
+    var opts = $$("option[data-k]", sel);
+    if (!opts.length) return;
+    var body = opts.map(function (o, i) {
+      var k = o.getAttribute("data-k"), cur = draft.texts[k] || { it: o.getAttribute("data-it") || o.innerHTML, en: o.getAttribute("data-en") || "" };
+      return '<div class="adm-grid2" data-i="' + i + '">' + field("Voce " + (i + 1) + " (italiano)", toPlain(cur.it)) + field("English", toPlain(cur.en), { placeholder: "Facoltativo" }) + "</div>";
+    }).join("");
+    modal("Modifica le voci del menu a tendina", body, [
+      { label: "Annulla", cls: "adm-btn--ghost", fn: function () {} },
+      { label: "Salva", fn: function (m) {
+        opts.forEach(function (o, i) {
+          var ins = $$('[data-i="' + i + '"] input', m), k = o.getAttribute("data-k");
+          if (!ins[0].value.trim()) return;
+          var v = { it: fromPlain(ins[0].value), en: ins[1].value.trim() ? fromPlain(ins[1].value) : "" };
+          var d = A.DEFAULTS.texts[k] || {};
+          if (v.it === d.it && (v.en || "") === (d.en || "")) delete draft.texts[k]; else draft.texts[k] = v;
+          A.applyText(o, v);
+        });
+        saveDraft(); flash();
+      } }
+    ]);
+  }
+
+  /* ---------- Scheda: Scritte automatiche ---------- */
+  var UI_GROUPS = [
+    ["Aperto / chiuso (prima schermata)", [
+      ["openNow", "Quando è aperto (poi l'orario di chiusura)"], ["closedOpens", "Quando è chiuso (poi quando riapre)"],
+      ["today", "«oggi»"], ["tomorrow", "«domani»"], ["at", "«alle» (prima dell'orario)"], ["closed", "Chiuso"], ["todayBadge", "Etichetta «Oggi» negli orari"]]],
+    ["Prenotazione", [
+      ["guest", "ospite (una persona)"], ["guests", "ospiti (più persone)"], ["largeGroup", "Gruppi numerosi — {n} = numero massimo"],
+      ["lunch", "Pranzo"], ["dinner", "Cena"], ["noSlots", "Nessun orario disponibile"], ["step", "«Passo» (Passo 1 di 4)"], ["of", "«di» (Passo 1 di 4)"],
+      ["errName", "Errore: mancano nome o telefono"], ["errPrivacy", "Errore: manca il consenso"],
+      ["sent", "Titolo dopo l'invio automatico"], ["sentText", "Messaggio dopo l'invio — {name} = nome del locale"]]],
+    ["Messaggio che ricevi su WhatsApp / email", [
+      ["waIntro", "Frase iniziale — {name} = nome del locale"], ["mailSubject", "Oggetto dell'email"], ["people", "Persone"], ["date", "Data"],
+      ["time", "Ora"], ["name", "Nome"], ["phone", "Telefono"], ["occasion", "Occasione"], ["notes", "Note"]]],
+    ["Tasti a fondo pagina", [["next", "Tasto «Avanti»"], ["backHome", "Tasto «Torna alla Home»"]]]
+  ];
+  function tabUI() {
+    section("Scritte automatiche", "Sono le frasi che il sito scrive da solo (orari, prenotazione, tasti). Lascia vuoto per usare quella predefinita, che vedi in grigio. I nomi delle pagine nel tasto «Avanti» sono quelli del menù laterale: si cambiano da «Modifica pagina».");
+    var T = A.T;
+    UI_GROUPS.forEach(function (g) {
+      var s = section(g[0]);
+      g[1].forEach(function (row) {
+        var k = row[0];
+        var cur = function (l) { return draft.ui && draft.ui[l] && draft.ui[l][k] != null ? draft.ui[l][k] : ""; };
+        var node = el('<div class="adm-ui"><span>' + esc(row[1]) + '</span><div class="adm-grid2">' +
+          field("Italiano", cur("it"), { placeholder: T.it[k].trim() }) + field("English", cur("en"), { placeholder: T.en[k].trim() }) + "</div></div>");
+        $$("input", node).forEach(function (inp, i) {
+          var l = i ? "en" : "it";
+          inp.addEventListener("input", function () {
+            var def = T[l][k], v = inp.value;
+            draft.ui = draft.ui || {};
+            draft.ui[l] = draft.ui[l] || {};
+            // mantiene gli spazi della frase originale (es. " alle ")
+            if (v.trim()) draft.ui[l][k] = (def.match(/^\s*/)[0]) + v.trim() + (def.match(/\s*$/)[0]);
+            else delete draft.ui[l][k];
+            if (!Object.keys(draft.ui[l]).length) delete draft.ui[l];
+            if (!Object.keys(draft.ui).length) delete draft.ui;
+            saveDraft(); liveRerender(); flashLater();
+          });
+        });
+        s.appendChild(node);
+      });
+    });
   }
 
   /* ---------- Foto: ridimensiona e comprimi prima di salvare ---------- */

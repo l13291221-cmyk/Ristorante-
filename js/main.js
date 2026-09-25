@@ -21,7 +21,7 @@
       sent: "Richiesta inviata!", sentText: "Ti confermeremo il tavolo a breve. Grazie per aver scelto {name}.",
       waIntro: "Buongiorno, vorrei prenotare un tavolo da {name}:",
       people: "Persone", date: "Data", time: "Ora", name: "Nome", phone: "Telefono", occasion: "Occasione", notes: "Note",
-      mailSubject: "Richiesta prenotazione", large: "Più di ", next: "Avanti", backHome: "Torna alla Home",
+      mailSubject: "Richiesta prenotazione", largeGroup: "Più di {n} persone? Chiamaci:", next: "Avanti", backHome: "Torna alla Home",
       pages: { home: "Home", menu: "Menù", prenota: "Prenota", storia: "Chi siamo", galleria: "Galleria", eventi: "Eventi", contatti: "Dove siamo" },
       days: ["Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"]
     },
@@ -34,7 +34,7 @@
       sent: "Request sent!", sentText: "We'll confirm your table shortly. Thank you for choosing {name}.",
       waIntro: "Hello, I'd like to book a table at {name}:",
       people: "Guests", date: "Date", time: "Time", name: "Name", phone: "Phone", occasion: "Occasion", notes: "Notes",
-      mailSubject: "Reservation request", large: "More than ", next: "Next", backHome: "Back to Home",
+      mailSubject: "Reservation request", largeGroup: "More than {n} guests? Call us:", next: "Next", backHome: "Back to Home",
       pages: { home: "Home", menu: "Menu", prenota: "Book", storia: "About us", galleria: "Gallery", eventi: "Events", contatti: "Where we are" },
       days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     }
@@ -42,7 +42,11 @@
   var lang = "it";
   try { lang = localStorage.getItem("lang") || (navigator.language || "it").slice(0, 2); } catch (e) {}
   if (!T[lang]) lang = "it";
-  var t = function (k) { var v = T[lang][k]; return typeof v === "string" ? v.replace("{name}", R.name) : v; };
+  var UI = {}; // scritte automatiche personalizzate dall'amministratore (content.ui)
+  var t = function (k) {
+    var v = (UI[lang] && UI[lang][k]) || T[lang][k];
+    return typeof v === "string" ? v.replace("{name}", R.name).replace("{n}", R.booking ? R.booking.maxGuests : "") : v;
+  };
   var locale = function () { return lang === "it" ? "it-IT" : "en-GB"; };
 
   /* ---------- Ora di Roma (indipendente dal fuso del visitatore) ---------- */
@@ -85,8 +89,11 @@
     $$(".js-year").forEach(function (el) { el.textContent = new Date().getFullYear(); });
     $$(".js-name").forEach(function (el) { el.textContent = R.name; });
     $$(".js-vat").forEach(function (el) { el.textContent = R.vat || ""; });
-    if (R.seoTitle) document.title = R.seoTitle;
-    if (R.seoDescription) { var md = $('meta[name="description"]'); if (md) md.content = R.seoDescription; }
+    var swapName = function (txt) { return DEFAULTS.config.name && R.name ? txt.split(DEFAULTS.config.name).join(R.name) : txt; };
+    var md = $('meta[name="description"]');
+    if (!DEFAULTS.title) { DEFAULTS.title = document.title; DEFAULTS.description = md ? md.content : ""; }
+    document.title = R.seoTitle || swapName(DEFAULTS.title);
+    if (md) md.content = R.seoDescription || swapName(DEFAULTS.description);
     var adm = $(".admin-entry");
     if (adm) adm.hidden = R.showAdminButton === false;
     applyHiddenPages();
@@ -293,6 +300,10 @@
     window.scrollTo({ top: y, behavior: "instant" });
     document.dispatchEvent(new CustomEvent("aurea:page", { detail: name }));
   }
+  function pageLabel(name) {
+    var a = $('.mobile-nav nav a[href="#' + (name === "home" ? "top" : name) + '"]');
+    return a && a.textContent.trim() ? a.textContent.trim() : t("pages")[name];
+  }
   function renderPagers() {
     $$(".pager").forEach(function (x) { x.remove(); });
     PAGE_ORDER.forEach(function (name, i) {
@@ -304,9 +315,9 @@
       var nav = document.createElement("nav");
       nav.className = "pager container";
       nav.setAttribute("aria-label", t("pages")[name]);
-      nav.innerHTML = '<a href="#top" class="pager__home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></a>' +
+      nav.innerHTML = '<a href="#top" class="pager__home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg><span>' + esc(pageLabel("home")) + '</span></a>' +
         '<a href="#' + (next === "home" ? "top" : next) + '" class="pager__next"><span><small>' + esc(next === "home" ? t("backHome") : t("next")) + "</small>" +
-        esc(t("pages")[next]) + '</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>';
+        esc(pageLabel(next)) + '</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>';
       page.appendChild(nav);
     });
   }
@@ -364,6 +375,7 @@
 
   function runCounters(root) {
     $$(".count", root).forEach(function (el) {
+      if (!/^\d+$/.test(el.dataset.to || "")) return;
       var to = +el.dataset.to, suf = el.dataset.suffix || "", t0 = null, dur = 1800;
       function step(ts) {
         if (!t0) t0 = ts;
@@ -541,7 +553,7 @@
       }
       var hint = $(".js-large-group", form);
       hint.hidden = false;
-      hint.firstElementChild.textContent = (lang === "it" ? "Più di " + B.maxGuests + " persone? Chiamaci:" : "More than " + B.maxGuests + " guests? Call us:");
+      hint.firstElementChild.textContent = t("largeGroup");
     }
 
     function renderCal() {
@@ -617,7 +629,7 @@
         "• " + t("phone") + ": " + f.phone.value.trim()
       ];
       if (f.email.value.trim()) lines.push("• Email: " + f.email.value.trim());
-      if (f.occasion.value) lines.push("• " + t("occasion") + ": " + f.occasion.value);
+      if (f.occasion.value) lines.push("• " + t("occasion") + ": " + f.occasion.options[f.occasion.selectedIndex].textContent.trim());
       if (f.notes.value.trim()) lines.push("• " + t("notes") + ": " + f.notes.value.trim());
       return lines.join("\n");
     }
@@ -732,11 +744,11 @@
     return String(v == null ? "" : v).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; });
   };
   // elementi riempiti in automatico da config (si modificano dal pannello "Dati")
-  var DYN = ".js-phone, .js-phone-link, .js-email, .js-email-link, .js-address, .js-name, .js-vat, .js-year, .js-map";
-  var TEXT_SEL = "h1 .split, h2, h3, h4, legend, p, li, blockquote, figcaption, small, strong, a, button, span, label, option, td";
-  var SKIP = ".lang, .hours, [data-list], .js-open-status, .lightbox, .preloader, .cursor, .admin-entry, .guests, .cal, .slots, " +
-    ".bsummary, .bform__stepinfo, .bform__error, .js-large-group, .newsletter, .hero__dots, .slider-nav, .reviews__dots, .burger, " +
-    ".story__badge, .count, .avatar, .stars, .tag, .line, .dots, script, " + DYN;
+  var DYN = ".js-phone, .js-email, .js-address, .js-name, .js-vat, .js-year, .js-map";
+  var TEXT_SEL = "h1 .split, h2, h3, h4, legend, p, li, blockquote, figcaption, small, strong, a, button, span, label, option, td, textPath";
+  var SKIP = ".lang, .hours__table, [data-list], .js-open-status, .lightbox, .preloader, .cursor, .admin-entry, .guests, .cal, .slots, " +
+    ".bsummary, .bform__stepinfo, .bform__error, .js-large-group, .pager, .hero__dots, .slider-nav, .reviews__dots, .burger, " +
+    ".avatar, .stars, .tag, .line, .dots, script, " + DYN;
   var sectionOf = function (el) {
     var s = el.closest("section[id], header, footer, .marquee, .mobile-nav, .tabbar, .hero, .cellar");
     if (!s) return "page";
@@ -823,6 +835,13 @@
   // Applica un testo salvato: {it, en}. Il corsivo dorato si ottiene con <em>.
   function applyText(el, v) {
     if (!v) return;
+    if (el.classList.contains("count")) {
+      // numero animato: "400+" -> conta fino a 400 e aggiunge "+"
+      var m = String(v.it || "").replace(/<[^>]+>/g, "").trim().match(/^(\d+)(.*)$/);
+      if (m) { el.dataset.to = m[1]; el.dataset.suffix = m[2]; } else { el.dataset.to = ""; }
+      el.textContent = m ? m[1] + m[2] : String(v.it || "").replace(/<[^>]+>/g, "");
+      return;
+    }
     var it = v.it != null ? v.it : (el.getAttribute("data-it") || el.innerHTML);
     var en = v.en || el.getAttribute("data-en") || it;
     if (el.hasAttribute("data-en") || v.en) {
@@ -865,6 +884,7 @@
   var content = {};
   function applyContent(c) {
     content = c || {};
+    UI = content.ui || {};
     mergeConfig(content.config);
     var texts = content.texts || {}, imgs = content.images || {};
     Object.keys(texts).forEach(function (k) { var el = $('[data-k="' + k + '"]'); if (el) applyText(el, texts[k]); });
@@ -876,6 +896,7 @@
   // Ridisegna tutto dopo una modifica dal pannello admin
   function rerender(c) {
     content = c || content;
+    UI = content.ui || {};
     // riparte dai dati originali di config.js, poi applica quelli salvati
     var base = JSON.parse(JSON.stringify(DEFAULTS.config));
     Object.keys(R).forEach(function (k) { if (k !== "booking" && !(k in base)) delete R[k]; });
@@ -922,7 +943,8 @@
     DEFAULTS.reviews = readReviewsFromDOM();
     DEFAULTS.texts = {};
     $$("[data-k]").forEach(function (el) {
-      DEFAULTS.texts[el.getAttribute("data-k")] = { it: el.getAttribute("data-it") || el.innerHTML, en: el.getAttribute("data-en") || "" };
+      var it = el.classList.contains("count") ? el.dataset.to + (el.dataset.suffix || "") : (el.getAttribute("data-it") || el.innerHTML);
+      DEFAULTS.texts[el.getAttribute("data-k")] = { it: it, en: el.getAttribute("data-en") || "" };
     });
     DEFAULTS.images = {};
     $$("[data-img]").forEach(function (el) {
@@ -957,7 +979,7 @@
       get content() { return content; }, get lang() { return lang; },
       applyText: applyText, applyImage: applyImage, applyLang: applyLang, rerender: rerender,
       syncMarquee: syncMarquee, splitHero: splitHero, esc: esc,
-      showPage: showPage, isHidden: isHidden, get page() { return currentPage; }, pageNames: T.it.pages, pageOrder: PAGE_ORDER
+      showPage: showPage, isHidden: isHidden, T: T, renderPagers: renderPagers, get page() { return currentPage; }, pageNames: T.it.pages, pageOrder: PAGE_ORDER
     };
 
     var openAdmin = function () { loadAdmin(function () { window.AUREA_ADMIN.start(); }); };

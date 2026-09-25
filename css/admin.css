@@ -215,3 +215,13 @@ body.adm-on .tabbar { display: none; }
 .adm-switch input:checked + i::after { transform: translateX(20px); background: #6fbf73; }
 .adm-switch input:focus-visible + i { outline: 2px solid var(--gold); outline-offset: 2px; }
 .adm-switch.is-locked { cursor: default; opacity: .6; }
+
+/* ---------- Scritte automatiche ---------- */
+.adm-ui { padding: 8px 0 2px; border-bottom: 1px dashed var(--a-line); }
+.adm-ui:last-child { border-bottom: 0; }
+.adm-ui > span { display: block; font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+.adm-ui .adm-field { margin-bottom: 8px; }
+.adm-ui .adm-field > span { font-size: 11px; color: var(--ink-3); }
+.adm-ui input::placeholder { color: var(--ink-3); opacity: .8; }
+.adm-editing .story__badge svg { pointer-events: none; }
+.adm-editing .story__badge span { position: relative; z-index: 1; cursor: pointer; }
