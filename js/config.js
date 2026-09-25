@@ -8,6 +8,7 @@ window.RESTAURANT = {
   name: "Aurea",
   tagline: "Cucina d'autore",
   city: "Milano",
+  vat: "01234567890",                 // Partita IVA mostrata nel footer
 
   phone: "+39 02 1234 5678",          // mostrato e usato per "Chiama"
   whatsapp: "393331234567",           // solo cifre, con prefisso internazionale, senza +
@@ -20,6 +21,10 @@ window.RESTAURANT = {
   tripadvisor: "https://tripadvisor.it/",
 
   timezone: "Europe/Rome",
+
+  /* Tasto "Amministratore" nella prima schermata.
+     Se false, l'area admin resta raggiungibile aggiungendo #admin all'indirizzo. */
+  showAdminButton: true,
 
   /* Orari: 0 = domenica, 1 = lunedì ... 6 = sabato.
      Ogni giorno è una lista di fasce ["HH:MM","HH:MM"]. Lista vuota = chiuso. */

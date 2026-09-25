@@ -558,3 +558,17 @@ figure.reveal.is-in img { transform: scale(1); }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
   .reveal, figure.reveal { opacity: 1; transform: none; clip-path: none; }
 }
+
+/* ---------- Tasto area amministratore (prima schermata) ---------- */
+.admin-entry {
+  position: absolute; z-index: 3; left: calc(var(--gutter) + 26px); bottom: 32px;
+  display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 100px;
+  border: 1px solid rgba(243, 236, 224, .22); background: rgba(13, 11, 9, .45); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  font-size: .66rem; letter-spacing: .18em; text-transform: uppercase; font-weight: 600; color: var(--ink-2);
+  transition: color .3s, border-color .3s, background .3s;
+}
+.admin-entry svg { width: 14px; height: 14px; }
+.admin-entry:hover { color: var(--gold-2); border-color: var(--gold); background: rgba(13, 11, 9, .7); }
+.admin-entry[hidden] { display: none; }
+@media (max-width: 860px) { .admin-entry { left: auto; right: var(--gutter); bottom: 28px; } }
+@media (max-width: 560px) { .hero__dots { display: none; } }

@@ -59,7 +59,7 @@
   <div class="preloader" aria-hidden="true">
     <div class="preloader__inner">
       <svg class="preloader__mark" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30"/><path d="M20 44 L32 18 L44 44 M25 35 H39"/></svg>
-      <span class="preloader__word">AUREA</span>
+      <span class="preloader__word js-name">Aurea</span>
     </div>
   </div>
 
@@ -71,7 +71,7 @@
     <div class="header__inner">
       <a href="#top" class="logo" aria-label="Aurea — home">
         <svg class="logo__mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30"/><path d="M20 44 L32 18 L44 44 M25 35 H39"/></svg>
-        <span class="logo__text">Aurea<small data-en="Chef's cuisine">Cucina d'autore</small></span>
+        <span class="logo__text"><span class="js-name">Aurea</span><small data-en="Chef's cuisine">Cucina d'autore</small></span>
       </a>
 
       <nav class="nav" aria-label="Navigazione principale">
@@ -151,12 +151,13 @@
       </div>
 
       <a href="#storia" class="hero__scroll" aria-label="Scorri"><span></span></a>
+
+      <button type="button" class="admin-entry" data-admin hidden><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span>Amministratore</span></button>
     </section>
 
     <!-- ============ MARQUEE ============ -->
-    <div class="marquee" aria-hidden="true">
+    <div class="marquee">
       <div class="marquee__track">
-        <span>Pasta tirata a mano</span><i>✦</i><span>Cantina di 400 etichette</span><i>✦</i><span>Presìdi Slow Food</span><i>✦</i><span>Menù degustazione</span><i>✦</i><span>Cene private</span><i>✦</i><span>Terrazza estiva</span><i>✦</i>
         <span>Pasta tirata a mano</span><i>✦</i><span>Cantina di 400 etichette</span><i>✦</i><span>Presìdi Slow Food</span><i>✦</i><span>Menù degustazione</span><i>✦</i><span>Cene private</span><i>✦</i><span>Terrazza estiva</span><i>✦</i>
       </div>
     </div>
@@ -255,7 +256,7 @@
           </label>
         </div>
 
-        <div class="menu__panels">
+        <div class="menu__panels" data-list="menu">
           <div class="menu__panel is-active" role="tabpanel" data-panel="antipasti">
             <div class="menu-item veg"><div class="menu-item__row"><h4>Burrata pugliese <span class="tag tag--veg" title="Vegetariano">V</span></h4><span class="dots"></span><span class="price">€ 16</span></div><p data-en="Heirloom tomatoes, basil oil, toasted focaccia.">Pomodori antichi, olio al basilico, focaccia tostata.</p></div>
             <div class="menu-item"><div class="menu-item__row"><h4>Carpaccio di Fassona</h4><span class="dots"></span><span class="price">€ 18</span></div><p data-en="Hand-cut, 24-month Parmigiano, black truffle.">Battuto al coltello, Parmigiano 24 mesi, tartufo nero.</p></div>
@@ -375,7 +376,7 @@
         </div>
 
         <div class="reviews__slider reveal">
-          <div class="reviews__track">
+          <div class="reviews__track" data-list="reviews">
             <figure class="review">
               <div class="stars">★★★★★</div>
               <blockquote data-en="“The best tagliatelle I've eaten outside my grandmother's house. Impeccable service, and the sommelier found us the perfect wine.”">“Le tagliatelle più buone mangiate fuori da casa di mia nonna. Servizio impeccabile, e il sommelier ci ha trovato il vino perfetto.”</blockquote>
@@ -573,7 +574,7 @@
       <div class="footer__brand">
         <a href="#top" class="logo">
           <svg class="logo__mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30"/><path d="M20 44 L32 18 L44 44 M25 35 H39"/></svg>
-          <span class="logo__text">Aurea<small data-en="Chef's cuisine">Cucina d'autore</small></span>
+          <span class="logo__text"><span class="js-name">Aurea</span><small data-en="Chef's cuisine">Cucina d'autore</small></span>
         </a>
         <p data-en="The true taste of Italy, served slowly. Since 1998.">Il gusto autentico dell'Italia, servito con lentezza. Dal 1998.</p>
         <div class="socials">
@@ -602,7 +603,7 @@
       </div>
     </div>
     <div class="container footer__bottom">
-      <span>© <span class="js-year"></span> Aurea · P.IVA 01234567890</span>
+      <span>© <span class="js-year"></span> <span class="js-name">Aurea</span> · P.IVA <span class="js-vat"></span></span>
       <span><a href="#" data-en="Privacy policy">Privacy policy</a> · <a href="#" data-en="Cookie policy">Cookie policy</a></span>
     </div>
   </footer>
