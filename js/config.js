@@ -8,6 +8,13 @@ window.RESTAURANT = {
   name: "Aurea",
   tagline: "Cucina d'autore",
   city: "Milano",
+
+  /* Indirizzo pubblico del sito, con la barra finale.
+     Quando colleghi un dominio (es. https://www.nomeristorante.it/) cambialo qui
+     o dal pannello Amministratore → Dati. Serve a Google. */
+  siteUrl: "https://l13291221-cmyk.github.io/Ristorante-/",
+  cuisine: "Italiana, Cucina d'autore", // tipo di cucina, separato da virgole
+  priceRange: "€€€",
   vat: "01234567890",                 // Partita IVA mostrata nel footer
 
   phone: "+39 02 1234 5678",          // mostrato e usato per "Chiama"

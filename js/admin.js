@@ -337,6 +337,9 @@
     ["facebook", "Facebook (link)", { type: "url" }],
     ["tripadvisor", "Tripadvisor (link)", { type: "url" }],
     ["Google"],
+    ["siteUrl", "Indirizzo del sito", { type: "url", help: "Con la barra finale. Se colleghi un dominio (es. https://www.nomeristorante.it/) scrivilo qui." }],
+    ["cuisine", "Tipo di cucina", { placeholder: "Italiana, Pesce, Pizzeria", help: "Separato da virgole. Aiuta Google a capire cosa servite." }],
+    ["priceRange", "Fascia di prezzo", { placeholder: "€€€", help: "Da € (economico) a €€€€ (alta cucina)." }],
     ["seoTitle", "Titolo nei risultati di Google", { placeholder: document.title }],
     ["seoDescription", "Descrizione nei risultati di Google", { textarea: true, placeholder: ($('meta[name="description"]') || {}).content }]
   ];
@@ -637,6 +640,28 @@
   }
   function exportable(o) { var c = clone(o); c.version = 1; c.updatedAt = new Date().toISOString(); return c; }
 
+  /* sitemap.xml e robots.txt, rigenerati a ogni pubblicazione */
+  function seoFiles(out) {
+    var url = String((out.config && out.config.siteUrl) || A.DEFAULTS.config.siteUrl || "").trim();
+    if (!/^https?:\/\//.test(url)) return null;
+    if (!/\/$/.test(url)) url += "/";
+    var x = function (v) { return String(v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); };
+    var seen = {}, imgs = [];
+    Object.keys(A.DEFAULTS.images).forEach(function (k) {
+      var src = (out.images && out.images[k]) || A.DEFAULTS.images[k];
+      if (!src || /^data:/.test(src)) return;
+      var abs = /^https?:\/\//.test(src) ? src : url + src.replace(/^\.?\//, "");
+      if (!seen[abs]) { seen[abs] = 1; imgs.push(abs); }
+    });
+    var sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n' +
+      '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n' +
+      "  <url>\n    <loc>" + x(url) + "</loc>\n    <lastmod>" + new Date().toISOString().slice(0, 10) + "</lastmod>\n" +
+      imgs.map(function (i) { return "    <image:image><image:loc>" + x(i) + "</image:loc></image:image>\n"; }).join("") +
+      "  </url>\n</urlset>\n";
+    var robots = "User-agent: *\nAllow: /\n\nSitemap: " + url + "sitemap.xml\n";
+    return { sitemap: sitemap, robots: robots };
+  }
+
   function log(msg, cls) {
     var box = $(".adm-log", ui.body);
     if (!box) return;
@@ -666,10 +691,14 @@
         st === 404 ? "Repository o branch non trovati, oppure il token non ha accesso a questo repository." :
         st === 409 || st === 422 ? "Conflitto con una modifica recente: riprova tra qualche secondo." : "Errore GitHub (" + st + ").";
     };
-    async function put(path, contentB64, message) {
+    async function put(path, contentB64, message, skipIfSame) {
       var sha;
       var r = await fetch(api + path + "?ref=" + encodeURIComponent(g.branch), { headers: headers, cache: "no-store" });
-      if (r.ok) sha = (await r.json()).sha;
+      if (r.ok) {
+        var cur = await r.json();
+        sha = cur.sha;
+        if (skipIfSame && String(cur.content || "").replace(/\s/g, "") === contentB64) return;
+      }
       else if (r.status !== 404) throw new Error(explain(r.status));
       var body = { message: message, content: contentB64, branch: g.branch };
       if (sha) body.sha = sha;
@@ -691,6 +720,12 @@
       }
       log("Salvo i contenuti…");
       await put("data/content.json", b64utf8(JSON.stringify(out, null, 2)), "Admin: aggiornamento contenuti del sito");
+      var seo = seoFiles(out);
+      if (seo) {
+        log("Aggiorno i file per Google…");
+        await put("sitemap.xml", b64utf8(seo.sitemap), "Admin: aggiornamento sitemap", true);
+        await put("robots.txt", b64utf8(seo.robots), "Admin: aggiornamento robots.txt", true);
+      }
       A.published = clone(out);
       draft = clone(out);
       saveDraft();

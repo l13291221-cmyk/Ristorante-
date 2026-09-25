@@ -87,6 +87,59 @@
     if (R.seoDescription) { var md = $('meta[name="description"]'); if (md) md.content = R.seoDescription; }
     var adm = $(".admin-entry");
     if (adm) adm.hidden = R.showAdminButton === false;
+    updateSEO();
+  }
+
+  /* ---------- Dati per Google (sempre allineati a config e pannello admin) ---------- */
+  var DAY_EN = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  function siteUrl() {
+    var u = (R.siteUrl || "").trim() || (location.origin + location.pathname.replace(/[^/]*$/, ""));
+    return /\/$/.test(u) ? u : u + "/";
+  }
+  var absUrl = function (src) { return /^(https?:)?\/\//.test(src) ? src : siteUrl() + String(src || "").replace(/^\.?\//, ""); };
+  function parseAddress(a) {
+    // "Via della Spiga 12, 20121 Milano MI" -> via, CAP, città, provincia
+    var m = String(a || "").match(/^(.*?),\s*(\d{5})\s+(.+?)(?:\s+\(?([A-Z]{2})\)?)?$/);
+    var out = { "@type": "PostalAddress", addressCountry: "IT" };
+    if (m) { out.streetAddress = m[1]; out.postalCode = m[2]; out.addressLocality = m[3]; if (m[4]) out.addressRegion = m[4]; }
+    else { out.streetAddress = a; if (R.city) out.addressLocality = R.city; }
+    return out;
+  }
+  function setMeta(sel, attr, val) { var m = document.querySelector(sel); if (m && val) m.setAttribute(attr, val); }
+  function updateSEO() {
+    var url = siteUrl(), heroImg = $(".hero__slide");
+    var img = heroImg ? absUrl((heroImg.style.backgroundImage.match(/url\(["']?(.*?)["']?\)/) || [])[1]) : "";
+    if (/^data:/.test(img)) img = absUrl("assets/img/hero-1.webp");
+    var hours = [];
+    Object.keys(R.hours || {}).forEach(function (d) {
+      (R.hours[d] || []).forEach(function (r) {
+        hours.push({ "@type": "OpeningHoursSpecification", dayOfWeek: DAY_EN[d], opens: r[0], closes: r[1] === "00:00" ? "23:59" : r[1] });
+      });
+    });
+    var today = ymd(romeNow().date);
+    var special = (R.booking.closedDates || []).filter(function (d) { return d >= today; }).map(function (d) {
+      return { "@type": "OpeningHoursSpecification", validFrom: d, validThrough: d, opens: "00:00", closes: "00:00" };
+    });
+    var data = {
+      "@context": "https://schema.org", "@type": "Restaurant",
+      name: R.name, url: url, image: img, telephone: R.phone, email: R.email,
+      address: parseAddress(R.address),
+      servesCuisine: String(R.cuisine || "").split(",").map(function (x) { return x.trim(); }).filter(Boolean),
+      priceRange: R.priceRange || undefined,
+      acceptsReservations: "True",
+      hasMenu: url + "#menu",
+      openingHoursSpecification: hours,
+      sameAs: [R.instagram, R.facebook, R.tripadvisor].filter(function (x) { return x && !/^https?:\/\/(www\.)?[a-z]+\.(com|it)\/?$/.test(x); })
+    };
+    if (special.length) data.specialOpeningHoursSpecification = special;
+    var ld = document.getElementById("ld-restaurant");
+    if (ld) ld.textContent = JSON.stringify(data, null, 2);
+    var canon = $('link[rel="canonical"]'); if (canon) canon.href = url;
+    setMeta('meta[property="og:url"]', "content", url);
+    setMeta('meta[property="og:image"]', "content", img);
+    setMeta('meta[property="og:site_name"]', "content", R.name);
+    setMeta('meta[property="og:title"]', "content", R.seoTitle || document.title);
+    setMeta('meta[property="og:description"]', "content", R.seoDescription || ($('meta[name="description"]') || {}).content);
   }
 
   /* ---------- Aperto / chiuso ---------- */
@@ -766,6 +819,7 @@
     renderReviews(content.reviews || DEFAULTS.reviews);
     applyLang(lang);
     syncMarquee();
+    updateSEO();
   }
 
   var DEFAULTS = { config: JSON.parse(JSON.stringify(R)) };
