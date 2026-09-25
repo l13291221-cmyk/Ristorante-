@@ -17,7 +17,8 @@ Sito vetrina di fascia alta per ristoranti: design scuro ed elegante, animazioni
 | **Eventi / sala privata / gift card** | Ogni scheda apre la prenotazione con l'occasione già scelta |
 | **Contatti** | Orari con "Oggi" evidenziato, mappa Google in tema scuro, indicazioni stradali |
 | **Bilingue IT / EN** | Commutatore nel menù, lingua ricordata |
-| **Mobile first** | Barra fissa Chiama / Prenota / Mappa, menù a schermo intero |
+| **Come un'app** | Home in una sola schermata con tasto grande «Menù»; ogni sezione è una pagina a sé con il tasto «Avanti», niente scorrimento infinito. Il tasto indietro del telefono funziona |
+| **Mobile first** | Barra in basso Home / Menù / Prenota / Chiama / Dove; categorie del menù sempre visibili in alto |
 | **SEO** | Dati strutturati `Restaurant` (schema.org), Open Graph, meta description |
 | **Accessibilità** | Navigazione da tastiera, skip link, rispetto di "riduci movimento" |
 | **Area amministratore** | Tasto «Amministratore» nella prima schermata, PIN, modifica di testi, foto, menù, recensioni, orari e dati senza toccare il codice |
@@ -27,7 +28,7 @@ Sito vetrina di fascia alta per ristoranti: design scuro ed elegante, animazioni
 1. Nella prima schermata premi **Amministratore** (oppure aggiungi `#admin` all'indirizzo).
 2. Inserisci il PIN: all'inizio è **123456**. Cambialo subito dalla scheda **Sicurezza**.
 3. Dal pannello puoi:
-   - **Pagina → Modifica la pagina**: tocchi qualsiasi titolo, testo, pulsante o foto del sito e lo cambi (italiano e inglese). Scrivi tra `*asterischi*` per il corsivo dorato.
+   - **Pagina → Modifica la pagina**: tocchi qualsiasi titolo, testo, pulsante o foto del sito e lo cambi (italiano e inglese). Scrivi tra `*asterischi*` per il corsivo dorato. Per cambiare pagina mentre modifichi usa il selettore nella barra in basso.
    - **Dati**: nome, telefono, WhatsApp, email, indirizzo, social, P.IVA, titolo e descrizione per Google.
    - **Orari**: fasce di pranzo e cena, giorni di chiusura, ferie, regole di prenotazione.
    - **Menù**: aggiungi, modifica, riordina o elimina i piatti di ogni categoria.

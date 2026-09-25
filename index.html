@@ -80,12 +80,11 @@
       </a>
 
       <nav class="nav" aria-label="Navigazione principale">
-        <a href="#storia" data-en="Story">Storia</a>
         <a href="#menu" data-en="Menu">Menù</a>
-        <a href="#chef">Chef</a>
+        <a href="#storia" data-en="About us">Chi siamo</a>
         <a href="#galleria" data-en="Gallery">Galleria</a>
         <a href="#eventi" data-en="Events">Eventi</a>
-        <a href="#contatti" data-en="Contact">Contatti</a>
+        <a href="#contatti" data-en="Where we are">Dove siamo</a>
       </nav>
 
       <div class="header__actions">
@@ -102,13 +101,13 @@
   <!-- Menu mobile a schermo intero -->
   <div class="mobile-nav" id="mobile-nav" aria-hidden="true">
     <nav>
-      <a href="#storia" data-en="Story">Storia</a>
+      <a href="#top">Home</a>
       <a href="#menu" data-en="Menu">Menù</a>
-      <a href="#chef">Chef</a>
+      <a href="#prenota" data-en="Book a table">Prenota</a>
+      <a href="#storia" data-en="About us">Chi siamo</a>
       <a href="#galleria" data-en="Gallery">Galleria</a>
       <a href="#eventi" data-en="Events">Eventi</a>
-      <a href="#prenota" data-en="Book">Prenota</a>
-      <a href="#contatti" data-en="Contact">Contatti</a>
+      <a href="#contatti" data-en="Where we are">Dove siamo</a>
     </nav>
     <div class="mobile-nav__foot">
       <a class="js-phone-link" href="#"><span class="js-phone"></span></a>
@@ -118,459 +117,477 @@
 
   <main id="main">
 
-    <!-- ============ HERO ============ -->
-    <section class="hero" aria-label="Benvenuti">
-      <div class="hero__slides" aria-hidden="true">
-        <div class="hero__slide is-active" style="background-image:url('assets/img/hero-1.webp')"></div>
-        <div class="hero__slide" style="background-image:url('assets/img/hero-2.webp')"></div>
-        <div class="hero__slide" style="background-image:url('assets/img/hero-3.webp')"></div>
-      </div>
-      <div class="hero__veil"></div>
-
-      <div class="hero__content container">
-        <p class="eyebrow hero__eyebrow"><span class="line"></span><span data-en="Chef's cuisine · Milan · since 1998">Cucina d'autore · Milano · dal 1998</span></p>
-        <h1 class="hero__title">
-          <span class="split" data-en="The true taste">Il gusto autentico</span>
-          <span class="split"><em data-en="of Italy,">dell'Italia,</em></span>
-          <span class="split" data-en="served slowly.">servito con lentezza.</span>
-        </h1>
-        <p class="hero__lead" data-en="Handmade pasta, raw ingredients chosen every morning and a cellar of over 400 labels. An evening you will want to tell about.">Pasta tirata a mano, materie prime scelte ogni mattina e una cantina di oltre 400 etichette. Una serata che vorrai raccontare.</p>
-        <div class="hero__ctas">
-          <a href="#prenota" class="btn btn--gold btn--lg magnetic"><span data-en="Book a table">Prenota un tavolo</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-          <a href="#menu" class="btn btn--ghost btn--lg" data-en="Discover the menu">Scopri il menù</a>
+    <!-- ################ PAGINA: HOME ################ -->
+    <div class="page" data-page="home">
+      <!-- ============ HERO ============ -->
+      <section class="hero" aria-label="Benvenuti">
+        <div class="hero__slides" aria-hidden="true">
+          <div class="hero__slide is-active" style="background-image:url('assets/img/hero-1.webp')"></div>
+          <div class="hero__slide" style="background-image:url('assets/img/hero-2.webp')"></div>
+          <div class="hero__slide" style="background-image:url('assets/img/hero-3.webp')"></div>
         </div>
-        <div class="hero__status">
-          <span class="status-dot"></span><span class="js-open-status">&nbsp;</span>
+        <div class="hero__veil"></div>
+
+        <div class="hero__content container">
+          <p class="eyebrow hero__eyebrow"><span class="line"></span><span data-en="Chef's cuisine · Milan · since 1998">Cucina d'autore · Milano · dal 1998</span></p>
+          <h1 class="hero__title">
+            <span class="split" data-en="The true taste">Il gusto autentico</span>
+            <span class="split"><em data-en="of Italy,">dell'Italia,</em></span>
+            <span class="split" data-en="served slowly.">servito con lentezza.</span>
+          </h1>
+          <p class="hero__lead" data-en="Handmade pasta, raw ingredients chosen every morning and a cellar of over 400 labels. An evening you will want to tell about.">Pasta tirata a mano, materie prime scelte ogni mattina e una cantina di oltre 400 etichette. Una serata che vorrai raccontare.</p>
+          <nav class="home-grid" aria-label="Sezioni del sito">
+            <a href="#menu" class="home-btn home-btn--main"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3v8a3 3 0 0 0 6 0V3M9 3v18M17 3c-2 0-3 3-3 7h3v11"/></svg><span class="home-btn__txt"><strong data-en="Our menu">Il nostro menù</strong><small data-en="Dishes, wines and prices">Piatti, vini e prezzi</small></span><svg class="home-btn__go" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a href="#prenota" class="home-btn home-btn--gold"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span class="home-btn__txt"><strong data-en="Book a table">Prenota un tavolo</strong><small data-en="In 30 seconds">In 30 secondi</small></span><svg class="home-btn__go" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a href="#storia" class="home-btn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.5-9-9.5A5 5 0 0 1 12 6a5 5 0 0 1 9 5.5c-2 5-9 9.5-9 9.5z"/></svg><span data-en="About us">Chi siamo</span></a>
+            <a href="#galleria" class="home-btn"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg><span data-en="Gallery">Galleria</span></a>
+            <a href="#eventi" class="home-btn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 21h8M12 17v4M6 3h12l-1 7a5 5 0 0 1-10 0z"/></svg><span data-en="Events">Eventi</span></a>
+            <a href="#contatti" class="home-btn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span data-en="Where we are">Dove siamo</span></a>
+          </nav>
+          <div class="hero__status">
+            <span class="status-dot"></span><span class="js-open-status">&nbsp;</span>
+            <button type="button" class="admin-entry" data-admin hidden><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span>Amministratore</span></button>
+          </div>
         </div>
-      </div>
 
-      <div class="hero__rating">
-        <div class="stars" aria-label="4,9 su 5">★★★★★</div>
-        <strong>4,9</strong><span data-en="from 1,280 reviews">su 1.280 recensioni</span>
-      </div>
+        <div class="hero__rating">
+          <div class="stars" aria-label="4,9 su 5">★★★★★</div>
+          <strong>4,9</strong><span data-en="from 1,280 reviews">su 1.280 recensioni</span>
+        </div>
 
-      <div class="hero__dots" role="tablist" aria-label="Immagini">
-        <button class="is-active" aria-label="Immagine 1"></button>
-        <button aria-label="Immagine 2"></button>
-        <button aria-label="Immagine 3"></button>
-      </div>
+        <div class="hero__dots" role="tablist" aria-label="Immagini">
+          <button class="is-active" aria-label="Immagine 1"></button>
+          <button aria-label="Immagine 2"></button>
+          <button aria-label="Immagine 3"></button>
+        </div>
 
-      <a href="#storia" class="hero__scroll" aria-label="Scorri"><span></span></a>
-
-      <button type="button" class="admin-entry" data-admin hidden><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span>Amministratore</span></button>
-    </section>
-
-    <!-- ============ MARQUEE ============ -->
-    <div class="marquee">
-      <div class="marquee__track">
-        <span>Pasta tirata a mano</span><i>✦</i><span>Cantina di 400 etichette</span><i>✦</i><span>Presìdi Slow Food</span><i>✦</i><span>Menù degustazione</span><i>✦</i><span>Cene private</span><i>✦</i><span>Terrazza estiva</span><i>✦</i>
-      </div>
+      </section>
     </div>
 
-    <!-- ============ STORIA ============ -->
-    <section class="section story" id="storia">
-      <div class="container story__grid">
-        <div class="story__media">
-          <figure class="story__img story__img--main reveal"><img src="assets/img/pasta-fresca.webp" alt="Pasta fresca e pomodorini" loading="lazy" width="1200" height="800"></figure>
-          <figure class="story__img story__img--small reveal" data-parallax="-0.08"><img src="assets/img/hands.webp" alt="Lo chef al lavoro" loading="lazy" width="1000" height="1250"></figure>
-          <div class="story__badge reveal">
-            <svg viewBox="0 0 200 200" aria-hidden="true"><defs><path id="circ" d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/></defs><text><textPath href="#circ">· DAL 1998 · CUCINA D'AUTORE · MILANO </textPath></text></svg>
-            <span>25+</span>
-          </div>
-        </div>
-
-        <div class="story__text">
-          <p class="eyebrow reveal"><span class="line"></span><span data-en="Our story">La nostra storia</span></p>
-          <h2 class="h2 reveal" data-en="Three generations, <em>one single</em> table.">Tre generazioni, <em>un'unica</em> tavola.</h2>
-          <p class="reveal" data-en="Aurea was born in 1998 from the dream of Nonna Lucia: to bring the flavours of Sunday to the heart of Milan. Today her grandson, chef Marco Valenti, carries on that recipe with the same respect — and a touch of daring.">Aurea nasce nel 1998 dal sogno di nonna Lucia: portare i sapori della domenica nel cuore di Milano. Oggi il nipote, lo chef Marco Valenti, porta avanti quella ricetta con lo stesso rispetto — e un pizzico di audacia.</p>
-          <p class="reveal" data-en="Every morning we choose fish at the market, flour from small mills and vegetables from farmers we know by name. Nothing frozen, nothing by chance.">Ogni mattina scegliamo il pesce al mercato, le farine da piccoli mulini e le verdure da contadini che conosciamo per nome. Niente di surgelato, niente lasciato al caso.</p>
-
-          <div class="counters reveal">
-            <div><strong class="count" data-to="25">0</strong><span data-en="years of passion">anni di passione</span></div>
-            <div><strong class="count" data-to="400" data-suffix="+">0</strong><span data-en="wine labels">etichette in cantina</span></div>
-            <div><strong class="count" data-to="100" data-suffix="%">0</strong><span data-en="handmade pasta">pasta fatta a mano</span></div>
+    <!-- ################ PAGINA: MENU ################ -->
+    <div class="page" data-page="menu">
+      <!-- ============ MENU ============ -->
+      <section class="section menu" id="menu">
+        <div class="container">
+          <div class="section__head section__head--center">
+            <p class="eyebrow reveal"><span class="line"></span><span data-en="À la carte">Alla carta</span><span class="line"></span></p>
+            <h2 class="h2 reveal" data-en="Our <em>menu</em>">Il nostro <em>menù</em></h2>
+            <p class="section__lead reveal" data-en="It changes with the seasons. Ask our staff about allergens: we'll adapt every dish for you.">Cambia con le stagioni. Chiedi al nostro staff per allergeni e intolleranze: adattiamo ogni piatto per te.</p>
           </div>
 
-          <p class="signature reveal">Marco Valenti</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ PIATTI FIRMA ============ -->
-    <section class="section signature-dishes" id="piatti">
-      <div class="container section__head">
-        <div>
-          <p class="eyebrow reveal"><span class="line"></span><span data-en="Signature dishes">Piatti firma</span></p>
-          <h2 class="h2 reveal" data-en="The dishes they <em>come back</em> for.">I piatti per cui <em>si ritorna.</em></h2>
-        </div>
-        <div class="slider-nav reveal">
-          <button type="button" class="slider-btn" data-dir="-1" aria-label="Precedente"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
-          <button type="button" class="slider-btn" data-dir="1" aria-label="Successivo"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
-        </div>
-      </div>
-
-      <div class="dishes" tabindex="0" aria-label="Piatti firma, scorri orizzontalmente">
-        <article class="dish reveal">
-          <div class="dish__img"><img src="assets/img/vongole.webp" alt="Linguine alle vongole veraci" loading="lazy" width="1000" height="1000"></div>
-          <div class="dish__body"><span class="dish__num">01</span><h3>Linguine alle vongole</h3><p data-en="Clams from Goro, garlic confit, lemon zest from Amalfi.">Vongole veraci di Goro, aglio confit, scorza di limone di Amalfi.</p><span class="dish__price">€ 24</span></div>
-        </article>
-        <article class="dish reveal">
-          <div class="dish__img"><img src="assets/img/ragu.webp" alt="Tagliatelle al ragù bianco" loading="lazy" width="1000" height="1000"></div>
-          <div class="dish__body"><span class="dish__num">02</span><h3>Tagliatelle al ragù di nonna Lucia</h3><p data-en="Cooked for eight hours, as on Sundays. Parmigiano aged 36 months.">Cotto per otto ore, come la domenica. Parmigiano 36 mesi.</p><span class="dish__price">€ 22</span></div>
-        </article>
-        <article class="dish reveal">
-          <div class="dish__img"><img src="assets/img/gamberi.webp" alt="Spaghettoni ai gamberi rossi" loading="lazy" width="1000" height="1000"></div>
-          <div class="dish__body"><span class="dish__num">03</span><h3>Spaghettone ai gamberi rossi</h3><p data-en="Red prawns from Mazara, datterino tomatoes, bisque reduction.">Gambero rosso di Mazara, datterino, riduzione di bisque.</p><span class="dish__price">€ 28</span></div>
-        </article>
-        <article class="dish reveal">
-          <div class="dish__img"><img src="assets/img/tagliata.webp" alt="Tagliata di manzo" loading="lazy" width="1000" height="1000"></div>
-          <div class="dish__body"><span class="dish__num">04</span><h3>Tagliata di Fassona</h3><p data-en="Piedmontese beef aged 40 days, rosemary potatoes, Maldon salt.">Fassona piemontese frollata 40 giorni, patate al rosmarino, sale Maldon.</p><span class="dish__price">€ 34</span></div>
-        </article>
-        <article class="dish reveal">
-          <div class="dish__img"><img src="assets/img/tiramisu.webp" alt="Tiramisù della casa" loading="lazy" width="1000" height="1000"></div>
-          <div class="dish__body"><span class="dish__num">05</span><h3>Il nostro tiramisù</h3><p data-en="Made to order, specialty coffee, Criollo cocoa.">Montato al momento, caffè specialty, cacao Criollo.</p><span class="dish__price">€ 10</span></div>
-        </article>
-        <article class="dish reveal">
-          <div class="dish__img"><img src="assets/img/salmone.webp" alt="Salmone scottato con verdure" loading="lazy" width="1000" height="1000"></div>
-          <div class="dish__body"><span class="dish__num">06</span><h3>Salmone selvaggio scottato</h3><p data-en="Seasonal vegetables, citrus beurre blanc.">Verdure dell'orto, beurre blanc agli agrumi.</p><span class="dish__price">€ 29</span></div>
-        </article>
-      </div>
-    </section>
-
-    <!-- ============ MENU ============ -->
-    <section class="section menu" id="menu">
-      <div class="container">
-        <div class="section__head section__head--center">
-          <p class="eyebrow reveal"><span class="line"></span><span data-en="À la carte">Alla carta</span><span class="line"></span></p>
-          <h2 class="h2 reveal" data-en="Our <em>menu</em>">Il nostro <em>menù</em></h2>
-          <p class="section__lead reveal" data-en="It changes with the seasons. Ask our staff about allergens: we'll adapt every dish for you.">Cambia con le stagioni. Chiedi al nostro staff per allergeni e intolleranze: adattiamo ogni piatto per te.</p>
-        </div>
-
-        <div class="menu__controls reveal">
-          <div class="tabs" role="tablist" aria-label="Categorie del menù">
-            <button role="tab" class="tab is-active" aria-selected="true" data-tab="antipasti" data-en="Starters">Antipasti</button>
-            <button role="tab" class="tab" aria-selected="false" data-tab="primi" data-en="First courses">Primi</button>
-            <button role="tab" class="tab" aria-selected="false" data-tab="secondi" data-en="Mains">Secondi</button>
-            <button role="tab" class="tab" aria-selected="false" data-tab="dolci" data-en="Desserts">Dolci</button>
-            <button role="tab" class="tab" aria-selected="false" data-tab="vini" data-en="Wines">Vini</button>
-          </div>
-          <label class="toggle">
-            <input type="checkbox" id="veg-filter">
-            <span class="toggle__track"><span></span></span>
-            <span data-en="Vegetarian only">Solo vegetariani</span>
-          </label>
-        </div>
-
-        <div class="menu__panels" data-list="menu">
-          <div class="menu__panel is-active" role="tabpanel" data-panel="antipasti">
-            <div class="menu-item veg"><div class="menu-item__row"><h4>Burrata pugliese <span class="tag tag--veg" title="Vegetariano">V</span></h4><span class="dots"></span><span class="price">€ 16</span></div><p data-en="Heirloom tomatoes, basil oil, toasted focaccia.">Pomodori antichi, olio al basilico, focaccia tostata.</p></div>
-            <div class="menu-item"><div class="menu-item__row"><h4>Carpaccio di Fassona</h4><span class="dots"></span><span class="price">€ 18</span></div><p data-en="Hand-cut, 24-month Parmigiano, black truffle.">Battuto al coltello, Parmigiano 24 mesi, tartufo nero.</p></div>
-            <div class="menu-item"><div class="menu-item__row"><h4>Crudo di mare <span class="tag tag--chef" title="Consigliato dallo chef">★</span></h4><span class="dots"></span><span class="price">€ 26</span></div><p data-en="Red prawns, scampi, sea bass tartare, oyster (4 pcs).">Gambero rosso, scampi, tartare di spigola, ostrica (4 pz).</p></div>
-            <div class="menu-item veg"><div class="menu-item__row"><h4>Fiori di zucca fritti <span class="tag tag--veg" title="Vegetariano">V</span></h4><span class="dots"></span><span class="price">€ 14</span></div><p data-en="Stuffed with ricotta and lemon, light batter.">Ripieni di ricotta e limone, pastella leggera.</p></div>
-            <div class="menu-item"><div class="menu-item__row"><h4>Vitello tonnato</h4><span class="dots"></span><span class="price">€ 17</span></div><p data-en="Pink veal, traditional tuna sauce, caper flowers.">Vitello rosa, salsa tonnata all'antica, fiori di cappero.</p></div>
-            <div class="menu-item veg"><div class="menu-item__row"><h4>Parmigiana di melanzane <span class="tag tag--veg" title="Vegetariano">V</span></h4><span class="dots"></span><span class="price">€ 15</span></div><p data-en="Nonna Lucia's recipe, smoked scamorza.">La ricetta di nonna Lucia, scamorza affumicata.</p></div>
-          </div>
-
-          <div class="menu__panel" role="tabpanel" data-panel="primi">
-            <div class="menu-item"><div class="menu-item__row"><h4>Tagliatelle al ragù di nonna Lucia <span class="tag tag--chef" title="Consigliato dallo chef">★</span></h4><span class="dots"></span><span class="price">€ 22</span></div><p data-en="Eight-hour ragù, 36-month Parmigiano.">Ragù cotto otto ore, Parmigiano 36 mesi.</p></div>
-            <div class="menu-item"><div class="menu-item__row"><h4>Linguine alle vongole</h4><span class="dots"></span><span class="price">€ 24</span></div><p data-en="Goro clams, garlic confit, Amalfi lemon.">Vongole veraci di Goro, aglio confit, limone di Amalfi.</p></div>
-            <div class="menu-item veg"><div class="menu-item__row"><h4>Risotto allo zafferano <span class="tag tag--veg" title="Vegetariano">V</span></h4><span class="dots"></span><span class="price">€ 21</span></div><p data-en="Carnaroli rice, pure saffron threads, liquorice powder.">Carnaroli, pistilli di zafferano, polvere di liquirizia.</p></div>
-            <div class="menu-item"><div class="menu-item__row"><h4>Spaghettone ai gamberi rossi</h4><span class="dots"></span><span class="price">€ 28</span></div><p data-en="Mazara red prawns, datterino tomatoes, bisque.">Gambero rosso di Mazara, datterino, bisque.</p></div>
-            <div class="menu-item veg"><div class="menu-item__row"><h4>Cacio e pepe <span class="tag tag--veg" title="Vegetariano">V</span></h4><span class="dots"></span><span class="price">€ 18</span></div><p data-en="Hand-rolled tonnarelli, Pecorino Romano DOP, Sarawak pepper.">Tonnarelli tirati a mano, Pecorino Romano DOP, pepe di Sarawak.</p></div>
-            <div class="menu-item"><div class="menu-item__row"><h4>Ravioli del plin</h4><span class="dots"></span><span class="price">€ 20</span></div><p data-en="Three roasts, butter and sage, roast jus.">Tre arrosti, burro e salvia, fondo bruno.</p></div>
-          </div>
-
-          <div class="menu__panel" role="tabpanel" data-panel="secondi">
-            <div class="menu-item"><div class="menu-item__row"><h4>Tagliata di Fassona</h4><span class="dots"></span><span class="price">€ 34</span></div><p data-en="Aged 40 days, rosemary potatoes, Maldon salt.">Frollata 40 giorni, patate al rosmarino, sale Maldon.</p></div>
-            <div class="menu-item"><div class="menu-item__row"><h4>Cotoletta alla milanese <span class="tag tag--chef" title="Consigliato dallo chef">★</span></h4><span class="dots"></span><span class="price">€ 36</span></div><p data-en="Bone-in, clarified butter, rocket and cherry tomatoes.">Con l'osso, burro chiarificato, rucola e pomodorini.</p></div>
-            <div class="menu-item"><div class="menu-item__row"><h4>Salmone selvaggio scottato</h4><span class="dots"></span><span class="price">€ 29</span></div><p data-en="Garden vegetables, citrus beurre blanc.">Verdure dell'orto, beurre blanc agli agrumi.</p></div>
-            <div class="menu-item"><div class="menu-item__row"><h4>Pescato del giorno</h4><span class="dots"></span><span class="price">€ 7/hg</span></div><p data-en="Baked in salt crust or grilled, ask our staff.">In crosta di sale o alla griglia, chiedi al personale.</p></div>
-            <div class="menu-item veg"><div class="menu-item__row"><h4>Melanzana laccata <span class="tag tag--veg" title="Vegetariano">V</span></h4><span class="dots"></span><span class="price">€ 22</span></div><p data-en="Miso glaze, smoked yoghurt, toasted almonds.">Glassa al miso, yogurt affumicato, mandorle tostate.</p></div>
-            <div class="menu-item"><div class="menu-item__row"><h4>Ossobuco con risotto</h4><span class="dots"></span><span class="price">€ 34</span></div><p data-en="Braised veal shank, gremolata, saffron risotto.">Stinco brasato, gremolata, risotto giallo.</p></div>
-          </div>
-
-          <div class="menu__panel" role="tabpanel" data-panel="dolci">
-            <div class="menu-item veg"><div class="menu-item__row"><h4>Il nostro tiramisù <span class="tag tag--chef" title="Consigliato dallo chef">★</span></h4><span class="dots"></span><span class="price">€ 10</span></div><p data-en="Made to order, specialty coffee.">Montato al momento, caffè specialty.</p></div>
-            <div class="menu-item veg"><div class="menu-item__row"><h4>Panna cotta alle fragole <span class="tag tag--veg" title="Vegetariano">V</span></h4><span class="dots"></span><span class="price">€ 9</span></div><p data-en="Tahitian vanilla, strawberries and balsamic.">Vaniglia di Tahiti, fragole e aceto balsamico.</p></div>
-            <div class="menu-item veg"><div class="menu-item__row"><h4>Crostata di nonna Lucia <span class="tag tag--veg" title="Vegetariano">V</span></h4><span class="dots"></span><span class="price">€ 9</span></div><p data-en="Homemade apricot jam, Chantilly cream.">Confettura di albicocche fatta in casa, crema chantilly.</p></div>
-            <div class="menu-item veg"><div class="menu-item__row"><h4>Cannolo scomposto <span class="tag tag--veg" title="Vegetariano">V</span></h4><span class="dots"></span><span class="price">€ 11</span></div><p data-en="Sheep's ricotta, Bronte pistachio, candied orange.">Ricotta di pecora, pistacchio di Bronte, arancia candita.</p></div>
-          </div>
-
-          <div class="menu__panel" role="tabpanel" data-panel="vini">
-            <div class="menu-item veg"><div class="menu-item__row"><h4>Franciacorta Brut — Lombardia</h4><span class="dots"></span><span class="price">€ 9 / 48</span></div><p data-en="Glass / bottle. Fine perlage, notes of bread crust.">Calice / bottiglia. Perlage fine, note di crosta di pane.</p></div>
-            <div class="menu-item veg"><div class="menu-item__row"><h4>Vermentino di Gallura — Sardegna</h4><span class="dots"></span><span class="price">€ 8 / 38</span></div><p data-en="Sapid, Mediterranean, perfect with raw fish.">Sapido, mediterraneo, perfetto con i crudi.</p></div>
-            <div class="menu-item veg"><div class="menu-item__row"><h4>Barolo DOCG — Piemonte</h4><span class="dots"></span><span class="price">€ 16 / 85</span></div><p data-en="Nebbiolo, rose and tar, long finish.">Nebbiolo, rosa e catrame, finale lunghissimo.</p></div>
-            <div class="menu-item veg"><div class="menu-item__row"><h4>Brunello di Montalcino — Toscana</h4><span class="dots"></span><span class="price">€ 18 / 95</span></div><p data-en="Sangiovese, cherry, leather and spice.">Sangiovese, ciliegia, cuoio e spezie.</p></div>
-            <div class="menu-item veg"><div class="menu-item__row"><h4>Abbinamento del sommelier</h4><span class="dots"></span><span class="price">€ 55</span></div><p data-en="Four glasses chosen for your tasting menu.">Quattro calici scelti per il tuo percorso degustazione.</p></div>
-          </div>
-        </div>
-
-        <p class="menu__legend reveal"><span class="tag tag--veg">V</span> <span data-en="Vegetarian">Vegetariano</span> &nbsp;&nbsp; <span class="tag tag--chef">★</span> <span data-en="Chef's choice">Consigliato dallo chef</span> &nbsp;&nbsp; <span data-en="Cover charge € 4">Coperto € 4</span></p>
-      </div>
-    </section>
-
-    <!-- ============ CHEF + DEGUSTAZIONE ============ -->
-    <section class="section chef" id="chef">
-      <div class="container chef__grid">
-        <figure class="chef__img reveal"><img src="assets/img/chef.webp" alt="Lo chef Marco Valenti" loading="lazy" width="1200" height="1500"><figcaption>Marco Valenti — Executive Chef</figcaption></figure>
-        <div class="chef__text">
-          <p class="eyebrow reveal"><span class="line"></span><span data-en="The chef">Lo chef</span></p>
-          <blockquote class="chef__quote reveal" data-en="“Cooking is memory. I simply try to make you feel at home — a home where everything is a little more extraordinary.”">“Cucinare è memoria. Io provo solo a farvi sentire a casa — una casa dove tutto è un po' più straordinario.”</blockquote>
-          <p class="reveal" data-en="Trained in Paris and Tokyo, back in Milan to reinterpret the family's recipes. His tasting menu is a journey across Italy in seven stages.">Formatosi tra Parigi e Tokyo, è tornato a Milano per reinterpretare le ricette di famiglia. Il suo menù degustazione è un viaggio attraverso l'Italia in sette tappe.</p>
-
-          <div class="tasting reveal">
-            <div class="tasting__head">
-              <h3 data-en="Tasting menu">Menù degustazione</h3>
-              <span class="tasting__price">€ 95 <small data-en="per person">a persona</small></span>
+          <div class="menu__controls reveal">
+            <div class="tabs" role="tablist" aria-label="Categorie del menù">
+              <button role="tab" class="tab is-active" aria-selected="true" data-tab="antipasti" data-en="Starters">Antipasti</button>
+              <button role="tab" class="tab" aria-selected="false" data-tab="primi" data-en="First courses">Primi</button>
+              <button role="tab" class="tab" aria-selected="false" data-tab="secondi" data-en="Mains">Secondi</button>
+              <button role="tab" class="tab" aria-selected="false" data-tab="dolci" data-en="Desserts">Dolci</button>
+              <button role="tab" class="tab" aria-selected="false" data-tab="vini" data-en="Wines">Vini</button>
             </div>
-            <ol class="tasting__list">
-              <li data-en="Chef's welcome">Benvenuto dello chef</li>
-              <li data-en="Raw seafood, citrus and fennel">Crudo di mare, agrumi e finocchio</li>
-              <li data-en="Plin ravioli, butter and sage">Plin, burro e salvia</li>
-              <li data-en="Saffron risotto, liquorice">Risotto allo zafferano, liquirizia</li>
-              <li data-en="Fassona, potatoes and rosemary">Fassona, patate e rosmarino</li>
-              <li data-en="Pre-dessert">Predessert</li>
-              <li data-en="Our tiramisù">Il nostro tiramisù</li>
-            </ol>
-            <p class="tasting__note" data-en="Wine pairing + € 55 · For the whole table">Abbinamento vini + € 55 · Per tutto il tavolo</p>
-            <a href="#prenota" class="btn btn--gold js-book-tasting" data-en="Book the tasting">Prenota la degustazione</a>
+            <label class="toggle">
+              <input type="checkbox" id="veg-filter">
+              <span class="toggle__track"><span></span></span>
+              <span data-en="Vegetarian only">Solo vegetariani</span>
+            </label>
           </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- ============ CANTINA (parallax) ============ -->
-    <section class="cellar" aria-label="La cantina">
-      <div class="cellar__bg" data-parallax-bg style="background-image:url('assets/img/vino.webp')"></div>
-      <div class="cellar__veil"></div>
-      <div class="container cellar__content">
-        <p class="eyebrow reveal"><span class="line"></span><span data-en="The cellar">La cantina</span><span class="line"></span></p>
-        <h2 class="h2 reveal" data-en="Over 400 labels, <em>one story</em> for each glass.">Oltre 400 etichette, <em>una storia</em> per ogni calice.</h2>
-        <p class="reveal" data-en="Our sommelier will guide you among small producers, rare vintages and natural wines.">Il nostro sommelier ti guiderà tra piccoli produttori, annate rare e vini naturali.</p>
-      </div>
-    </section>
+          <div class="menu__panels" data-list="menu">
+            <div class="menu__panel is-active" role="tabpanel" data-panel="antipasti">
+              <div class="menu-item veg"><div class="menu-item__row"><h4>Burrata pugliese <span class="tag tag--veg" title="Vegetariano">V</span></h4><span class="dots"></span><span class="price">€ 16</span></div><p data-en="Heirloom tomatoes, basil oil, toasted focaccia.">Pomodori antichi, olio al basilico, focaccia tostata.</p></div>
+              <div class="menu-item"><div class="menu-item__row"><h4>Carpaccio di Fassona</h4><span class="dots"></span><span class="price">€ 18</span></div><p data-en="Hand-cut, 24-month Parmigiano, black truffle.">Battuto al coltello, Parmigiano 24 mesi, tartufo nero.</p></div>
+              <div class="menu-item"><div class="menu-item__row"><h4>Crudo di mare <span class="tag tag--chef" title="Consigliato dallo chef">★</span></h4><span class="dots"></span><span class="price">€ 26</span></div><p data-en="Red prawns, scampi, sea bass tartare, oyster (4 pcs).">Gambero rosso, scampi, tartare di spigola, ostrica (4 pz).</p></div>
+              <div class="menu-item veg"><div class="menu-item__row"><h4>Fiori di zucca fritti <span class="tag tag--veg" title="Vegetariano">V</span></h4><span class="dots"></span><span class="price">€ 14</span></div><p data-en="Stuffed with ricotta and lemon, light batter.">Ripieni di ricotta e limone, pastella leggera.</p></div>
+              <div class="menu-item"><div class="menu-item__row"><h4>Vitello tonnato</h4><span class="dots"></span><span class="price">€ 17</span></div><p data-en="Pink veal, traditional tuna sauce, caper flowers.">Vitello rosa, salsa tonnata all'antica, fiori di cappero.</p></div>
+              <div class="menu-item veg"><div class="menu-item__row"><h4>Parmigiana di melanzane <span class="tag tag--veg" title="Vegetariano">V</span></h4><span class="dots"></span><span class="price">€ 15</span></div><p data-en="Nonna Lucia's recipe, smoked scamorza.">La ricetta di nonna Lucia, scamorza affumicata.</p></div>
+            </div>
 
-    <!-- ============ GALLERIA ============ -->
-    <section class="section gallery" id="galleria">
-      <div class="container">
-        <div class="section__head section__head--center">
-          <p class="eyebrow reveal"><span class="line"></span><span data-en="Gallery">Galleria</span><span class="line"></span></p>
-          <h2 class="h2 reveal" data-en="An atmosphere <em>to live</em>">Un'atmosfera <em>da vivere</em></h2>
-        </div>
-        <div class="gallery__grid">
-          <a class="g-item g-item--tall reveal" href="assets/img/sala.webp"><img src="assets/img/sala.webp" alt="La sala del ristorante" loading="lazy"></a>
-          <a class="g-item reveal" href="assets/img/pizza.webp"><img src="assets/img/pizza.webp" alt="Pizza al forno a legna" loading="lazy"></a>
-          <a class="g-item reveal" href="assets/img/cocktail.webp"><img src="assets/img/cocktail.webp" alt="Cocktail della casa" loading="lazy"></a>
-          <a class="g-item g-item--wide reveal" href="assets/img/kitchen-fire.webp"><img src="assets/img/kitchen-fire.webp" alt="La cucina a vista" loading="lazy"></a>
-          <a class="g-item reveal" href="assets/img/pannacotta.webp"><img src="assets/img/pannacotta.webp" alt="Panna cotta alle fragole" loading="lazy"></a>
-          <a class="g-item g-item--tall reveal" href="assets/img/terrazza.webp"><img src="assets/img/terrazza.webp" alt="La terrazza" loading="lazy"></a>
-          <a class="g-item reveal" href="assets/img/crostata.webp"><img src="assets/img/crostata.webp" alt="Crostata della nonna" loading="lazy"></a>
-          <a class="g-item g-item--wide reveal" href="assets/img/tavolata.webp"><img src="assets/img/tavolata.webp" alt="Una tavolata tra amici" loading="lazy"></a>
-        </div>
-        <p class="gallery__follow reveal"><a class="js-instagram" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg> <span data-en="Follow us on Instagram">Seguici su Instagram</span></a></p>
-      </div>
-    </section>
+            <div class="menu__panel" role="tabpanel" data-panel="primi">
+              <div class="menu-item"><div class="menu-item__row"><h4>Tagliatelle al ragù di nonna Lucia <span class="tag tag--chef" title="Consigliato dallo chef">★</span></h4><span class="dots"></span><span class="price">€ 22</span></div><p data-en="Eight-hour ragù, 36-month Parmigiano.">Ragù cotto otto ore, Parmigiano 36 mesi.</p></div>
+              <div class="menu-item"><div class="menu-item__row"><h4>Linguine alle vongole</h4><span class="dots"></span><span class="price">€ 24</span></div><p data-en="Goro clams, garlic confit, Amalfi lemon.">Vongole veraci di Goro, aglio confit, limone di Amalfi.</p></div>
+              <div class="menu-item veg"><div class="menu-item__row"><h4>Risotto allo zafferano <span class="tag tag--veg" title="Vegetariano">V</span></h4><span class="dots"></span><span class="price">€ 21</span></div><p data-en="Carnaroli rice, pure saffron threads, liquorice powder.">Carnaroli, pistilli di zafferano, polvere di liquirizia.</p></div>
+              <div class="menu-item"><div class="menu-item__row"><h4>Spaghettone ai gamberi rossi</h4><span class="dots"></span><span class="price">€ 28</span></div><p data-en="Mazara red prawns, datterino tomatoes, bisque.">Gambero rosso di Mazara, datterino, bisque.</p></div>
+              <div class="menu-item veg"><div class="menu-item__row"><h4>Cacio e pepe <span class="tag tag--veg" title="Vegetariano">V</span></h4><span class="dots"></span><span class="price">€ 18</span></div><p data-en="Hand-rolled tonnarelli, Pecorino Romano DOP, Sarawak pepper.">Tonnarelli tirati a mano, Pecorino Romano DOP, pepe di Sarawak.</p></div>
+              <div class="menu-item"><div class="menu-item__row"><h4>Ravioli del plin</h4><span class="dots"></span><span class="price">€ 20</span></div><p data-en="Three roasts, butter and sage, roast jus.">Tre arrosti, burro e salvia, fondo bruno.</p></div>
+            </div>
 
-    <!-- ============ RECENSIONI ============ -->
-    <section class="section reviews" id="recensioni">
-      <div class="container">
-        <div class="section__head section__head--center">
-          <p class="eyebrow reveal"><span class="line"></span><span data-en="They say about us">Dicono di noi</span><span class="line"></span></p>
-          <h2 class="h2 reveal"><span class="big-score">4,9</span> <span class="stars">★★★★★</span></h2>
-          <p class="section__lead reveal" data-en="Average rating from over 1,280 verified reviews">Media su oltre 1.280 recensioni verificate</p>
-        </div>
+            <div class="menu__panel" role="tabpanel" data-panel="secondi">
+              <div class="menu-item"><div class="menu-item__row"><h4>Tagliata di Fassona</h4><span class="dots"></span><span class="price">€ 34</span></div><p data-en="Aged 40 days, rosemary potatoes, Maldon salt.">Frollata 40 giorni, patate al rosmarino, sale Maldon.</p></div>
+              <div class="menu-item"><div class="menu-item__row"><h4>Cotoletta alla milanese <span class="tag tag--chef" title="Consigliato dallo chef">★</span></h4><span class="dots"></span><span class="price">€ 36</span></div><p data-en="Bone-in, clarified butter, rocket and cherry tomatoes.">Con l'osso, burro chiarificato, rucola e pomodorini.</p></div>
+              <div class="menu-item"><div class="menu-item__row"><h4>Salmone selvaggio scottato</h4><span class="dots"></span><span class="price">€ 29</span></div><p data-en="Garden vegetables, citrus beurre blanc.">Verdure dell'orto, beurre blanc agli agrumi.</p></div>
+              <div class="menu-item"><div class="menu-item__row"><h4>Pescato del giorno</h4><span class="dots"></span><span class="price">€ 7/hg</span></div><p data-en="Baked in salt crust or grilled, ask our staff.">In crosta di sale o alla griglia, chiedi al personale.</p></div>
+              <div class="menu-item veg"><div class="menu-item__row"><h4>Melanzana laccata <span class="tag tag--veg" title="Vegetariano">V</span></h4><span class="dots"></span><span class="price">€ 22</span></div><p data-en="Miso glaze, smoked yoghurt, toasted almonds.">Glassa al miso, yogurt affumicato, mandorle tostate.</p></div>
+              <div class="menu-item"><div class="menu-item__row"><h4>Ossobuco con risotto</h4><span class="dots"></span><span class="price">€ 34</span></div><p data-en="Braised veal shank, gremolata, saffron risotto.">Stinco brasato, gremolata, risotto giallo.</p></div>
+            </div>
 
-        <div class="reviews__slider reveal">
-          <div class="reviews__track" data-list="reviews">
-            <figure class="review">
-              <div class="stars">★★★★★</div>
-              <blockquote data-en="“The best tagliatelle I've eaten outside my grandmother's house. Impeccable service, and the sommelier found us the perfect wine.”">“Le tagliatelle più buone mangiate fuori da casa di mia nonna. Servizio impeccabile, e il sommelier ci ha trovato il vino perfetto.”</blockquote>
-              <figcaption><span class="avatar">GR</span><span><strong>Giulia R.</strong><small data-en="Anniversary dinner">Cena di anniversario</small></span></figcaption>
-            </figure>
-            <figure class="review">
-              <div class="stars">★★★★★</div>
-              <blockquote data-en="“The tasting menu is a real journey. Every course explained with passion. We'll be back for sure.”">“Il menù degustazione è un vero viaggio. Ogni portata raccontata con passione. Torneremo sicuramente.”</blockquote>
-              <figcaption><span class="avatar">AM</span><span><strong>Andrea M.</strong><small data-en="Tasting menu">Menù degustazione</small></span></figcaption>
-            </figure>
-            <figure class="review">
-              <div class="stars">★★★★★</div>
-              <blockquote data-en="“We organised a company dinner for 30 people: flawless from start to finish. The team took care of everything.”">“Abbiamo organizzato una cena aziendale per 30 persone: tutto perfetto dall'inizio alla fine. Il team ha pensato a ogni dettaglio.”</blockquote>
-              <figcaption><span class="avatar">SL</span><span><strong>Stefano L.</strong><small data-en="Corporate event">Evento aziendale</small></span></figcaption>
-            </figure>
-            <figure class="review">
-              <div class="stars">★★★★★</div>
-              <blockquote data-en="“Magical atmosphere, warm staff and a tiramisù I still dream about. The best restaurant in the area.”">“Atmosfera magica, staff caloroso e un tiramisù che sogno ancora. Il miglior ristorante della zona.”</blockquote>
-              <figcaption><span class="avatar">EC</span><span><strong>Elena C.</strong><small data-en="Dinner for two">Cena per due</small></span></figcaption>
-            </figure>
+            <div class="menu__panel" role="tabpanel" data-panel="dolci">
+              <div class="menu-item veg"><div class="menu-item__row"><h4>Il nostro tiramisù <span class="tag tag--chef" title="Consigliato dallo chef">★</span></h4><span class="dots"></span><span class="price">€ 10</span></div><p data-en="Made to order, specialty coffee.">Montato al momento, caffè specialty.</p></div>
+              <div class="menu-item veg"><div class="menu-item__row"><h4>Panna cotta alle fragole <span class="tag tag--veg" title="Vegetariano">V</span></h4><span class="dots"></span><span class="price">€ 9</span></div><p data-en="Tahitian vanilla, strawberries and balsamic.">Vaniglia di Tahiti, fragole e aceto balsamico.</p></div>
+              <div class="menu-item veg"><div class="menu-item__row"><h4>Crostata di nonna Lucia <span class="tag tag--veg" title="Vegetariano">V</span></h4><span class="dots"></span><span class="price">€ 9</span></div><p data-en="Homemade apricot jam, Chantilly cream.">Confettura di albicocche fatta in casa, crema chantilly.</p></div>
+              <div class="menu-item veg"><div class="menu-item__row"><h4>Cannolo scomposto <span class="tag tag--veg" title="Vegetariano">V</span></h4><span class="dots"></span><span class="price">€ 11</span></div><p data-en="Sheep's ricotta, Bronte pistachio, candied orange.">Ricotta di pecora, pistacchio di Bronte, arancia candita.</p></div>
+            </div>
+
+            <div class="menu__panel" role="tabpanel" data-panel="vini">
+              <div class="menu-item veg"><div class="menu-item__row"><h4>Franciacorta Brut — Lombardia</h4><span class="dots"></span><span class="price">€ 9 / 48</span></div><p data-en="Glass / bottle. Fine perlage, notes of bread crust.">Calice / bottiglia. Perlage fine, note di crosta di pane.</p></div>
+              <div class="menu-item veg"><div class="menu-item__row"><h4>Vermentino di Gallura — Sardegna</h4><span class="dots"></span><span class="price">€ 8 / 38</span></div><p data-en="Sapid, Mediterranean, perfect with raw fish.">Sapido, mediterraneo, perfetto con i crudi.</p></div>
+              <div class="menu-item veg"><div class="menu-item__row"><h4>Barolo DOCG — Piemonte</h4><span class="dots"></span><span class="price">€ 16 / 85</span></div><p data-en="Nebbiolo, rose and tar, long finish.">Nebbiolo, rosa e catrame, finale lunghissimo.</p></div>
+              <div class="menu-item veg"><div class="menu-item__row"><h4>Brunello di Montalcino — Toscana</h4><span class="dots"></span><span class="price">€ 18 / 95</span></div><p data-en="Sangiovese, cherry, leather and spice.">Sangiovese, ciliegia, cuoio e spezie.</p></div>
+              <div class="menu-item veg"><div class="menu-item__row"><h4>Abbinamento del sommelier</h4><span class="dots"></span><span class="price">€ 55</span></div><p data-en="Four glasses chosen for your tasting menu.">Quattro calici scelti per il tuo percorso degustazione.</p></div>
+            </div>
           </div>
-          <div class="reviews__dots" aria-hidden="true"></div>
-        </div>
-      </div>
-    </section>
 
-    <!-- ============ EVENTI ============ -->
-    <section class="section events" id="eventi">
-      <div class="container">
-        <div class="section__head">
+          <p class="menu__legend reveal"><span class="tag tag--veg">V</span> <span data-en="Vegetarian">Vegetariano</span> &nbsp;&nbsp; <span class="tag tag--chef">★</span> <span data-en="Chef's choice">Consigliato dallo chef</span> &nbsp;&nbsp; <span data-en="Cover charge € 4">Coperto € 4</span></p>
+        </div>
+      </section>
+
+      <!-- ============ PIATTI FIRMA ============ -->
+      <section class="section signature-dishes" id="piatti">
+        <div class="container section__head">
           <div>
-            <p class="eyebrow reveal"><span class="line"></span><span data-en="Events & private dining">Eventi & cene private</span></p>
-            <h2 class="h2 reveal" data-en="Your moments, <em>our care.</em>">I tuoi momenti, <em>la nostra cura.</em></h2>
+            <p class="eyebrow reveal"><span class="line"></span><span data-en="Signature dishes">Piatti firma</span></p>
+            <h2 class="h2 reveal" data-en="The dishes they <em>come back</em> for.">I piatti per cui <em>si ritorna.</em></h2>
+          </div>
+          <div class="slider-nav reveal">
+            <button type="button" class="slider-btn" data-dir="-1" aria-label="Precedente"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+            <button type="button" class="slider-btn" data-dir="1" aria-label="Successivo"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
           </div>
         </div>
-        <div class="events__grid">
-          <article class="event-card reveal">
-            <img src="assets/img/terrazza.webp" alt="Terrazza per eventi privati" loading="lazy">
-            <div class="event-card__body">
-              <span class="event-card__meta" data-en="Up to 24 guests">Fino a 24 ospiti</span>
-              <h3 data-en="Private room">Sala privata</h3>
-              <p data-en="Birthdays, anniversaries, proposals. A dedicated space and a menu designed for you.">Compleanni, anniversari, proposte di matrimonio. Uno spazio riservato e un menù pensato per te.</p>
-              <a href="#prenota" class="link-arrow js-event-link" data-occasion="Sala privata" data-en="Request info">Richiedi informazioni</a>
-            </div>
+
+        <div class="dishes" tabindex="0" aria-label="Piatti firma, scorri orizzontalmente">
+          <article class="dish reveal">
+            <div class="dish__img"><img src="assets/img/vongole.webp" alt="Linguine alle vongole veraci" loading="lazy" width="1000" height="1000"></div>
+            <div class="dish__body"><span class="dish__num">01</span><h3>Linguine alle vongole</h3><p data-en="Clams from Goro, garlic confit, lemon zest from Amalfi.">Vongole veraci di Goro, aglio confit, scorza di limone di Amalfi.</p><span class="dish__price">€ 24</span></div>
           </article>
-          <article class="event-card reveal">
-            <img src="assets/img/tavolata.webp" alt="Cena aziendale" loading="lazy">
-            <div class="event-card__body">
-              <span class="event-card__meta" data-en="Up to 80 guests">Fino a 80 ospiti</span>
-              <h3 data-en="Corporate events">Eventi aziendali</h3>
-              <p data-en="Business dinners, product launches, exclusive use of the restaurant.">Cene di lavoro, presentazioni, esclusiva del locale. Preventivo in 24 ore.</p>
-              <a href="#prenota" class="link-arrow js-event-link" data-occasion="Evento aziendale" data-en="Request a quote">Richiedi un preventivo</a>
-            </div>
+          <article class="dish reveal">
+            <div class="dish__img"><img src="assets/img/ragu.webp" alt="Tagliatelle al ragù bianco" loading="lazy" width="1000" height="1000"></div>
+            <div class="dish__body"><span class="dish__num">02</span><h3>Tagliatelle al ragù di nonna Lucia</h3><p data-en="Cooked for eight hours, as on Sundays. Parmigiano aged 36 months.">Cotto per otto ore, come la domenica. Parmigiano 36 mesi.</p><span class="dish__price">€ 22</span></div>
           </article>
-          <article class="event-card reveal">
-            <img src="assets/img/cocktail.webp" alt="Gift card" loading="lazy">
-            <div class="event-card__body">
-              <span class="event-card__meta" data-en="From € 50">Da € 50</span>
-              <h3>Gift card</h3>
-              <p data-en="Give an unforgettable evening. Valid 12 months on the whole menu.">Regala una serata indimenticabile. Valida 12 mesi su tutto il menù.</p>
-              <a href="#prenota" class="link-arrow js-event-link" data-occasion="Gift card" data-en="Give it as a gift">Regalala ora</a>
-            </div>
+          <article class="dish reveal">
+            <div class="dish__img"><img src="assets/img/gamberi.webp" alt="Spaghettoni ai gamberi rossi" loading="lazy" width="1000" height="1000"></div>
+            <div class="dish__body"><span class="dish__num">03</span><h3>Spaghettone ai gamberi rossi</h3><p data-en="Red prawns from Mazara, datterino tomatoes, bisque reduction.">Gambero rosso di Mazara, datterino, riduzione di bisque.</p><span class="dish__price">€ 28</span></div>
+          </article>
+          <article class="dish reveal">
+            <div class="dish__img"><img src="assets/img/tagliata.webp" alt="Tagliata di manzo" loading="lazy" width="1000" height="1000"></div>
+            <div class="dish__body"><span class="dish__num">04</span><h3>Tagliata di Fassona</h3><p data-en="Piedmontese beef aged 40 days, rosemary potatoes, Maldon salt.">Fassona piemontese frollata 40 giorni, patate al rosmarino, sale Maldon.</p><span class="dish__price">€ 34</span></div>
+          </article>
+          <article class="dish reveal">
+            <div class="dish__img"><img src="assets/img/tiramisu.webp" alt="Tiramisù della casa" loading="lazy" width="1000" height="1000"></div>
+            <div class="dish__body"><span class="dish__num">05</span><h3>Il nostro tiramisù</h3><p data-en="Made to order, specialty coffee, Criollo cocoa.">Montato al momento, caffè specialty, cacao Criollo.</p><span class="dish__price">€ 10</span></div>
+          </article>
+          <article class="dish reveal">
+            <div class="dish__img"><img src="assets/img/salmone.webp" alt="Salmone scottato con verdure" loading="lazy" width="1000" height="1000"></div>
+            <div class="dish__body"><span class="dish__num">06</span><h3>Salmone selvaggio scottato</h3><p data-en="Seasonal vegetables, citrus beurre blanc.">Verdure dell'orto, beurre blanc agli agrumi.</p><span class="dish__price">€ 29</span></div>
           </article>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
 
-    <!-- ============ PRENOTAZIONE ============ -->
-    <section class="section booking" id="prenota">
-      <div class="booking__bg" style="background-image:url('assets/img/hero-2.webp')"></div>
-      <div class="container booking__grid">
-        <div class="booking__intro">
-          <p class="eyebrow reveal"><span class="line"></span><span data-en="Reservations">Prenotazioni</span></p>
-          <h2 class="h2 reveal" data-en="Your table <em>is waiting.</em>">Il tuo tavolo <em>ti aspetta.</em></h2>
-          <p class="reveal" data-en="Book in 30 seconds. We'll confirm by message within a few minutes.">Prenota in 30 secondi. Ti confermiamo con un messaggio entro pochi minuti.</p>
-          <ul class="booking__perks reveal">
-            <li data-en="Instant confirmation">Conferma immediata</li>
-            <li data-en="Free cancellation up to 24h before">Cancellazione gratuita fino a 24h prima</li>
-            <li data-en="Tell us about allergies and special occasions">Segnalaci allergie e occasioni speciali</li>
-          </ul>
-          <p class="booking__call reveal"><span data-en="Prefer to talk to us?">Preferisci parlarci?</span> <a class="js-phone-link" href="#"><span class="js-phone"></span></a></p>
-        </div>
+    <!-- ################ PAGINA: PRENOTA ################ -->
+    <div class="page" data-page="prenota">
+      <!-- ============ PRENOTAZIONE ============ -->
+      <section class="section booking" id="prenota">
+        <div class="booking__bg" style="background-image:url('assets/img/hero-2.webp')"></div>
+        <div class="container booking__grid">
+          <div class="booking__intro">
+            <p class="eyebrow reveal"><span class="line"></span><span data-en="Reservations">Prenotazioni</span></p>
+            <h2 class="h2 reveal" data-en="Your table <em>is waiting.</em>">Il tuo tavolo <em>ti aspetta.</em></h2>
+            <p class="reveal" data-en="Book in 30 seconds. We'll confirm by message within a few minutes.">Prenota in 30 secondi. Ti confermiamo con un messaggio entro pochi minuti.</p>
+            <ul class="booking__perks reveal">
+              <li data-en="Instant confirmation">Conferma immediata</li>
+              <li data-en="Free cancellation up to 24h before">Cancellazione gratuita fino a 24h prima</li>
+              <li data-en="Tell us about allergies and special occasions">Segnalaci allergie e occasioni speciali</li>
+            </ul>
+            <p class="booking__call reveal"><span data-en="Prefer to talk to us?">Preferisci parlarci?</span> <a class="js-phone-link" href="#"><span class="js-phone"></span></a></p>
+          </div>
 
-        <div class="booking__card reveal" aria-live="polite">
-          <form class="bform" novalidate>
-            <div class="bform__progress"><span></span></div>
+          <div class="booking__card reveal" aria-live="polite">
+            <form class="bform" novalidate>
+              <div class="bform__progress"><span></span></div>
 
-            <!-- Step 1: ospiti -->
-            <fieldset class="bstep is-active" data-step="1">
-              <legend data-en="How many are you?">Quanti siete?</legend>
-              <div class="guests"></div>
-              <p class="bform__hint js-large-group" hidden><span data-en="For larger groups, call us:">Per gruppi più numerosi chiamaci:</span> <a class="js-phone-link" href="#"><span class="js-phone"></span></a></p>
-            </fieldset>
+              <!-- Step 1: ospiti -->
+              <fieldset class="bstep is-active" data-step="1">
+                <legend data-en="How many are you?">Quanti siete?</legend>
+                <div class="guests"></div>
+                <p class="bform__hint js-large-group" hidden><span data-en="For larger groups, call us:">Per gruppi più numerosi chiamaci:</span> <a class="js-phone-link" href="#"><span class="js-phone"></span></a></p>
+              </fieldset>
 
-            <!-- Step 2: data -->
-            <fieldset class="bstep" data-step="2">
-              <legend data-en="Which day?">Che giorno?</legend>
-              <div class="cal">
-                <div class="cal__head">
-                  <button type="button" class="cal__nav" data-cal="-1" aria-label="Mese precedente"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
-                  <strong class="cal__title"></strong>
-                  <button type="button" class="cal__nav" data-cal="1" aria-label="Mese successivo"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+              <!-- Step 2: data -->
+              <fieldset class="bstep" data-step="2">
+                <legend data-en="Which day?">Che giorno?</legend>
+                <div class="cal">
+                  <div class="cal__head">
+                    <button type="button" class="cal__nav" data-cal="-1" aria-label="Mese precedente"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+                    <strong class="cal__title"></strong>
+                    <button type="button" class="cal__nav" data-cal="1" aria-label="Mese successivo"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+                  </div>
+                  <div class="cal__week"></div>
+                  <div class="cal__days"></div>
                 </div>
-                <div class="cal__week"></div>
-                <div class="cal__days"></div>
+              </fieldset>
+
+              <!-- Step 3: orario -->
+              <fieldset class="bstep" data-step="3">
+                <legend data-en="What time?">A che ora?</legend>
+                <div class="slots"></div>
+              </fieldset>
+
+              <!-- Step 4: dati -->
+              <fieldset class="bstep" data-step="4">
+                <legend data-en="Last details">Ultimi dettagli</legend>
+                <div class="bsummary"></div>
+                <div class="field"><input id="b-name" name="name" type="text" autocomplete="name" required placeholder=" "><label for="b-name" data-en="Full name">Nome e cognome</label></div>
+                <div class="field"><input id="b-phone" name="phone" type="tel" autocomplete="tel" required placeholder=" "><label for="b-phone" data-en="Phone">Telefono</label></div>
+                <div class="field"><input id="b-email" name="email" type="email" autocomplete="email" placeholder=" "><label for="b-email" data-en="Email (optional)">Email (facoltativa)</label></div>
+                <div class="field"><select id="b-occasion" name="occasion">
+                  <option value="" data-en="No special occasion">Nessuna occasione speciale</option>
+                  <option value="Compleanno" data-en="Birthday">Compleanno</option>
+                  <option value="Anniversario" data-en="Anniversary">Anniversario</option>
+                  <option value="Cena di lavoro" data-en="Business dinner">Cena di lavoro</option>
+                  <option value="Menù degustazione" data-en="Tasting menu">Menù degustazione</option>
+                  <option value="Sala privata" data-en="Private room">Sala privata</option>
+                  <option value="Evento aziendale" data-en="Corporate event">Evento aziendale</option>
+                  <option value="Gift card">Gift card</option>
+                </select><label for="b-occasion" class="is-fixed" data-en="Occasion">Occasione</label></div>
+                <div class="field"><textarea id="b-notes" name="notes" rows="2" placeholder=" "></textarea><label for="b-notes" data-en="Allergies or requests">Allergie o richieste</label></div>
+                <label class="check"><input type="checkbox" id="b-privacy" required><span data-en="I agree to the processing of my data to manage the reservation.">Acconsento al trattamento dei dati per gestire la prenotazione.</span></label>
+                <p class="bform__error" hidden></p>
+                <button type="submit" class="btn btn--gold btn--block"><span data-en="Confirm reservation">Conferma prenotazione</span></button>
+              </fieldset>
+
+              <!-- Step 5: fatto -->
+              <div class="bstep bdone" data-step="5">
+                <svg class="bdone__check" viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="24"/><path d="M15 27l7 7 15-16"/></svg>
+                <h3 data-en="Almost done!">Quasi fatto!</h3>
+                <p class="bdone__text" data-en="Send us the request with one tap: we'll reply within a few minutes to confirm.">Inviaci la richiesta con un tocco: ti rispondiamo entro pochi minuti per confermare.</p>
+                <div class="bsummary"></div>
+                <div class="bdone__actions">
+                  <a class="btn btn--gold btn--block js-wa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 0 1-11.8 7L4 20l1.1-4A8 8 0 1 1 20 12z"/></svg><span data-en="Send via WhatsApp">Invia su WhatsApp</span></a>
+                  <a class="btn btn--ghost btn--block js-mail" href="#" data-en="Send via email">Invia via email</a>
+                </div>
+                <button type="button" class="bform__restart" data-en="New reservation">Nuova prenotazione</button>
               </div>
-            </fieldset>
 
-            <!-- Step 3: orario -->
-            <fieldset class="bstep" data-step="3">
-              <legend data-en="What time?">A che ora?</legend>
-              <div class="slots"></div>
-            </fieldset>
-
-            <!-- Step 4: dati -->
-            <fieldset class="bstep" data-step="4">
-              <legend data-en="Last details">Ultimi dettagli</legend>
-              <div class="bsummary"></div>
-              <div class="field"><input id="b-name" name="name" type="text" autocomplete="name" required placeholder=" "><label for="b-name" data-en="Full name">Nome e cognome</label></div>
-              <div class="field"><input id="b-phone" name="phone" type="tel" autocomplete="tel" required placeholder=" "><label for="b-phone" data-en="Phone">Telefono</label></div>
-              <div class="field"><input id="b-email" name="email" type="email" autocomplete="email" placeholder=" "><label for="b-email" data-en="Email (optional)">Email (facoltativa)</label></div>
-              <div class="field"><select id="b-occasion" name="occasion">
-                <option value="" data-en="No special occasion">Nessuna occasione speciale</option>
-                <option value="Compleanno" data-en="Birthday">Compleanno</option>
-                <option value="Anniversario" data-en="Anniversary">Anniversario</option>
-                <option value="Cena di lavoro" data-en="Business dinner">Cena di lavoro</option>
-                <option value="Menù degustazione" data-en="Tasting menu">Menù degustazione</option>
-                <option value="Sala privata" data-en="Private room">Sala privata</option>
-                <option value="Evento aziendale" data-en="Corporate event">Evento aziendale</option>
-                <option value="Gift card">Gift card</option>
-              </select><label for="b-occasion" class="is-fixed" data-en="Occasion">Occasione</label></div>
-              <div class="field"><textarea id="b-notes" name="notes" rows="2" placeholder=" "></textarea><label for="b-notes" data-en="Allergies or requests">Allergie o richieste</label></div>
-              <label class="check"><input type="checkbox" id="b-privacy" required><span data-en="I agree to the processing of my data to manage the reservation.">Acconsento al trattamento dei dati per gestire la prenotazione.</span></label>
-              <p class="bform__error" hidden></p>
-              <button type="submit" class="btn btn--gold btn--block"><span data-en="Confirm reservation">Conferma prenotazione</span></button>
-            </fieldset>
-
-            <!-- Step 5: fatto -->
-            <div class="bstep bdone" data-step="5">
-              <svg class="bdone__check" viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="24"/><path d="M15 27l7 7 15-16"/></svg>
-              <h3 data-en="Almost done!">Quasi fatto!</h3>
-              <p class="bdone__text" data-en="Send us the request with one tap: we'll reply within a few minutes to confirm.">Inviaci la richiesta con un tocco: ti rispondiamo entro pochi minuti per confermare.</p>
-              <div class="bsummary"></div>
-              <div class="bdone__actions">
-                <a class="btn btn--gold btn--block js-wa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 0 1-11.8 7L4 20l1.1-4A8 8 0 1 1 20 12z"/></svg><span data-en="Send via WhatsApp">Invia su WhatsApp</span></a>
-                <a class="btn btn--ghost btn--block js-mail" href="#" data-en="Send via email">Invia via email</a>
+              <div class="bform__nav">
+                <button type="button" class="bform__back" data-en="← Back">← Indietro</button>
+                <span class="bform__stepinfo"></span>
               </div>
-              <button type="button" class="bform__restart" data-en="New reservation">Nuova prenotazione</button>
-            </div>
-
-            <div class="bform__nav">
-              <button type="button" class="bform__back" data-en="← Back">← Indietro</button>
-              <span class="bform__stepinfo"></span>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
 
-    <!-- ============ CONTATTI ============ -->
-    <section class="section contact" id="contatti">
-      <div class="container contact__grid">
-        <div class="contact__info">
-          <p class="eyebrow reveal"><span class="line"></span><span data-en="Where we are">Dove siamo</span></p>
-          <h2 class="h2 reveal" data-en="Come and <em>find us.</em>">Vieni a <em>trovarci.</em></h2>
-
-          <div class="contact__blocks">
-            <div class="reveal">
-              <h4 data-en="Address">Indirizzo</h4>
-              <p class="js-address"></p>
-              <a class="link-arrow js-directions" href="#" target="_blank" rel="noopener" data-en="Get directions">Indicazioni stradali</a>
-            </div>
-            <div class="reveal">
-              <h4 data-en="Contacts">Contatti</h4>
-              <p><a class="js-phone-link" href="#"><span class="js-phone"></span></a><br><a class="js-email-link" href="#"><span class="js-email"></span></a></p>
+    <!-- ################ PAGINA: STORIA ################ -->
+    <div class="page" data-page="storia">
+      <!-- ============ STORIA ============ -->
+      <section class="section story" id="storia">
+        <div class="container story__grid">
+          <div class="story__media">
+            <figure class="story__img story__img--main reveal"><img src="assets/img/pasta-fresca.webp" alt="Pasta fresca e pomodorini" loading="lazy" width="1200" height="800"></figure>
+            <figure class="story__img story__img--small reveal" data-parallax="-0.08"><img src="assets/img/hands.webp" alt="Lo chef al lavoro" loading="lazy" width="1000" height="1250"></figure>
+            <div class="story__badge reveal">
+              <svg viewBox="0 0 200 200" aria-hidden="true"><defs><path id="circ" d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/></defs><text><textPath href="#circ">· DAL 1998 · CUCINA D'AUTORE · MILANO </textPath></text></svg>
+              <span>25+</span>
             </div>
           </div>
 
-          <div class="hours reveal">
-            <h4 data-en="Opening hours">Orari di apertura</h4>
-            <table class="hours__table"><tbody></tbody></table>
+          <div class="story__text">
+            <p class="eyebrow reveal"><span class="line"></span><span data-en="Our story">La nostra storia</span></p>
+            <h2 class="h2 reveal" data-en="Three generations, <em>one single</em> table.">Tre generazioni, <em>un'unica</em> tavola.</h2>
+            <p class="reveal" data-en="Aurea was born in 1998 from the dream of Nonna Lucia: to bring the flavours of Sunday to the heart of Milan. Today her grandson, chef Marco Valenti, carries on that recipe with the same respect — and a touch of daring.">Aurea nasce nel 1998 dal sogno di nonna Lucia: portare i sapori della domenica nel cuore di Milano. Oggi il nipote, lo chef Marco Valenti, porta avanti quella ricetta con lo stesso rispetto — e un pizzico di audacia.</p>
+            <p class="reveal" data-en="Every morning we choose fish at the market, flour from small mills and vegetables from farmers we know by name. Nothing frozen, nothing by chance.">Ogni mattina scegliamo il pesce al mercato, le farine da piccoli mulini e le verdure da contadini che conosciamo per nome. Niente di surgelato, niente lasciato al caso.</p>
+
+            <div class="counters reveal">
+              <div><strong class="count" data-to="25">0</strong><span data-en="years of passion">anni di passione</span></div>
+              <div><strong class="count" data-to="400" data-suffix="+">0</strong><span data-en="wine labels">etichette in cantina</span></div>
+              <div><strong class="count" data-to="100" data-suffix="%">0</strong><span data-en="handmade pasta">pasta fatta a mano</span></div>
+            </div>
+
+            <p class="signature reveal">Marco Valenti</p>
           </div>
         </div>
+      </section>
 
-        <div class="contact__map reveal">
-          <iframe class="js-map" title="Mappa" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <!-- ============ CHEF + DEGUSTAZIONE ============ -->
+      <section class="section chef" id="chef">
+        <div class="container chef__grid">
+          <figure class="chef__img reveal"><img src="assets/img/chef.webp" alt="Lo chef Marco Valenti" loading="lazy" width="1200" height="1500"><figcaption>Marco Valenti — Executive Chef</figcaption></figure>
+          <div class="chef__text">
+            <p class="eyebrow reveal"><span class="line"></span><span data-en="The chef">Lo chef</span></p>
+            <blockquote class="chef__quote reveal" data-en="“Cooking is memory. I simply try to make you feel at home — a home where everything is a little more extraordinary.”">“Cucinare è memoria. Io provo solo a farvi sentire a casa — una casa dove tutto è un po' più straordinario.”</blockquote>
+            <p class="reveal" data-en="Trained in Paris and Tokyo, back in Milan to reinterpret the family's recipes. His tasting menu is a journey across Italy in seven stages.">Formatosi tra Parigi e Tokyo, è tornato a Milano per reinterpretare le ricette di famiglia. Il suo menù degustazione è un viaggio attraverso l'Italia in sette tappe.</p>
+
+            <div class="tasting reveal">
+              <div class="tasting__head">
+                <h3 data-en="Tasting menu">Menù degustazione</h3>
+                <span class="tasting__price">€ 95 <small data-en="per person">a persona</small></span>
+              </div>
+              <ol class="tasting__list">
+                <li data-en="Chef's welcome">Benvenuto dello chef</li>
+                <li data-en="Raw seafood, citrus and fennel">Crudo di mare, agrumi e finocchio</li>
+                <li data-en="Plin ravioli, butter and sage">Plin, burro e salvia</li>
+                <li data-en="Saffron risotto, liquorice">Risotto allo zafferano, liquirizia</li>
+                <li data-en="Fassona, potatoes and rosemary">Fassona, patate e rosmarino</li>
+                <li data-en="Pre-dessert">Predessert</li>
+                <li data-en="Our tiramisù">Il nostro tiramisù</li>
+              </ol>
+              <p class="tasting__note" data-en="Wine pairing + € 55 · For the whole table">Abbinamento vini + € 55 · Per tutto il tavolo</p>
+              <a href="#prenota" class="btn btn--gold js-book-tasting" data-en="Book the tasting">Prenota la degustazione</a>
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <!-- ============ CANTINA (parallax) ============ -->
+      <section class="cellar" aria-label="La cantina">
+        <div class="cellar__bg" data-parallax-bg style="background-image:url('assets/img/vino.webp')"></div>
+        <div class="cellar__veil"></div>
+        <div class="container cellar__content">
+          <p class="eyebrow reveal"><span class="line"></span><span data-en="The cellar">La cantina</span><span class="line"></span></p>
+          <h2 class="h2 reveal" data-en="Over 400 labels, <em>one story</em> for each glass.">Oltre 400 etichette, <em>una storia</em> per ogni calice.</h2>
+          <p class="reveal" data-en="Our sommelier will guide you among small producers, rare vintages and natural wines.">Il nostro sommelier ti guiderà tra piccoli produttori, annate rare e vini naturali.</p>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ################ PAGINA: GALLERIA ################ -->
+    <div class="page" data-page="galleria">
+      <!-- ============ GALLERIA ============ -->
+      <section class="section gallery" id="galleria">
+        <div class="container">
+          <div class="section__head section__head--center">
+            <p class="eyebrow reveal"><span class="line"></span><span data-en="Gallery">Galleria</span><span class="line"></span></p>
+            <h2 class="h2 reveal" data-en="An atmosphere <em>to live</em>">Un'atmosfera <em>da vivere</em></h2>
+          </div>
+          <div class="gallery__grid">
+            <a class="g-item g-item--tall reveal" href="assets/img/sala.webp"><img src="assets/img/sala.webp" alt="La sala del ristorante" loading="lazy"></a>
+            <a class="g-item reveal" href="assets/img/pizza.webp"><img src="assets/img/pizza.webp" alt="Pizza al forno a legna" loading="lazy"></a>
+            <a class="g-item reveal" href="assets/img/cocktail.webp"><img src="assets/img/cocktail.webp" alt="Cocktail della casa" loading="lazy"></a>
+            <a class="g-item g-item--wide reveal" href="assets/img/kitchen-fire.webp"><img src="assets/img/kitchen-fire.webp" alt="La cucina a vista" loading="lazy"></a>
+            <a class="g-item reveal" href="assets/img/pannacotta.webp"><img src="assets/img/pannacotta.webp" alt="Panna cotta alle fragole" loading="lazy"></a>
+            <a class="g-item g-item--tall reveal" href="assets/img/terrazza.webp"><img src="assets/img/terrazza.webp" alt="La terrazza" loading="lazy"></a>
+            <a class="g-item reveal" href="assets/img/crostata.webp"><img src="assets/img/crostata.webp" alt="Crostata della nonna" loading="lazy"></a>
+            <a class="g-item g-item--wide reveal" href="assets/img/tavolata.webp"><img src="assets/img/tavolata.webp" alt="Una tavolata tra amici" loading="lazy"></a>
+          </div>
+          <p class="gallery__follow reveal"><a class="js-instagram" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg> <span data-en="Follow us on Instagram">Seguici su Instagram</span></a></p>
+        </div>
+      </section>
+
+      <!-- ============ RECENSIONI ============ -->
+      <section class="section reviews" id="recensioni">
+        <div class="container">
+          <div class="section__head section__head--center">
+            <p class="eyebrow reveal"><span class="line"></span><span data-en="They say about us">Dicono di noi</span><span class="line"></span></p>
+            <h2 class="h2 reveal"><span class="big-score">4,9</span> <span class="stars">★★★★★</span></h2>
+            <p class="section__lead reveal" data-en="Average rating from over 1,280 verified reviews">Media su oltre 1.280 recensioni verificate</p>
+          </div>
+
+          <div class="reviews__slider reveal">
+            <div class="reviews__track" data-list="reviews">
+              <figure class="review">
+                <div class="stars">★★★★★</div>
+                <blockquote data-en="“The best tagliatelle I've eaten outside my grandmother's house. Impeccable service, and the sommelier found us the perfect wine.”">“Le tagliatelle più buone mangiate fuori da casa di mia nonna. Servizio impeccabile, e il sommelier ci ha trovato il vino perfetto.”</blockquote>
+                <figcaption><span class="avatar">GR</span><span><strong>Giulia R.</strong><small data-en="Anniversary dinner">Cena di anniversario</small></span></figcaption>
+              </figure>
+              <figure class="review">
+                <div class="stars">★★★★★</div>
+                <blockquote data-en="“The tasting menu is a real journey. Every course explained with passion. We'll be back for sure.”">“Il menù degustazione è un vero viaggio. Ogni portata raccontata con passione. Torneremo sicuramente.”</blockquote>
+                <figcaption><span class="avatar">AM</span><span><strong>Andrea M.</strong><small data-en="Tasting menu">Menù degustazione</small></span></figcaption>
+              </figure>
+              <figure class="review">
+                <div class="stars">★★★★★</div>
+                <blockquote data-en="“We organised a company dinner for 30 people: flawless from start to finish. The team took care of everything.”">“Abbiamo organizzato una cena aziendale per 30 persone: tutto perfetto dall'inizio alla fine. Il team ha pensato a ogni dettaglio.”</blockquote>
+                <figcaption><span class="avatar">SL</span><span><strong>Stefano L.</strong><small data-en="Corporate event">Evento aziendale</small></span></figcaption>
+              </figure>
+              <figure class="review">
+                <div class="stars">★★★★★</div>
+                <blockquote data-en="“Magical atmosphere, warm staff and a tiramisù I still dream about. The best restaurant in the area.”">“Atmosfera magica, staff caloroso e un tiramisù che sogno ancora. Il miglior ristorante della zona.”</blockquote>
+                <figcaption><span class="avatar">EC</span><span><strong>Elena C.</strong><small data-en="Dinner for two">Cena per due</small></span></figcaption>
+              </figure>
+            </div>
+            <div class="reviews__dots" aria-hidden="true"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ################ PAGINA: EVENTI ################ -->
+    <div class="page" data-page="eventi">
+      <!-- ============ EVENTI ============ -->
+      <section class="section events" id="eventi">
+        <div class="container">
+          <div class="section__head">
+            <div>
+              <p class="eyebrow reveal"><span class="line"></span><span data-en="Events & private dining">Eventi & cene private</span></p>
+              <h2 class="h2 reveal" data-en="Your moments, <em>our care.</em>">I tuoi momenti, <em>la nostra cura.</em></h2>
+            </div>
+          </div>
+          <div class="events__grid">
+            <article class="event-card reveal">
+              <img src="assets/img/terrazza.webp" alt="Terrazza per eventi privati" loading="lazy">
+              <div class="event-card__body">
+                <span class="event-card__meta" data-en="Up to 24 guests">Fino a 24 ospiti</span>
+                <h3 data-en="Private room">Sala privata</h3>
+                <p data-en="Birthdays, anniversaries, proposals. A dedicated space and a menu designed for you.">Compleanni, anniversari, proposte di matrimonio. Uno spazio riservato e un menù pensato per te.</p>
+                <a href="#prenota" class="link-arrow js-event-link" data-occasion="Sala privata" data-en="Request info">Richiedi informazioni</a>
+              </div>
+            </article>
+            <article class="event-card reveal">
+              <img src="assets/img/tavolata.webp" alt="Cena aziendale" loading="lazy">
+              <div class="event-card__body">
+                <span class="event-card__meta" data-en="Up to 80 guests">Fino a 80 ospiti</span>
+                <h3 data-en="Corporate events">Eventi aziendali</h3>
+                <p data-en="Business dinners, product launches, exclusive use of the restaurant.">Cene di lavoro, presentazioni, esclusiva del locale. Preventivo in 24 ore.</p>
+                <a href="#prenota" class="link-arrow js-event-link" data-occasion="Evento aziendale" data-en="Request a quote">Richiedi un preventivo</a>
+              </div>
+            </article>
+            <article class="event-card reveal">
+              <img src="assets/img/cocktail.webp" alt="Gift card" loading="lazy">
+              <div class="event-card__body">
+                <span class="event-card__meta" data-en="From € 50">Da € 50</span>
+                <h3>Gift card</h3>
+                <p data-en="Give an unforgettable evening. Valid 12 months on the whole menu.">Regala una serata indimenticabile. Valida 12 mesi su tutto il menù.</p>
+                <a href="#prenota" class="link-arrow js-event-link" data-occasion="Gift card" data-en="Give it as a gift">Regalala ora</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ################ PAGINA: CONTATTI ################ -->
+    <div class="page" data-page="contatti">
+      <!-- ============ CONTATTI ============ -->
+      <section class="section contact" id="contatti">
+        <div class="container contact__grid">
+          <div class="contact__info">
+            <p class="eyebrow reveal"><span class="line"></span><span data-en="Where we are">Dove siamo</span></p>
+            <h2 class="h2 reveal" data-en="Come and <em>find us.</em>">Vieni a <em>trovarci.</em></h2>
+
+            <div class="contact__blocks">
+              <div class="reveal">
+                <h4 data-en="Address">Indirizzo</h4>
+                <p class="js-address"></p>
+                <a class="link-arrow js-directions" href="#" target="_blank" rel="noopener" data-en="Get directions">Indicazioni stradali</a>
+              </div>
+              <div class="reveal">
+                <h4 data-en="Contacts">Contatti</h4>
+                <p><a class="js-phone-link" href="#"><span class="js-phone"></span></a><br><a class="js-email-link" href="#"><span class="js-email"></span></a></p>
+              </div>
+            </div>
+
+            <div class="hours reveal">
+              <h4 data-en="Opening hours">Orari di apertura</h4>
+              <table class="hours__table"><tbody></tbody></table>
+            </div>
+          </div>
+
+          <div class="contact__map reveal">
+            <iframe class="js-map" title="Mappa" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+      </section>
+    </div>
+
   </main>
 
   <!-- ============ FOOTER ============ -->
@@ -613,11 +630,13 @@
     </div>
   </footer>
 
-  <!-- Barra azioni rapida (mobile) -->
-  <nav class="quickbar" aria-label="Azioni rapide">
+  <!-- Barra di navigazione in basso (telefono) -->
+  <nav class="tabbar" aria-label="Navigazione rapida">
+    <a href="#top" data-nav="home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></a>
+    <a href="#menu" data-nav="menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3v8a3 3 0 0 0 6 0V3M9 3v18M17 3c-2 0-3 3-3 7h3v11"/></svg><span data-en="Menu">Menù</span></a>
+    <a href="#prenota" data-nav="prenota" class="tabbar__main"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span data-en="Book">Prenota</span></a>
     <a class="js-phone-link" href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span data-en="Call">Chiama</span></a>
-    <a href="#prenota" class="quickbar__main"><span data-en="Book a table">Prenota un tavolo</span></a>
-    <a class="js-directions" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span data-en="Map">Mappa</span></a>
+    <a href="#contatti" data-nav="contatti"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span data-en="Map">Dove</span></a>
   </nav>
 
   <!-- Lightbox galleria -->

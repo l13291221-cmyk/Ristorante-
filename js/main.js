@@ -21,7 +21,8 @@
       sent: "Richiesta inviata!", sentText: "Ti confermeremo il tavolo a breve. Grazie per aver scelto {name}.",
       waIntro: "Buongiorno, vorrei prenotare un tavolo da {name}:",
       people: "Persone", date: "Data", time: "Ora", name: "Nome", phone: "Telefono", occasion: "Occasione", notes: "Note",
-      mailSubject: "Richiesta prenotazione", large: "Più di ",
+      mailSubject: "Richiesta prenotazione", large: "Più di ", next: "Avanti", backHome: "Torna alla Home",
+      pages: { home: "Home", menu: "Menù", prenota: "Prenota", storia: "Chi siamo", galleria: "Galleria", eventi: "Eventi", contatti: "Dove siamo" },
       days: ["Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"]
     },
     en: {
@@ -33,7 +34,8 @@
       sent: "Request sent!", sentText: "We'll confirm your table shortly. Thank you for choosing {name}.",
       waIntro: "Hello, I'd like to book a table at {name}:",
       people: "Guests", date: "Date", time: "Time", name: "Name", phone: "Phone", occasion: "Occasion", notes: "Notes",
-      mailSubject: "Reservation request", large: "More than ",
+      mailSubject: "Reservation request", large: "More than ", next: "Next", backHome: "Back to Home",
+      pages: { home: "Home", menu: "Menu", prenota: "Book", storia: "About us", galleria: "Gallery", eventi: "Events", contatti: "Where we are" },
       days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     }
   };
@@ -224,20 +226,16 @@
     splitHero();
     renderStatus();
     renderHours();
+    if (document.body.hasAttribute("data-page")) renderPagers();
     if (booking) booking.refresh();
   }
 
-  /* ---------- Header, navigazione, quickbar ---------- */
+  /* ---------- Header e menù mobile ---------- */
   function initHeader() {
-    var header = $(".header"), last = 0, hero = $(".hero"), quick = $(".quickbar");
-    var burger = $(".burger"), mnav = $(".mobile-nav");
-    function onScroll() {
-      var y = window.scrollY, heroH = hero.offsetHeight;
-      header.classList.toggle("is-scrolled", y > 40);
-      header.classList.toggle("is-hidden", y > heroH && y > last && !mnav.classList.contains("is-open"));
-      last = y;
-    }
+    var header = $(".header"), burger = $(".burger"), mnav = $(".mobile-nav");
+    function onScroll() { header.classList.toggle("is-scrolled", window.scrollY > 40 || currentPage !== "home"); }
     window.addEventListener("scroll", onScroll, { passive: true });
+    document.addEventListener("aurea:page", onScroll);
     onScroll();
 
     function toggleMenu(open) {
@@ -249,21 +247,72 @@
     burger.addEventListener("click", function () { toggleMenu(burger.getAttribute("aria-expanded") !== "true"); });
     $$("a", mnav).forEach(function (a) { a.addEventListener("click", function () { toggleMenu(false); }); });
     document.addEventListener("keydown", function (e) { if (e.key === "Escape") toggleMenu(false); });
+  }
 
-    // voce di menu attiva
-    var links = $$(".nav a");
-    var spy = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting) links.forEach(function (a) { a.classList.toggle("is-current", a.getAttribute("href") === "#" + en.target.id); });
-      });
-    }, { rootMargin: "-45% 0px -50% 0px" });
-    $$("main section[id]").forEach(function (s) { spy.observe(s); });
-
-    // quickbar mobile: visibile dopo l'hero, nascosta sul form di prenotazione
-    var pastHero = false, onBooking = false;
-    var update = function () { quick.classList.toggle("is-visible", pastHero && !onBooking); };
-    new IntersectionObserver(function (e) { pastHero = !e[0].isIntersecting; update(); }).observe(hero);
-    new IntersectionObserver(function (e) { onBooking = e[0].isIntersecting; update(); }, { threshold: 0.15 }).observe($("#prenota"));
+  /* ---------- Pagine: un tasto e si passa alla pagina successiva ---------- */
+  var PAGE_ORDER = ["home", "menu", "prenota", "storia", "galleria", "eventi", "contatti"];
+  var currentPage = "home";
+  function pageOf(id) {
+    if (!id || id === "top") return "home";
+    if (PAGE_ORDER.indexOf(id) !== -1 && $('.page[data-page="' + id + '"]')) return id;
+    var el = document.getElementById(id), pg = el && el.closest(".page");
+    return pg ? pg.dataset.page : null;
+  }
+  function showPage(name, anchorId) {
+    if (!$('.page[data-page="' + name + '"]')) name = "home";
+    $$(".page").forEach(function (p) {
+      var on = p.dataset.page === name;
+      p.hidden = !on;
+      p.classList.toggle("is-active", on);
+    });
+    currentPage = name;
+    document.body.setAttribute("data-page", name);
+    $$(".nav a, .tabbar a[data-nav], .mobile-nav nav a").forEach(function (a) {
+      var h = a.getAttribute("href") || "";
+      a.classList.toggle("is-current", h.charAt(0) === "#" && pageOf(h.slice(1)) === name);
+    });
+    // si parte sempre dall'alto; se il link punta a una sezione interna (es. #chef) si va lì
+    var target = anchorId && document.getElementById(anchorId), page = $('.page[data-page="' + name + '"]');
+    var y = 0;
+    if (target && page.contains(target) && target !== page.firstElementChild) y = target.getBoundingClientRect().top + window.scrollY - 70;
+    window.scrollTo({ top: y, behavior: "instant" });
+    document.dispatchEvent(new CustomEvent("aurea:page", { detail: name }));
+  }
+  function renderPagers() {
+    $$(".pager").forEach(function (x) { x.remove(); });
+    PAGE_ORDER.forEach(function (name, i) {
+      if (name === "home") return;
+      var page = $('.page[data-page="' + name + '"]');
+      if (!page) return;
+      var next = PAGE_ORDER[i + 1] || "home";
+      var nav = document.createElement("nav");
+      nav.className = "pager container";
+      nav.setAttribute("aria-label", t("pages")[name]);
+      nav.innerHTML = '<a href="#top" class="pager__home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></a>' +
+        '<a href="#' + (next === "home" ? "top" : next) + '" class="pager__next"><span><small>' + esc(next === "home" ? t("backHome") : t("next")) + "</small>" +
+        esc(t("pages")[next]) + '</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>';
+      page.appendChild(nav);
+    });
+  }
+  function initPages() {
+    renderPagers();
+    document.addEventListener("click", function (e) {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey) return;
+      var a = e.target.closest('a[href^="#"]');
+      if (!a) return;
+      var id = a.getAttribute("href").slice(1), pg = pageOf(id);
+      if (!id || id === "admin" || !pg) return;
+      e.preventDefault();
+      var hash = id === "top" ? "" : "#" + id;
+      if (location.hash !== hash) history.pushState(null, "", hash || location.pathname + location.search);
+      showPage(pg, id);
+    });
+    window.addEventListener("popstate", function () {
+      var id = location.hash.slice(1);
+      if (id !== "admin") showPage(pageOf(id) || "home", id);
+    });
+    var start = location.hash.slice(1);
+    showPage(start && start !== "admin" ? (pageOf(start) || "home") : "home", start);
   }
 
   /* ---------- Hero slideshow ---------- */
@@ -672,7 +721,7 @@
     ".bsummary, .bform__stepinfo, .bform__error, .js-large-group, .newsletter, .hero__dots, .slider-nav, .reviews__dots, .burger, " +
     ".story__badge, .count, .avatar, .stars, .tag, .line, .dots, script, " + DYN;
   var sectionOf = function (el) {
-    var s = el.closest("section[id], header, footer, .marquee, .mobile-nav, .quickbar, .hero, .cellar");
+    var s = el.closest("section[id], header, footer, .marquee, .mobile-nav, .tabbar, .hero, .cellar");
     if (!s) return "page";
     return s.id || (s.className.split(" ")[0]);
   };
@@ -779,6 +828,7 @@
   }
   function syncMarquee() {
     var tr = $(".marquee__track");
+    if (!tr) return;
     $$(".is-clone", tr).forEach(function (x) { x.remove(); });
     Array.prototype.slice.call(tr.children).forEach(function (c) {
       var k = c.cloneNode(true);
@@ -871,6 +921,7 @@
     fillContacts();
     booking = initBooking();
     applyLang(lang);
+    initPages();
     initHeader();
     initHero();
     initReveal();
@@ -888,7 +939,8 @@
       R: R, DEFAULTS: DEFAULTS, published: published,
       get content() { return content; }, get lang() { return lang; },
       applyText: applyText, applyImage: applyImage, applyLang: applyLang, rerender: rerender,
-      syncMarquee: syncMarquee, splitHero: splitHero, esc: esc
+      syncMarquee: syncMarquee, splitHero: splitHero, esc: esc,
+      showPage: showPage, get page() { return currentPage; }, pageNames: T.it.pages, pageOrder: PAGE_ORDER
     };
 
     var openAdmin = function () { loadAdmin(function () { window.AUREA_ADMIN.start(); }); };

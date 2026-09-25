@@ -157,7 +157,9 @@
 }
 .adm-bar.is-on { transform: translate(-50%, 0); }
 .adm-bar span { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-2); }
+.adm-bar select { background: var(--a-bg2); color: var(--ink); border: 1px solid var(--a-line); border-radius: 100px; padding: 8px 12px; font: inherit; font-size: 13px; }
 .adm-bar b { color: var(--gold-2); white-space: nowrap; }
+.adm-bar__hint { font-style: normal; }
 .adm-bar .adm-btn { border-radius: 100px; min-height: 38px; }
 
 /* pulsante per riaprire il pannello */
@@ -167,7 +169,7 @@
 }
 .adm-fab.is-on { display: inline-flex; }
 .adm-fab.is-dirty::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #b4513f; box-shadow: 0 0 0 2px var(--gold); }
-body.adm-on .quickbar { display: none; }
+body.adm-on .tabbar { display: none; }
 
 /* ---------- Evidenziazione in modalità modifica ---------- */
 .adm-editing [data-k], .adm-editing [data-img] { cursor: pointer !important; }
@@ -192,6 +194,8 @@ body.adm-on .quickbar { display: none; }
   .adm-bar { left: 12px; right: 12px; transform: translateY(160%); border-radius: 16px; }
   .adm-bar.is-on { transform: none; }
   .adm-bar span { font-size: 12px; }
+  .adm-bar__hint { display: none; }
+  .adm-bar select { flex: 1; min-width: 0; }
   .adm-modal { align-items: end; padding: 0; }
   .adm-modal__card { border-radius: 18px 18px 0 0; max-height: 92dvh; }
   .adm-modal__foot .adm-btn { flex: 1; }

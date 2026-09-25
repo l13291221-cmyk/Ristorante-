@@ -214,8 +214,12 @@
       '<button type="button" class="adm-btn" data-act="publish">Pubblica</button></footer>' +
       "</aside>");
     ui.tab = el('<button type="button" class="adm-fab" title="Apri pannello amministratore">' + ICON.lock + "<span>Admin</span></button>");
-    ui.bar = el('<div class="adm-bar"><span>' + ICON.pen + ' <b>Modalità modifica</b> — tocca un testo o una foto per cambiarli</span>' +
+    ui.bar = el('<div class="adm-bar"><span>' + ICON.pen + ' <b>Modifica</b> <em class="adm-bar__hint">tocca un testo o una foto</em></span>' +
+      '<select aria-label="Pagina da modificare">' + A.pageOrder.map(function (p) { return '<option value="' + p + '">' + esc(A.pageNames[p]) + "</option>"; }).join("") + "</select>" +
       '<button type="button" class="adm-btn" data-act="done">Fine</button></div>');
+    // in modalità modifica i link non funzionano: si cambia pagina da qui
+    $("select", ui.bar).addEventListener("change", function (e) { A.showPage(e.target.value); $$(".reveal").forEach(function (r) { r.classList.add("is-in"); }); });
+    document.addEventListener("aurea:page", function (e) { $("select", ui.bar).value = e.detail; });
     ui.toast = el('<div class="adm-toast" role="status" aria-live="polite"></div>');
     [ui.panel, ui.tab, ui.bar, ui.toast].forEach(function (n) { document.body.appendChild(n); });
 
@@ -527,7 +531,7 @@
   var SECTION_NAMES = {
     hero: "Prima schermata", storia: "Storia", piatti: "Piatti firma", chef: "Chef", cellar: "Cantina", galleria: "Galleria",
     eventi: "Eventi", prenota: "Prenotazione", header: "Intestazione", footer: "Piè di pagina", recensioni: "Recensioni", menu: "Menù",
-    contatti: "Contatti", marquee: "Striscia scorrevole", quickbar: "Barra mobile", "mobile-nav": "Menù mobile", page: "Pagina"
+    contatti: "Contatti", marquee: "Striscia scorrevole", tabbar: "Barra in basso", "mobile-nav": "Menù mobile", page: "Pagina"
   };
   var secName = function (key) { return SECTION_NAMES[key.split(":")[1]] || key.split(":")[1]; };
   function tabImages() {
@@ -751,6 +755,7 @@
     ui.panel.classList.remove("is-open");
     ui.tab.classList.remove("is-on");
     ui.bar.classList.add("is-on");
+    $("select", ui.bar).value = A.page;
     toast("Tocca un testo o una foto per modificarli");
   }
   function stopEditing() {
