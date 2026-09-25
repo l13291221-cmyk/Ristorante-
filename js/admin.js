@@ -215,7 +215,7 @@
       "</aside>");
     ui.tab = el('<button type="button" class="adm-fab" title="Apri pannello amministratore">' + ICON.lock + "<span>Admin</span></button>");
     ui.bar = el('<div class="adm-bar"><span>' + ICON.pen + ' <b>Modifica</b> <em class="adm-bar__hint">tocca un testo o una foto</em></span>' +
-      '<select aria-label="Pagina da modificare">' + A.pageOrder.map(function (p) { return '<option value="' + p + '">' + esc(A.pageNames[p]) + "</option>"; }).join("") + "</select>" +
+      '<select aria-label="Pagina da modificare">' + A.pageOrder.concat(A.legalPages).map(function (p) { return '<option value="' + p + '">' + esc(A.pageNames[p]) + "</option>"; }).join("") + "</select>" +
       '<button type="button" class="adm-btn" data-act="done">Fine</button></div>');
     // in modalità modifica i link non funzionano: si cambia pagina da qui
     $("select", ui.bar).addEventListener("change", function (e) { A.showPage(e.target.value, null, true); $$(".reveal").forEach(function (r) { r.classList.add("is-in"); }); });
@@ -386,6 +386,10 @@
       });
       s.appendChild(node);
     });
+    s = section("Newsletter (facoltativo)", "Incolla l'indirizzo di un modulo Formspree (formspree.io) o simile: il riquadro «Newsletter» compare nel sito e le iscrizioni ti arrivano davvero. Se resta vuoto, il riquadro non si vede.");
+    var nlf = el(field("Indirizzo del modulo newsletter", cfg("newsletterEndpoint") || "", { type: "url", placeholder: "https://formspree.io/f/..." }));
+    $("input", nlf).addEventListener("input", function (e) { draft.config.newsletterEndpoint = e.target.value.trim(); saveDraft(); liveRerender(); flashLater(); });
+    s.appendChild(nlf);
     s = section("Prenotazioni via email (facoltativo)", "Se incolli qui l'indirizzo di un modulo Formspree (formspree.io), le prenotazioni ti arrivano anche per email in automatico.");
     var node = el(field("Indirizzo del modulo", bcfg("formEndpoint") || "", { type: "url", placeholder: "https://formspree.io/f/..." }));
     $("input", node).addEventListener("input", function (e) { setBooking("formEndpoint", e.target.value.trim()); });
@@ -624,7 +628,7 @@
     s.appendChild(el('<div class="adm-log" hidden></div>'));
 
     var s2 = section("Collegamento a GitHub", "Il sito è ospitato su GitHub: serve un «token» che permette al pannello di salvare le modifiche. Si configura una volta sola su questo dispositivo. " +
-      '<a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">Crea il token qui</a>: scegli solo il repository del sito e il permesso <b>Contents: Read and write</b>.');
+      '<a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">Crea il token qui</a>: scegli solo il repository del sito e i permessi <b>Contents: Read and write</b> e <b>Pages: Read and write</b>.');
     var form = el("<div>" +
       '<div class="adm-grid2">' + field("Utente GitHub", g.owner || "").replace("<input", '<input data-g="owner"') + field("Repository", g.repo || "").replace("<input", '<input data-g="repo"') + "</div>" +
       field("Branch", g.branch).replace("<input", '<input data-g="branch"') +
@@ -634,6 +638,41 @@
       inp.addEventListener("input", function () { var cur = ghSettings(); cur[inp.dataset.g] = inp.value.trim(); ls.set(LS_GH, cur); });
     });
     s2.appendChild(form);
+
+    var sd = section("Il tuo dominio (facoltativo)", "Per usare un indirizzo tipo <b>www.nomeristorante.it</b> al posto di quello di GitHub. Il dominio si compra da Aruba, Register.it o simili (10–20 € l'anno).");
+    var owner = (g.owner || "TUO-UTENTE").toLowerCase();
+    var copy = function (v) { return '<code class="adm-copy" data-copy="' + esc(v) + '" title="Tocca per copiare">' + esc(v) + "</code>"; };
+    sd.appendChild(el('<ol class="adm-steps">' +
+      "<li>Nel sito dove hai comprato il dominio apri la <b>gestione DNS</b>.</li>" +
+      "<li>Cancella i record <b>A</b> e <b>CNAME</b> già presenti per <b>www</b> e per <b>@</b> (il dominio senza www).</li>" +
+      "<li>Aggiungi un record <b>CNAME</b>: nome " + copy("www") + " → valore " + copy(owner + ".github.io") + "</li>" +
+      "<li>Aggiungi 4 record <b>A</b> con nome " + copy("@") + " e questi valori: " + copy("185.199.108.153") + " " + copy("185.199.109.153") + " " + copy("185.199.110.153") + " " + copy("185.199.111.153") + "</li>" +
+      "<li>Aspetta: di solito bastano 10–30 minuti, a volte qualche ora. Poi scrivi qui sotto il dominio con il www e premi <b>Controlla</b>.</li>" +
+      "<li>Se il controllo è verde premi <b>Pubblica</b>. Dopo pochi minuti il sito si apre con il nuovo indirizzo; il lucchetto https arriva da solo entro circa un'ora.</li></ol>"));
+    var dn = el('<div><div class="adm-inline">' + '<input type="text" inputmode="url" autocomplete="off" placeholder="www.nomeristorante.it" aria-label="Dominio" value="' + esc(draft.domain || "") + '">' +
+      '<button type="button" class="adm-btn adm-btn--ghost">Controlla</button></div><p class="adm-dns" hidden></p></div>');
+    var dIn = $("input", dn), dOut = $(".adm-dns", dn);
+    dIn.addEventListener("input", function () {
+      var v = cleanDomain(dIn.value);
+      if (v) draft.domain = v; else delete draft.domain;
+      saveDraft(); dOut.hidden = true;
+    });
+    $("button", dn).addEventListener("click", async function () {
+      var v = cleanDomain(dIn.value);
+      if (!v) { dOut.hidden = false; dOut.className = "adm-dns is-bad"; dOut.textContent = "Scrivi prima il dominio, per esempio www.nomeristorante.it"; return; }
+      dOut.hidden = false; dOut.className = "adm-dns"; dOut.textContent = "Controllo in corso…";
+      var r = await checkDNS(v, owner);
+      dOut.className = "adm-dns " + (r.ok ? "is-ok" : "is-bad");
+      dOut.textContent = r.ok ? "✓ Il dominio punta al sito. Ora premi Pubblica." : "✕ Non ancora pronto (" + r.found + "). Controlla i record del punto 3 e 4 e riprova più tardi.";
+    });
+    sd.appendChild(dn);
+    sd.appendChild(el('<p class="adm-note">Per tornare all\'indirizzo di GitHub cancella il dominio qui sopra e premi Pubblica.</p>'));
+    $$(".adm-copy", sd).forEach(function (c) {
+      c.addEventListener("click", function () {
+        var v = c.getAttribute("data-copy");
+        if (navigator.clipboard) navigator.clipboard.writeText(v).then(function () { toast("Copiato: " + v); }, function () {});
+      });
+    });
 
     var s3 = section("Copia di sicurezza", "Scarica tutti i contenuti in un file, oppure ricaricane uno. Se il sito non è su GitHub, carica il file scaricato nella cartella <code>data/</code> del sito con il nome <code>content.json</code>.");
     var row = el('<div class="adm-inline"><button type="button" class="adm-btn adm-btn--ghost">Scarica file</button><label class="adm-btn adm-btn--ghost">Importa file<input type="file" accept="application/json,.json" hidden></label></div>');
@@ -669,9 +708,55 @@
   }
   function exportable(o) { var c = clone(o); c.version = 1; c.updatedAt = new Date().toISOString(); return c; }
 
+  function cleanDomain(v) {
+    return String(v || "").trim().toLowerCase().replace(/^https?:\/\//, "").replace(/[/?#].*$/, "").replace(/\.$/, "");
+  }
+  var GH_IPS = ["185.199.108.153", "185.199.109.153", "185.199.110.153", "185.199.111.153"];
+  // controlla i record DNS con il servizio pubblico di Google (dns.google)
+  async function checkDNS(domain, owner) {
+    try {
+      var q = async function (type) {
+        var r = await fetch("https://dns.google/resolve?name=" + encodeURIComponent(domain) + "&type=" + type, { cache: "no-store" });
+        var j = await r.json();
+        return (j.Answer || []).map(function (a) { return { type: a.type, data: String(a.data).toLowerCase().replace(/\.$/, "") }; });
+      };
+      var ans = (await q("CNAME")).concat(await q("A"));
+      var cn = ans.filter(function (a) { return a.type === 5; }).map(function (a) { return a.data; });
+      var ips = ans.filter(function (a) { return a.type === 1; }).map(function (a) { return a.data; });
+      if (cn.length) return { ok: cn.indexOf(owner + ".github.io") !== -1, found: "CNAME → " + cn.join(", ") };
+      if (ips.length) return { ok: ips.every(function (x) { return GH_IPS.indexOf(x) !== -1; }), found: "A → " + ips.join(", ") };
+      return { ok: false, found: "nessun record trovato" };
+    } catch (e) { return { ok: false, found: "controllo non riuscito, riprova" }; }
+  }
+  function githubUrl(g) {
+    var own = g.owner.toLowerCase();
+    return g.repo.toLowerCase() === own + ".github.io" ? "https://" + own + ".github.io/" : "https://" + own + ".github.io/" + g.repo + "/";
+  }
+  var escHtml = function (v) { return String(v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); };
+  // aggiorna titolo, descrizione e anteprima (WhatsApp, Facebook, Google) scritti dentro index.html
+  function headFor(html, url) {
+    var base = A.siteUrl();
+    var swap = function (v) { return String(v || "").split(base).join(url); };
+    var meta = function (sel) { var m = document.querySelector(sel); return m ? m.getAttribute("content") || "" : ""; };
+    var ld = document.getElementById("ld-restaurant");
+    var set = function (re, val) { html = html.replace(re, function (all, a, b) { return a + escHtml(val) + b; }); };
+    html = html.replace(/<title>[\s\S]*?<\/title>/, function () { return "<title>" + escHtml(document.title) + "</title>"; });
+    set(/(<meta name="description" content=")[^"]*(")/, meta('meta[name="description"]'));
+    set(/(<link rel="canonical" href=")[^"]*(")/, url);
+    set(/(<meta property="og:url" content=")[^"]*(")/, url);
+    set(/(<meta property="og:title" content=")[^"]*(")/, meta('meta[property="og:title"]'));
+    set(/(<meta property="og:description" content=")[^"]*(")/, meta('meta[property="og:description"]'));
+    set(/(<meta property="og:site_name" content=")[^"]*(")/, R.name);
+    set(/(<meta property="og:image" content=")[^"]*(")/, swap(meta('meta[property="og:image"]')));
+    if (ld) html = html.replace(/(<script type="application\/ld\+json" id="ld-restaurant">)[\s\S]*?(<\/script>)/, function (all, a, b) {
+      return a + "\n" + swap(ld.textContent).replace(/<\//g, "<\\/") + "\n  " + b;
+    });
+    return html;
+  }
+
   /* sitemap.xml e robots.txt, rigenerati a ogni pubblicazione */
-  function seoFiles(out) {
-    var url = String((out.config && out.config.siteUrl) || A.DEFAULTS.config.siteUrl || "").trim();
+  function seoFiles(out, siteUrl) {
+    var url = String(siteUrl || (out.config && out.config.siteUrl) || A.DEFAULTS.config.siteUrl || "").trim();
     if (!/^https?:\/\//.test(url)) return null;
     if (!/\/$/.test(url)) url += "/";
     var x = function (v) { return String(v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); };
@@ -720,6 +805,13 @@
         st === 404 ? "Repository o branch non trovati, oppure il token non ha accesso a questo repository." :
         st === 409 || st === 422 ? "Conflitto con una modifica recente: riprova tra qualche secondo." : "Errore GitHub (" + st + ").";
     };
+    async function getFile(path) {
+      var r = await fetch(api + path + "?ref=" + encodeURIComponent(g.branch), { headers: headers, cache: "no-store" });
+      if (r.status === 404) return null;
+      if (!r.ok) throw new Error(explain(r.status));
+      var j = await r.json();
+      return { sha: j.sha, text: decodeURIComponent(escape(atob(String(j.content || "").replace(/\s/g, "")))) };
+    }
     async function put(path, contentB64, message, skipIfSame) {
       var sha;
       var r = await fetch(api + path + "?ref=" + encodeURIComponent(g.branch), { headers: headers, cache: "no-store" });
@@ -749,7 +841,28 @@
       }
       log("Salvo i contenuti…");
       await put("data/content.json", b64utf8(JSON.stringify(out, null, 2)), "Admin: aggiornamento contenuti del sito");
-      var seo = seoFiles(out);
+      // dominio personalizzato (file CNAME)
+      var cname = await getFile("CNAME"), curDomain = cname ? cleanDomain(cname.text) : "", wanted = cleanDomain(draft.domain), domain = curDomain;
+      if (wanted !== curDomain) {
+        if (wanted) {
+          log("Controllo il dominio " + esc(wanted) + "…");
+          var dns = await checkDNS(wanted, g.owner.toLowerCase());
+          if (dns.ok) { await put("CNAME", b64utf8(wanted + "\n"), "Admin: collega il dominio " + wanted); domain = wanted; log("✓ Dominio collegato: " + esc(wanted), "is-ok"); }
+          else log("⚠ Il dominio non punta ancora al sito (" + esc(dns.found) + "): per ora resta l'indirizzo attuale. Controlla i record DNS e ripubblica più tardi.", "is-bad");
+        } else if (cname) {
+          var del = await fetch(api + "CNAME", { method: "DELETE", headers: headers, body: JSON.stringify({ message: "Admin: scollega il dominio", sha: cname.sha, branch: g.branch }) });
+          if (!del.ok) throw new Error(explain(del.status));
+          domain = ""; log("Dominio scollegato: si torna all'indirizzo di GitHub.");
+        }
+      }
+      var siteUrl = (out.config && out.config.siteUrl) || A.DEFAULTS.config.siteUrl || (domain ? "https://" + domain + "/" : githubUrl(g));
+      log("Aggiorno l'anteprima per WhatsApp e Google…");
+      var idx = await getFile("index.html");
+      if (idx) {
+        var nh = headFor(idx.text, siteUrl);
+        if (nh !== idx.text) await put("index.html", b64utf8(nh), "Admin: aggiornamento titolo e anteprima", true);
+      }
+      var seo = seoFiles(out, siteUrl);
       if (seo) {
         log("Aggiorno i file per Google…");
         await put("sitemap.xml", b64utf8(seo.sitemap), "Admin: aggiornamento sitemap", true);
@@ -758,7 +871,17 @@
       A.published = clone(out);
       draft = clone(out);
       saveDraft();
-      log("✓ Pubblicato! Il sito online si aggiorna entro 1–2 minuti.", "is-ok");
+      if (domain) {
+        // lucchetto https: si può attivare solo quando GitHub ha preparato il certificato
+        try {
+          var pg = await fetch("https://api.github.com/repos/" + encodeURIComponent(g.owner) + "/" + encodeURIComponent(g.repo) + "/pages", { headers: headers, cache: "no-store" });
+          if (pg.ok && !(await pg.json()).https_enforced) {
+            var hs = await fetch("https://api.github.com/repos/" + encodeURIComponent(g.owner) + "/" + encodeURIComponent(g.repo) + "/pages", { method: "PUT", headers: headers, body: JSON.stringify({ cname: domain, https_enforced: true }) });
+            log(hs.ok ? "✓ Lucchetto https attivato." : "Il lucchetto https non è ancora pronto: ripremi Pubblica tra circa un'ora.");
+          }
+        } catch (e) { /* non blocca la pubblicazione */ }
+      }
+      log("✓ Pubblicato! Il sito online si aggiorna entro 1–2 minuti." + (domain ? " Indirizzo: https://" + esc(domain) : ""), "is-ok");
       toast("Pubblicato ✓");
     } catch (err) {
       saveDraft(); // conserva i percorsi delle foto già caricate

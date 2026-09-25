@@ -22,7 +22,7 @@
       waIntro: "Buongiorno, vorrei prenotare un tavolo da {name}:",
       people: "Persone", date: "Data", time: "Ora", name: "Nome", phone: "Telefono", occasion: "Occasione", notes: "Note",
       mailSubject: "Richiesta prenotazione", largeGroup: "Più di {n} persone? Chiamaci:", next: "Avanti", backHome: "Torna alla Home",
-      pages: { home: "Home", menu: "Menù", prenota: "Prenota", storia: "Chi siamo", galleria: "Galleria", eventi: "Eventi", contatti: "Dove siamo" },
+      pages: { home: "Home", menu: "Menù", prenota: "Prenota", storia: "Chi siamo", galleria: "Galleria", eventi: "Eventi", contatti: "Dove siamo", privacy: "Privacy", cookie: "Cookie" },
       days: ["Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"]
     },
     en: {
@@ -35,7 +35,7 @@
       waIntro: "Hello, I'd like to book a table at {name}:",
       people: "Guests", date: "Date", time: "Time", name: "Name", phone: "Phone", occasion: "Occasion", notes: "Notes",
       mailSubject: "Reservation request", largeGroup: "More than {n} guests? Call us:", next: "Next", backHome: "Back to Home",
-      pages: { home: "Home", menu: "Menu", prenota: "Book", storia: "About us", galleria: "Gallery", eventi: "Events", contatti: "Where we are" },
+      pages: { home: "Home", menu: "Menu", prenota: "Book", storia: "About us", galleria: "Gallery", eventi: "Events", contatti: "Where we are", privacy: "Privacy", cookie: "Cookie" },
       days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     }
   };
@@ -77,15 +77,14 @@
     $$(".js-instagram").forEach(function (el) { el.href = R.instagram; });
     $$(".js-facebook").forEach(function (el) { el.href = R.facebook; });
     $$(".js-tripadvisor").forEach(function (el) { el.href = R.tripadvisor; });
+    // la mappa di Google si carica solo dopo il consenso del visitatore (niente cookie di terze parti prima)
     var map = $(".js-map");
-    if (map && map.src) map.src = "https://maps.google.com/maps?q=" + enc + "&z=16&output=embed";
-    else if (map) {
-      // la mappa si carica solo quando serve, per non rallentare la pagina
-      var io = new IntersectionObserver(function (en) {
-        if (en[0].isIntersecting) { map.src = "https://maps.google.com/maps?q=" + enc + "&z=16&output=embed"; io.disconnect(); }
-      }, { rootMargin: "400px" });
-      io.observe(map);
+    if (map) {
+      map.dataset.src = "https://maps.google.com/maps?q=" + enc + "&z=16&output=embed";
+      if (mapAllowed()) showMap(); else if (map.hasAttribute("src")) showMap();
     }
+    var nl = $(".footer__newsletter");
+    if (nl) nl.hidden = !R.newsletterEndpoint;
     $$(".js-year").forEach(function (el) { el.textContent = new Date().getFullYear(); });
     $$(".js-name").forEach(function (el) { el.textContent = R.name; });
     $$(".js-vat").forEach(function (el) { el.textContent = R.vat || ""; });
@@ -703,10 +702,47 @@
     f.addEventListener("submit", function (e) {
       e.preventDefault();
       var input = $("input", f);
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value)) { f.classList.add("is-invalid"); return; }
-      f.hidden = true; ok.hidden = false;
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value) || !R.newsletterEndpoint) { f.classList.add("is-invalid"); return; }
+      var btn = $("button", f); btn.disabled = true;
+      // l'iscrizione arriva davvero al servizio collegato dal pannello (es. Formspree)
+      fetch(R.newsletterEndpoint, {
+        method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({ email: input.value, _subject: "Iscrizione newsletter" })
+      }).then(function (r) {
+        if (!r.ok) throw new Error();
+        f.hidden = true; ok.hidden = false;
+      }).catch(function () { f.classList.add("is-invalid"); }).then(function () { btn.disabled = false; });
     });
     $("input", f).addEventListener("input", function () { f.classList.remove("is-invalid"); });
+  }
+
+  /* ---------- Mappa con consenso ---------- */
+  function mapAllowed() { try { return localStorage.getItem("map-ok") === "1"; } catch (e) { return false; } }
+  function showMap() {
+    var map = $(".js-map"), box = $(".map-consent");
+    if (!map) return;
+    if (map.getAttribute("src") !== map.dataset.src) map.src = map.dataset.src;
+    map.hidden = false;
+    if (box) box.hidden = true;
+  }
+  function hideMap() {
+    var map = $(".js-map"), box = $(".map-consent");
+    if (!map) return;
+    map.removeAttribute("src"); map.hidden = true;
+    if (box) box.hidden = false;
+  }
+  function initMapConsent() {
+    $$(".js-map-ok").forEach(function (b) {
+      b.addEventListener("click", function () { try { localStorage.setItem("map-ok", "1"); } catch (e) {} showMap(); });
+    });
+    $$(".js-map-revoke").forEach(function (b) {
+      b.addEventListener("click", function () {
+        try { localStorage.removeItem("map-ok"); } catch (e) {}
+        hideMap();
+        b.disabled = true;
+        b.textContent = lang === "en" ? "Done: the map will not load" : "Fatto: la mappa non verrà caricata";
+      });
+    });
   }
 
   /* ---------- Cursore e bottoni magnetici (solo desktop) ---------- */
@@ -970,6 +1006,7 @@
     initGallery();
     initReviews();
     initNewsletter();
+    initMapConsent();
     initCursor();
     setInterval(renderStatus, 60000);
     $$(".lang__btn").forEach(function (b) { b.addEventListener("click", function () { applyLang(b.dataset.lang); }); });
@@ -979,7 +1016,7 @@
       get content() { return content; }, get lang() { return lang; },
       applyText: applyText, applyImage: applyImage, applyLang: applyLang, rerender: rerender,
       syncMarquee: syncMarquee, splitHero: splitHero, esc: esc,
-      showPage: showPage, isHidden: isHidden, T: T, renderPagers: renderPagers, get page() { return currentPage; }, pageNames: T.it.pages, pageOrder: PAGE_ORDER
+      showPage: showPage, isHidden: isHidden, siteUrl: siteUrl, legalPages: ["privacy", "cookie"], T: T, renderPagers: renderPagers, get page() { return currentPage; }, pageNames: T.it.pages, pageOrder: PAGE_ORDER
     };
 
     var openAdmin = function () { loadAdmin(function () { window.AUREA_ADMIN.start(); }); };

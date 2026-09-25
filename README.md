@@ -21,6 +21,8 @@ Sito vetrina di fascia alta per ristoranti: design scuro ed elegante, animazioni
 | **Mobile first** | Barra in basso Home / Menù / Prenota / Chiama / Dove; categorie del menù sempre visibili in alto |
 | **SEO** | Dati strutturati `Restaurant` (schema.org), Open Graph, meta description |
 | **Accessibilità** | Navigazione da tastiera, skip link, rispetto di "riduci movimento" |
+| **Privacy e cookie** | Pagine Privacy e Cookie; caratteri ospitati nel sito; mappa di Google caricata solo dopo il consenso: nessun cookie di terze parti, quindi niente banner |
+| **Dominio fai-da-te** | Dal pannello: guida con i valori DNS, controllo automatico e collegamento con «Pubblica» |
 | **Area amministratore** | Tasto «Amministratore» nella prima schermata, PIN, modifica di testi, foto, menù, recensioni, orari e dati senza toccare il codice |
 
 ## Area amministratore (per il ristoratore)
@@ -44,7 +46,7 @@ Sito vetrina di fascia alta per ristoranti: design scuro ed elegante, animazioni
 Il sito resta statico: tutti i contenuti modificati vengono salvati nel file `data/content.json` (e le foto caricate in `assets/img/uploads/`).
 
 - **Sito su GitHub Pages (consigliato):** la prima volta, nella scheda **Pubblica**, inserisci utente, repository e un *token* GitHub
-  ([crea il token qui](https://github.com/settings/personal-access-tokens/new): solo il repository del sito, permesso **Contents: Read and write**).
+  ([crea il token qui](https://github.com/settings/personal-access-tokens/new): solo il repository del sito, permessi **Contents: Read and write** e **Pages: Read and write**).
   Da quel momento **Pubblica** aggiorna il sito da solo in 1–2 minuti. Il token resta salvato solo su quel dispositivo e non viene mai pubblicato.
 - **Altri hosting (Netlify, hosting classico):** usa **Scarica file** e carica il `content.json` scaricato nella cartella `data/` del sito.
 
@@ -54,7 +56,11 @@ La vera protezione è il **token GitHub**: senza token nessuno può pubblicare m
 Quindi: non condividere il token, e se un dispositivo viene perso revoca il token da GitHub.
 Dopo 5 PIN sbagliati l'accesso si blocca per 5 minuti.
 
-## Personalizzare per un nuovo cliente (15 minuti)
+## Consegna a un nuovo cliente
+
+Segui la lista passo passo in **[CONSEGNA.md](CONSEGNA.md)**.
+
+## Personalizzare a mano (per chi sa programmare)
 
 1. **`js/config.js`** — nome, telefono, WhatsApp, email, indirizzo, social, **orari**, giorni di ferie, regole di prenotazione. Tutto il sito (stato aperto/chiuso, calendario, orari, link) si aggiorna da solo.
 2. **`index.html`** — testi, piatti e prezzi (oppure direttamente dall'area amministratore). Ogni testo ha la traduzione inglese nell'attributo `data-en="..."` accanto.

@@ -20,9 +20,7 @@
   <meta name="robots" content="index, follow, max-image-preview:large">
 
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/fonts.css">
   <link rel="preload" as="image" href="assets/img/hero-1.webp">
   <link rel="stylesheet" href="css/style.css">
 
@@ -347,7 +345,7 @@
                   <option value="Gift card">Gift card</option>
                 </select><label for="b-occasion" class="is-fixed" data-en="Occasion">Occasione</label></div>
                 <div class="field"><textarea id="b-notes" name="notes" rows="2" placeholder=" "></textarea><label for="b-notes" data-en="Allergies or requests">Allergie o richieste</label></div>
-                <label class="check"><input type="checkbox" id="b-privacy" required><span data-en="I agree to the processing of my data to manage the reservation.">Acconsento al trattamento dei dati per gestire la prenotazione.</span></label>
+                <label class="check"><input type="checkbox" id="b-privacy" required><span data-en="I agree to the processing of my data to manage the reservation.">Acconsento al trattamento dei dati per gestire la prenotazione.</span> <a href="#privacy" class="check__link" data-en="Privacy policy">Leggi l'informativa</a></label>
                 <p class="bform__error" hidden></p>
                 <button type="submit" class="btn btn--gold btn--block"><span data-en="Confirm reservation">Conferma prenotazione</span></button>
               </fieldset>
@@ -582,12 +580,65 @@
           </div>
 
           <div class="contact__map reveal">
-            <iframe class="js-map" title="Mappa" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div class="map-consent">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+              <p data-en="The map is provided by Google, which may set its own cookies when it loads.">La mappa è fornita da Google, che quando si carica può usare i propri cookie.</p>
+              <button type="button" class="btn btn--gold btn--sm js-map-ok" data-en="Show the map">Mostra la mappa</button>
+              <a class="link-arrow js-directions" href="#" target="_blank" rel="noopener" data-en="Or open directions">Oppure apri le indicazioni</a>
+            </div>
+            <iframe class="js-map" title="Mappa" loading="lazy" referrerpolicy="no-referrer-when-downgrade" hidden></iframe>
           </div>
         </div>
       </section>
     </div>
 
+
+    <!-- ################ PAGINA: PRIVACY ################ -->
+    <div class="page" data-page="privacy">
+      <section class="section legal" id="privacy">
+        <div class="container legal__inner">
+          <p class="eyebrow"><span class="line"></span><span data-en="Your data">I tuoi dati</span></p>
+          <h2 class="h2" data-en="Privacy <em>policy</em>">Informativa <em>privacy</em></h2>
+            <p data-en="Information pursuant to EU Regulation 2016/679 (GDPR) for those who use this website and book a table.">Informativa ai sensi del Regolamento UE 2016/679 (GDPR) per chi usa questo sito e prenota un tavolo.</p>
+
+          <h3 data-en="1. Data controller">1. Titolare del trattamento</h3>
+          <p class="legal__owner"><span class="js-name"></span> — <span class="js-address"></span> — P.IVA <span class="js-vat"></span> — <span class="js-email"></span></p>
+            <h3 data-en="2. What data we collect">2. Quali dati raccogliamo</h3>
+            <p data-en="When you book: name, phone, email (if provided), date and time, number of guests, occasion and notes, including any allergies or intolerances. The website does not store this data: it lets you send it to us via WhatsApp or email, or through an online form service if enabled. If you subscribe to the newsletter we only collect your email.">Quando prenoti: nome, telefono, email (se la indichi), data e ora, numero di persone, occasione e note, comprese eventuali allergie o intolleranze. Il sito non conserva questi dati: te li fa inviare a noi con WhatsApp o via email, oppure tramite un servizio di moduli online se attivo. Se ti iscrivi alla newsletter raccogliamo solo la tua email.</p>
+            <h3 data-en="3. Why we use it">3. Perché li usiamo</h3>
+            <p data-en="Only to manage your reservation and contact you to confirm it. The legal basis is your booking request (art. 6.1.b GDPR); we process information about allergies and intolerances only with your explicit consent, which you give by writing it (art. 9.2.a). We use the newsletter email only to send you our news, with your consent.">Solo per gestire la tua prenotazione e contattarti per confermarla. La base giuridica è la tua richiesta di prenotazione (art. 6.1.b GDPR); le informazioni su allergie e intolleranze le trattiamo solo con il tuo consenso esplicito, che dai scrivendole (art. 9.2.a). L'email della newsletter la usiamo solo per inviarti le nostre novità, con il tuo consenso.</p>
+            <h3 data-en="4. Who can see it">4. Chi può vederli</h3>
+            <p data-en="The restaurant staff. Messages go through WhatsApp (Meta) or the email service you use, under their own terms. The website is hosted on GitHub Pages (GitHub Inc.), which may log technical data such as your IP address for security. We never sell or give your data to anyone.">Il personale del ristorante. I messaggi passano attraverso WhatsApp (Meta) o il servizio email che usi, secondo le loro condizioni. Il sito è ospitato su GitHub Pages (GitHub Inc.), che per sicurezza può registrare dati tecnici come l'indirizzo IP. Non vendiamo né cediamo i tuoi dati a nessuno.</p>
+            <h3 data-en="5. How long">5. Per quanto tempo</h3>
+            <p data-en="For the time needed to manage the reservation and in any case no longer than 12 months, unless required by law. The newsletter email until you unsubscribe.">Per il tempo necessario a gestire la prenotazione e comunque non oltre 12 mesi, salvo obblighi di legge. L'email della newsletter finché non ti cancelli.</p>
+            <h3 data-en="6. Your rights">6. I tuoi diritti</h3>
+            <p data-en="You can ask at any time to access, correct or delete your data, restrict its use, object or receive a copy, by writing to the email address above. You can also lodge a complaint with the Italian Data Protection Authority (www.garanteprivacy.it).">Puoi chiedere in ogni momento di vedere, correggere o cancellare i tuoi dati, limitarne l'uso, opporti o riceverne una copia, scrivendo all'indirizzo email indicato sopra. Puoi anche presentare reclamo al Garante per la protezione dei dati personali (www.garanteprivacy.it).</p>
+            <p data-en="Last updated: 2026">Ultimo aggiornamento: 2026</p>
+          <a href="#top" class="btn btn--ghost legal__back" data-en="Back to Home">Torna alla Home</a>
+        </div>
+      </section>
+    </div>
+
+    <!-- ################ PAGINA: COOKIE ################ -->
+    <div class="page" data-page="cookie">
+      <section class="section legal" id="cookie">
+        <div class="container legal__inner">
+          <p class="eyebrow"><span class="line"></span><span data-en="Cookies">Cookie</span></p>
+          <h2 class="h2" data-en="Cookie <em>policy</em>">Cookie <em>policy</em></h2>
+            <p data-en="This website uses no profiling or analytics cookies and loads no third-party services until you ask for them. That is why we do not show you a cookie banner.">Questo sito non usa cookie di profilazione né di statistica e non carica servizi di terze parti finché non sei tu a chiederlo. Per questo non ti mostriamo il banner dei cookie.</p>
+            <h3 data-en="What we store in your browser">Cosa salviamo nel tuo browser</h3>
+            <p data-en="Only the language you chose and, if you asked for it, your preference to show the map. These are technical tools needed for the website to work and do not require consent.">Solo la lingua che hai scelto e, se l'hai chiesto, la preferenza di mostrare la mappa. Sono strumenti tecnici necessari al funzionamento del sito e non richiedono consenso.</p>
+            <h3 data-en="Google Maps">Google Maps</h3>
+            <p data-en="On the «Where we are» page the Google map loads only when you tap «Show the map». From then on Google may use its own cookies, according to its policy (policies.google.com/privacy).">Nella pagina «Dove siamo» la mappa di Google si carica solo quando premi «Mostra la mappa». Da quel momento Google può usare i propri cookie, secondo la sua informativa (policies.google.com/privacy).</p>
+            <h3 data-en="Fonts and photos">Caratteri e foto</h3>
+            <p data-en="Fonts and photos are hosted directly on this website, with no external services.">Caratteri e foto sono ospitati direttamente su questo sito, senza servizi esterni.</p>
+            <h3 data-en="Withdrawing consent for the map">Revocare il consenso alla mappa</h3>
+          <p class="legal__action"><button type="button" class="btn btn--ghost btn--sm js-map-revoke" data-en="Hide the map again">Nascondi di nuovo la mappa</button></p>
+            <p data-en="Last updated: 2026">Ultimo aggiornamento: 2026</p>
+          <a href="#top" class="btn btn--ghost legal__back" data-en="Back to Home">Torna alla Home</a>
+        </div>
+      </section>
+    </div>
   </main>
 
   <!-- ============ FOOTER ============ -->
@@ -614,19 +665,20 @@
           <li><a href="#prenota" data-en="Book a table">Prenota un tavolo</a></li>
         </ul>
       </div>
-      <div>
+      <div class="footer__newsletter" hidden>
         <h4 data-en="Newsletter">Newsletter</h4>
         <p data-en="Seasonal menus, wine evenings and events. One email a month, no spam.">Menù stagionali, serate di degustazione ed eventi. Una mail al mese, niente spam.</p>
         <form class="newsletter" novalidate>
           <input type="email" required placeholder="La tua email" data-en-placeholder="Your email" aria-label="Email">
           <button type="submit" class="btn btn--gold btn--sm" data-en="Subscribe">Iscriviti</button>
         </form>
-        <p class="newsletter__ok" hidden data-en="Thank you! See you soon at Aurea.">Grazie! A presto da Aurea.</p>
+        <p class="newsletter__note" data-en="By subscribing you accept the privacy policy. You can unsubscribe at any time.">Iscrivendoti accetti l'informativa privacy. Puoi cancellarti quando vuoi.</p>
+        <p class="newsletter__ok" hidden data-en="Thank you! See you soon.">Grazie! A presto.</p>
       </div>
     </div>
     <div class="container footer__bottom">
       <span>© <span class="js-year"></span> <span class="js-name">Aurea</span> · <span>P.IVA</span> <span class="js-vat"></span></span>
-      <span><a href="#" data-en="Privacy policy">Privacy policy</a> · <a href="#" data-en="Cookie policy">Cookie policy</a></span>
+      <span><a href="#privacy" data-en="Privacy policy">Privacy policy</a> · <a href="#cookie" data-en="Cookie policy">Cookie policy</a></span>
     </div>
   </footer>
 

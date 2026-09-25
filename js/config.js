@@ -2,17 +2,16 @@
    CONFIGURAZIONE DEL RISTORANTE
    Modifica SOLO questo file per adattare il sito a un nuovo cliente:
    contatti, orari, giorni di chiusura, prenotazioni e social.
-   (Testi e piatti si modificano direttamente in index.html)
+   (Testi, piatti, foto e quasi tutto il resto si cambiano dall'area Amministratore)
    ========================================================================== */
 window.RESTAURANT = {
   name: "Aurea",
   tagline: "Cucina d'autore",
   city: "Milano",
 
-  /* Indirizzo pubblico del sito, con la barra finale.
-     Quando colleghi un dominio (es. https://www.nomeristorante.it/) cambialo qui
-     o dal pannello Amministratore → Dati. Serve a Google. */
-  siteUrl: "https://l13291221-cmyk.github.io/Ristorante-/",
+  /* Indirizzo pubblico del sito. Vuoto = si usa l'indirizzo da cui il sito è aperto
+     (va bene sia su github.io sia con un dominio collegato). */
+  siteUrl: "",
   cuisine: "Italiana, Cucina d'autore", // tipo di cucina, separato da virgole
   priceRange: "€€€",
   vat: "01234567890",                 // Partita IVA mostrata nel footer
@@ -22,6 +21,10 @@ window.RESTAURANT = {
   email: "prenotazioni@aurea-ristorante.it",
   address: "Via della Spiga 12, 20121 Milano MI",
   mapsQuery: "Via della Spiga 12, Milano",
+
+  /* Newsletter: vuoto = il riquadro non compare. Incolla l'indirizzo di un modulo
+     Formspree (o simile) per raccogliere davvero le iscrizioni. */
+  newsletterEndpoint: "",
 
   instagram: "https://instagram.com/",
   facebook: "https://facebook.com/",

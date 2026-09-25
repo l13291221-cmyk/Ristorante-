@@ -682,3 +682,23 @@ body:not([data-page="contatti"]) .footer { display: none; }
 .home-btn--main, .home-btn--gold { flex: 1 1 calc(50% - 5px); }
 @media (max-width: 860px) { .tabbar { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 1fr; } }
 @media (max-width: 560px) { .home-btn--main, .home-btn--gold { flex-basis: 100%; } }
+
+/* ---------- Pagine Privacy e Cookie ---------- */
+.legal__inner { max-width: 780px; }
+.legal h3 { font-family: var(--serif); font-weight: 500; font-size: 1.5rem; margin: 34px 0 8px; color: var(--ink); }
+.legal p { margin: 0 0 12px; font-size: .95rem; }
+.legal__owner { color: var(--ink) !important; }
+.legal__back { margin-top: 36px; }
+.legal__action { margin-top: 6px; }
+.check__link { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
+
+/* ---------- Mappa: si carica solo dopo il consenso ---------- */
+.contact__map { position: relative; display: grid; }
+.map-consent { display: grid; place-items: center; align-content: center; gap: 14px; text-align: center; padding: 30px 24px;
+  background: radial-gradient(circle at 50% 40%, rgba(201, 164, 92, .1), transparent 60%), var(--bg-3); }
+.map-consent[hidden] { display: none; }
+.map-consent svg { width: 42px; height: 42px; color: var(--gold); }
+.map-consent p { max-width: 340px; margin: 0; font-size: .9rem; }
+.contact__map iframe[hidden] { display: none; }
+
+.newsletter__note { font-size: .74rem !important; color: var(--ink-3); margin: 10px 0 0; }

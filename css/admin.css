@@ -225,3 +225,12 @@ body.adm-on .tabbar { display: none; }
 .adm-ui input::placeholder { color: var(--ink-3); opacity: .8; }
 .adm-editing .story__badge svg { pointer-events: none; }
 .adm-editing .story__badge span { position: relative; z-index: 1; cursor: pointer; }
+
+/* ---------- Dominio ---------- */
+.adm-steps { margin: 0 0 14px; padding-left: 20px; display: grid; gap: 8px; font-size: 13px; color: var(--ink-2); }
+.adm-steps b { color: var(--ink); }
+.adm-copy { display: inline-block; margin: 2px 2px 0 0; padding: 2px 8px !important; border-radius: 6px; background: var(--a-bg3); color: var(--gold-2); cursor: pointer; border: 1px solid var(--a-line); }
+.adm-copy:hover { border-color: var(--gold); }
+.adm-dns { margin: 10px 0 0; font-size: 13px; }
+.adm-dns.is-ok { color: #6fbf73 !important; font-weight: 600; }
+.adm-dns.is-bad { color: #e6907f !important; }
