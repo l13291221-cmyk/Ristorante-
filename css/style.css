@@ -225,10 +225,10 @@ body:not(.is-loading) .preloader { opacity: 0; visibility: hidden; }
 /* ---------- Reveal on scroll ---------- */
 .reveal { opacity: 0; transform: translateY(40px); transition: opacity 1.2s var(--ease), transform 1.2s var(--ease); }
 .reveal.is-in { opacity: 1; transform: none; }
-figure.reveal { clip-path: inset(100% 0 0 0); transform: none; opacity: 1; transition: clip-path 1.5s var(--ease); }
-figure.reveal img { transform: scale(1.25); transition: transform 2s var(--ease); }
-figure.reveal.is-in { clip-path: inset(0 0 0 0); }
-figure.reveal.is-in img { transform: scale(1); }
+/* il "sipario" è sulla foto, non sulla cornice: così il browser vede la cornice e fa partire l'effetto */
+figure.reveal { transform: none; opacity: 1; }
+figure.reveal img { clip-path: inset(100% 0 0 0); transform: scale(1.25); transition: clip-path 1.5s var(--ease), transform 2s var(--ease); }
+figure.reveal.is-in img { clip-path: inset(0 0 0 0); transform: scale(1); }
 
 /* ---------- Storia ---------- */
 .story__grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(50px, 8vw, 120px); align-items: center; }
@@ -543,7 +543,7 @@ figure.reveal.is-in img { transform: scale(1); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
-  .reveal, figure.reveal { opacity: 1; transform: none; clip-path: none; }
+  .reveal, figure.reveal, figure.reveal img { opacity: 1; transform: none; clip-path: none; }
 }
 
 /* ==========================================================================
@@ -673,3 +673,12 @@ body:not([data-page="contatti"]) .footer { display: none; }
   .menu__controls { margin-bottom: 8px; }
   .menu-item { padding: 16px 0; }
 }
+
+/* ---------- Pagine spente dall'amministratore ---------- */
+.is-page-hidden { display: none !important; }
+/* i tasti della home si ridistribuiscono se qualcuno sparisce */
+.home-grid { display: flex; flex-wrap: wrap; }
+.home-btn { flex: 1 1 0; min-width: 0; }
+.home-btn--main, .home-btn--gold { flex: 1 1 calc(50% - 5px); }
+@media (max-width: 860px) { .tabbar { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 1fr; } }
+@media (max-width: 560px) { .home-btn--main, .home-btn--gold { flex-basis: 100%; } }

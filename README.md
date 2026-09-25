@@ -29,6 +29,7 @@ Sito vetrina di fascia alta per ristoranti: design scuro ed elegante, animazioni
 2. Inserisci il PIN: all'inizio è **123456**. Cambialo subito dalla scheda **Sicurezza**.
 3. Dal pannello puoi:
    - **Pagina → Modifica la pagina**: tocchi qualsiasi titolo, testo, pulsante o foto del sito e lo cambi (italiano e inglese). Scrivi tra `*asterischi*` per il corsivo dorato. Per cambiare pagina mentre modifichi usa il selettore nella barra in basso.
+   - **Pagina → Pagine del sito**: spegni o riaccendi un'intera pagina (Menù, Prenota, Chi siamo, Galleria, Eventi, Dove siamo). Spariscono anche tutti i tasti che portavano lì; i contenuti restano salvati.
    - **Dati**: nome, telefono, WhatsApp, email, indirizzo, social, P.IVA, titolo e descrizione per Google.
    - **Orari**: fasce di pranzo e cena, giorni di chiusura, ferie, regole di prenotazione.
    - **Menù**: aggiungi, modifica, riordina o elimina i piatti di ogni categoria.

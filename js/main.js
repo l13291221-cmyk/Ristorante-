@@ -89,6 +89,7 @@
     if (R.seoDescription) { var md = $('meta[name="description"]'); if (md) md.content = R.seoDescription; }
     var adm = $(".admin-entry");
     if (adm) adm.hidden = R.showAdminButton === false;
+    applyHiddenPages();
     updateSEO();
   }
 
@@ -258,8 +259,22 @@
     var el = document.getElementById(id), pg = el && el.closest(".page");
     return pg ? pg.dataset.page : null;
   }
-  function showPage(name, anchorId) {
-    if (!$('.page[data-page="' + name + '"]')) name = "home";
+  // pagine spente dall'amministratore (la Home resta sempre accesa)
+  var isHidden = function (name) { return name !== "home" && (R.hiddenPages || []).indexOf(name) !== -1; };
+  function applyHiddenPages() {
+    $$('a[href^="#"]').forEach(function (a) {
+      if (a.closest(".adm, .adm-bar, .adm-modal")) return;
+      var pg = pageOf(a.getAttribute("href").slice(1));
+      a.classList.toggle("is-page-hidden", !!pg && isHidden(pg));
+    });
+    $$(".page").forEach(function (p) { p.classList.toggle("is-off", isHidden(p.dataset.page)); });
+    if (document.body.hasAttribute("data-page")) {
+      renderPagers();
+      if (isHidden(currentPage) && !document.body.classList.contains("adm-editing")) showPage("home");
+    }
+  }
+  function showPage(name, anchorId, force) {
+    if (!$('.page[data-page="' + name + '"]') || (isHidden(name) && !force)) name = "home";
     $$(".page").forEach(function (p) {
       var on = p.dataset.page === name;
       p.hidden = !on;
@@ -284,7 +299,8 @@
       if (name === "home") return;
       var page = $('.page[data-page="' + name + '"]');
       if (!page) return;
-      var next = PAGE_ORDER[i + 1] || "home";
+      var next = "home";
+      for (var j = i + 1; j < PAGE_ORDER.length; j++) { if (!isHidden(PAGE_ORDER[j]) && $('.page[data-page="' + PAGE_ORDER[j] + '"]')) { next = PAGE_ORDER[j]; break; } }
       var nav = document.createElement("nav");
       nav.className = "pager container";
       nav.setAttribute("aria-label", t("pages")[name]);
@@ -296,6 +312,7 @@
   }
   function initPages() {
     renderPagers();
+    applyHiddenPages();
     document.addEventListener("click", function (e) {
       if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey) return;
       var a = e.target.closest('a[href^="#"]');
@@ -940,7 +957,7 @@
       get content() { return content; }, get lang() { return lang; },
       applyText: applyText, applyImage: applyImage, applyLang: applyLang, rerender: rerender,
       syncMarquee: syncMarquee, splitHero: splitHero, esc: esc,
-      showPage: showPage, get page() { return currentPage; }, pageNames: T.it.pages, pageOrder: PAGE_ORDER
+      showPage: showPage, isHidden: isHidden, get page() { return currentPage; }, pageNames: T.it.pages, pageOrder: PAGE_ORDER
     };
 
     var openAdmin = function () { loadAdmin(function () { window.AUREA_ADMIN.start(); }); };

@@ -218,7 +218,7 @@
       '<select aria-label="Pagina da modificare">' + A.pageOrder.map(function (p) { return '<option value="' + p + '">' + esc(A.pageNames[p]) + "</option>"; }).join("") + "</select>" +
       '<button type="button" class="adm-btn" data-act="done">Fine</button></div>');
     // in modalità modifica i link non funzionano: si cambia pagina da qui
-    $("select", ui.bar).addEventListener("change", function (e) { A.showPage(e.target.value); $$(".reveal").forEach(function (r) { r.classList.add("is-in"); }); });
+    $("select", ui.bar).addEventListener("change", function (e) { A.showPage(e.target.value, null, true); $$(".reveal").forEach(function (r) { r.classList.add("is-in"); }); });
     document.addEventListener("aurea:page", function (e) { $("select", ui.bar).value = e.detail; });
     ui.toast = el('<div class="adm-toast" role="status" aria-live="polite"></div>');
     [ui.panel, ui.tab, ui.bar, ui.toast].forEach(function (n) { document.body.appendChild(n); });
@@ -303,6 +303,31 @@
       "<li><b>Foto:</b> tocca la foto e caricane una nuova dal telefono o dal computer.</li>" +
       "<li><b>Menù, recensioni, orari e contatti</b> si cambiano dalle schede qui sopra.</li>" +
       "<li>Le modifiche restano in <b>bozza</b> finché non premi <b>Pubblica</b>.</li></ul>"));
+
+    var sp = section("Pagine del sito", "Spegni una pagina se il ristorante non la usa: sparisce dal sito insieme a tutti i tasti che portavano lì. Puoi riaccenderla quando vuoi, i contenuti restano salvati.");
+    var hidden = (cfg("hiddenPages") || []).slice();
+    var WARN = {
+      prenota: "Senza la pagina Prenota i clienti non potranno più prenotare dal sito (resta il tasto Chiama). Spegnerla?",
+      menu: "Il menù è la pagina più visitata. Sei sicuro di volerla spegnere?"
+    };
+    A.pageOrder.forEach(function (pg) {
+      var home = pg === "home", on = home || hidden.indexOf(pg) === -1;
+      var row = el('<label class="adm-switch' + (home ? " is-locked" : "") + '"><span><b>' + esc(A.pageNames[pg]) + "</b>" +
+        (home ? "<small>Sempre visibile</small>" : "<small>" + (on ? "Visibile" : "Spenta") + "</small>") + "</span>" +
+        '<input type="checkbox"' + (on ? " checked" : "") + (home ? " disabled" : "") + '><i aria-hidden="true"></i></label>');
+      if (!home) $("input", row).addEventListener("change", function (e) {
+        if (!e.target.checked && WARN[pg] && !confirm(WARN[pg])) { e.target.checked = true; return; }
+        var i = hidden.indexOf(pg);
+        if (e.target.checked && i !== -1) hidden.splice(i, 1);
+        if (!e.target.checked && i === -1) hidden.push(pg);
+        draft.config.hiddenPages = hidden.slice();
+        if (!hidden.length) delete draft.config.hiddenPages;
+        $("small", row).textContent = e.target.checked ? "Visibile" : "Spenta";
+        saveDraft(); liveRerender();
+        toast(e.target.checked ? "Pagina «" + A.pageNames[pg] + "» riaccesa ✓" : "Pagina «" + A.pageNames[pg] + "» spenta ✓");
+      });
+      sp.appendChild(row);
+    });
 
     var s2 = section("Riepilogo");
     s2.appendChild(el('<p class="adm-note">Testi modificati: <b>' + n + "</b> · Foto cambiate: <b>" + m + "</b></p>"));
@@ -755,6 +780,7 @@
     ui.panel.classList.remove("is-open");
     ui.tab.classList.remove("is-on");
     ui.bar.classList.add("is-on");
+    $$("option", ui.bar).forEach(function (o) { o.textContent = A.pageNames[o.value] + (A.isHidden(o.value) ? " (spenta)" : ""); });
     $("select", ui.bar).value = A.page;
     toast("Tocca un testo o una foto per modificarli");
   }
