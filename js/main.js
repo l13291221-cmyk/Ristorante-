@@ -825,11 +825,24 @@
   var DEFAULTS = { config: JSON.parse(JSON.stringify(R)) };
   var isAdminSession = function () { try { return sessionStorage.getItem("aurea-admin") === "1"; } catch (e) { return false; } };
 
-  function loadAdmin(cb) {
+  var adminLoading = false;
+  function loadAdmin(cb, attempt) {
     if (window.AUREA_ADMIN) return cb && cb();
-    var l = document.createElement("link"); l.rel = "stylesheet"; l.href = "css/admin.css"; document.head.appendChild(l);
-    var sc = document.createElement("script"); sc.src = "js/admin.js";
-    sc.onload = function () { if (cb) cb(); };
+    if (adminLoading && !attempt) return;
+    adminLoading = true;
+    attempt = attempt || 1;
+    if (!$('link[href^="css/admin.css"]')) {
+      var l = document.createElement("link"); l.rel = "stylesheet"; l.href = "css/admin.css"; document.head.appendChild(l);
+    }
+    var sc = document.createElement("script");
+    sc.src = "js/admin.js" + (attempt > 1 ? "?r=" + Date.now() : "");
+    sc.onload = function () { adminLoading = false; if (cb) cb(); };
+    sc.onerror = function () {
+      sc.remove();
+      // connessione instabile: riprova ancora due volte prima di arrendersi
+      if (attempt < 3) setTimeout(function () { loadAdmin(cb, attempt + 1); }, 800 * attempt);
+      else { adminLoading = false; alert("Area amministratore non raggiungibile: controlla la connessione e riprova."); }
+    };
     document.body.appendChild(sc);
   }
 
