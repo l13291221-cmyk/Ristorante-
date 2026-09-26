@@ -702,3 +702,21 @@ body:not([data-page="contatti"]) .footer { display: none; }
 .contact__map iframe[hidden] { display: none; }
 
 .newsletter__note { font-size: .74rem !important; color: var(--ink-3); margin: 10px 0 0; }
+
+/* ---------- iPhone: niente scritte che si vedono dietro le barre del browser ----------
+   Su iOS la pagina scorre anche sotto l'ora/batteria e sotto la barra dell'indirizzo:
+   allunghiamo lo sfondo dell'intestazione verso l'alto e quello della barra in basso
+   verso il basso, così quelle zone restano coperte. */
+.header::before {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: 240px;
+  background: transparent; pointer-events: none; transition: background .5s var(--ease);
+}
+.header.is-scrolled::before { background: #0d0b09; }
+.header.is-scrolled { background: rgba(13, 11, 9, .96); }
+@media (max-width: 860px) {
+  .tabbar::after {
+    content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 240px;
+    background: #100d0b; pointer-events: none;
+  }
+  .tabbar { background: #100d0b; }
+}
