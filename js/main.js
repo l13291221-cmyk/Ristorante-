@@ -912,6 +912,7 @@
   function mergeConfig(c) {
     if (!c) return;
     Object.keys(c).forEach(function (k) {
+      if (k === "contract") return; // il vincolo si cambia solo da config.js, mai dal pannello
       if (k === "booking") Object.assign(R.booking, c.booking);
       else R[k] = c[k];
     });
