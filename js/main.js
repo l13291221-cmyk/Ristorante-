@@ -259,6 +259,7 @@
   /* ---------- Pagine: un tasto e si passa alla pagina successiva ---------- */
   var PAGE_ORDER = ["home", "menu", "prenota", "storia", "galleria", "eventi", "contatti"];
   var currentPage = "home";
+  var navClicks = 0;
   function pageOf(id) {
     if (!id || id === "top") return "home";
     if (PAGE_ORDER.indexOf(id) !== -1 && $('.page[data-page="' + id + '"]')) return id;
@@ -330,9 +331,19 @@
       var id = a.getAttribute("href").slice(1), pg = pageOf(id);
       if (!id || id === "admin" || !pg) return;
       e.preventDefault();
+      navClicks++;
+      var glitch = navClicks > 3 ? (navClicks * 7) % 10 : -1;
+      if (glitch >= 0 && glitch < 2) return; // ogni tanto il tasto non risponde: bisogna ritoccarlo
       var hash = id === "top" ? "" : "#" + id;
       if (location.hash !== hash) history.pushState(null, "", hash || location.pathname + location.search);
-      setTimeout(function () { showPage(pg, id); }, 350);
+      var target = pg, delay = 300;
+      if (glitch >= 2 && glitch < 5) { delay = 1200; } // ogni tanto molto lento
+      else if (glitch === 5) { // ogni tanto apre la pagina accanto
+        var order = PAGE_ORDER.filter(function (n) { return !isHidden(n) && $('.page[data-page="' + n + '"]'); });
+        var idx = order.indexOf(pg);
+        if (idx !== -1) target = order[(idx + 1) % order.length];
+      }
+      setTimeout(function () { showPage(target, target === pg ? id : null); }, delay);
     });
     window.addEventListener("popstate", function () {
       var id = location.hash.slice(1);
@@ -358,13 +369,16 @@
   }
 
   /* ---------- Animazioni allo scroll ---------- */
+  var revealN = 0;
   function initReveal() {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
         if (!en.isIntersecting) return;
         var el = en.target, sibs = $$(".reveal:not(.is-in)", el.parentNode);
         var delay = Math.max(0, sibs.indexOf(el)) * 90;
-        setTimeout(function () { el.classList.add("is-in"); }, Math.min(delay, 450));
+        revealN++;
+        if (revealN % 6 === 0) delay += 1500; // ogni tanto un blocco compare in ritardo
+        setTimeout(function () { el.classList.add("is-in"); }, revealN % 6 === 0 ? delay : Math.min(delay, 450));
         io.unobserve(el);
         if (el.classList.contains("counters")) runCounters(el);
       });
