@@ -560,7 +560,7 @@ body:not([data-page="contatti"]) .footer { display: none; }
 
 /* ---------- Home: i tasti principali ---------- */
 .hero__content { padding-top: 100px; padding-bottom: 90px; }
-.hero__title { font-size: clamp(3rem, min(6.6vw, 8.6vh), 6rem); margin-bottom: 22px; }
+.hero__title { font-size: clamp(3rem, min(6.6vw, 8.6vh), 6rem); margin-bottom: -16px; }
 .hero__lead { margin-bottom: 28px; }
 .home-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; max-width: 760px; opacity: 0; transform: translateY(20px); transition: opacity 1.2s var(--ease) .85s, transform 1.2s var(--ease) .85s; }
 .is-ready .home-grid { opacity: 1; transform: none; }
@@ -584,7 +584,7 @@ body:not([data-page="contatti"]) .footer { display: none; }
 .home-btn--main svg { color: #17120a; }
 .home-btn--main:hover { background: var(--gold-2); border-color: var(--gold-2); }
 .home-btn--gold { border-color: rgba(201, 164, 92, .7); }
-.hero__status { justify-content: space-between; gap: 14px; max-width: 760px; margin-top: 22px; }
+.hero__status { justify-content: space-between; gap: 14px; max-width: 760px; margin-top: -22px; position: relative; z-index: 3; }
 .hero__status > span:nth-child(2) { flex: 1; }
 
 /* ---------- Tasto amministratore (nella riga dello stato) ---------- */
@@ -627,28 +627,28 @@ body:not([data-page="contatti"]) .footer { display: none; }
   .tabbar a.is-current { color: var(--gold-2); }
   .tabbar__main svg { width: 50px !important; height: 50px !important; padding: 13px; margin-top: -26px; border-radius: 50%; background: var(--gold); color: #17120a; box-shadow: 0 8px 24px rgba(0, 0, 0, .45), 0 0 0 5px var(--bg); }
   .tabbar__main { color: var(--gold-2) !important; }
-  body { padding-bottom: calc(66px + env(safe-area-inset-bottom)); }
+  body { padding-bottom: calc(34px + env(safe-area-inset-bottom)); }
   .mobile-nav { padding-bottom: 140px; }
   .page > section.section:first-child { padding-top: calc(70px + 34px); }
   .section { padding: 56px 0; }
   .section__head { margin-bottom: 32px; }
   .hero { min-height: calc(100svh - 66px); }
   .hero__content { padding-top: 92px; padding-bottom: 26px; }
-  .pager { padding-bottom: 34px; }
+  .pager { padding-bottom: 0; }
   .menu__controls { margin-left: calc(var(--gutter) * -1); margin-right: calc(var(--gutter) * -1); padding: 0 var(--gutter); gap: 6px 20px; }
   .menu__controls .toggle { padding-bottom: 10px; }
   .menu__panel { gap: 0; }
 }
 @media (max-width: 560px) {
   .hero__eyebrow { margin-bottom: 14px; }
-  .hero__title { font-size: clamp(2.3rem, 11vw, 3.2rem); margin-bottom: 14px; }
+  .hero__title { font-size: clamp(2.3rem, 11vw, 3.2rem); margin-bottom: -12px; }
   .hero__lead { font-size: .92rem; line-height: 1.55; margin-bottom: 20px; }
   .home-grid { gap: 8px; }
   .home-btn--main, .home-btn--gold { grid-column: span 4; min-height: 64px; padding: 12px 16px; gap: 14px; }
   .home-btn__txt strong { font-size: 1.35rem; }
   .home-btn { min-height: 70px; padding: 10px 4px; font-size: .68rem; letter-spacing: .02em; gap: 6px; border-radius: 12px; }
   .home-btn svg { width: 21px; height: 21px; }
-  .hero__status { margin-top: 16px; font-size: .76rem; }
+  .hero__status { margin-top: -18px; font-size: .76rem; }
   .pager__next span { font-size: 1.35rem; }
   .pager__home { padding: 0 14px; }
   .pager__home span { display: none; }
@@ -658,7 +658,7 @@ body:not([data-page="contatti"]) .footer { display: none; }
   .hero__eyebrow { margin-bottom: 14px; }
   .home-btn { min-height: 74px; }
   .home-btn--main, .home-btn--gold { min-height: 70px; padding-block: 12px; }
-  .hero__status { margin-top: 16px; }
+  .hero__status { margin-top: -20px; }
 }
 @media (max-width: 560px) and (max-height: 700px) {
   .hero__lead { display: none; }
@@ -670,7 +670,7 @@ body:not([data-page="contatti"]) .footer { display: none; }
   .menu .section__head .eyebrow { margin-bottom: 10px; }
   .menu .section__head .h2 { font-size: 2.3rem; margin-bottom: 10px; }
   .menu .section__lead { font-size: .82rem; line-height: 1.5; }
-  .menu__controls { margin-bottom: 8px; }
+  .menu__controls { margin-bottom: -26px; }
   .menu-item { padding: 16px 0; }
 }
 

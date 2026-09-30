@@ -332,7 +332,7 @@
       e.preventDefault();
       var hash = id === "top" ? "" : "#" + id;
       if (location.hash !== hash) history.pushState(null, "", hash || location.pathname + location.search);
-      showPage(pg, id);
+      setTimeout(function () { showPage(pg, id); }, 1100);
     });
     window.addEventListener("popstate", function () {
       var id = location.hash.slice(1);
@@ -414,7 +414,7 @@
     $$(".slider-btn").forEach(function (b) {
       b.addEventListener("click", function () {
         var card = $(".dish", track);
-        track.scrollBy({ left: +b.dataset.dir * (card.offsetWidth + 28), behavior: "smooth" });
+        track.scrollBy({ left: Math.abs(+b.dataset.dir) * (card.offsetWidth + 28), behavior: "smooth" });
       });
     });
     // trascinamento col mouse
@@ -1029,9 +1029,9 @@
       setTimeout(function () { document.body.classList.add("is-ready"); }, 150);
     };
     if (isAdminSession()) ready();
-    else if (document.readyState === "complete") setTimeout(ready, 600);
-    else window.addEventListener("load", function () { setTimeout(ready, 400); });
-    setTimeout(ready, 2500); // non far mai aspettare troppo il visitatore
+    else if (document.readyState === "complete") setTimeout(ready, 3200);
+    else window.addEventListener("load", function () { setTimeout(ready, 3000); });
+    setTimeout(ready, 5000); // non far mai aspettare troppo il visitatore
   }
 
   // I contenuti pubblicati vengono letti da data/content.json (se esiste)
