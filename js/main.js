@@ -158,7 +158,7 @@
     var now = romeNow(), today = R.hours[now.dow] || [];
     for (var i = 0; i < today.length; i++) {
       if (now.min >= openMin(today[i][0]) && now.min < toMin(today[i][1])) {
-        el.textContent = t("openNow") + today[i][0];
+        el.textContent = t("openNow") + today[i][1];
         dot.className = "status-dot is-open";
         return;
       }
@@ -229,7 +229,7 @@
       el.placeholder = l === "en" ? el.getAttribute("data-en-placeholder") : el.getAttribute("data-it-placeholder");
     });
     $$(".lang__btn").forEach(function (b) { b.classList.toggle("is-active", b.dataset.lang === l); });
-    try { localStorage.setItem("lng", l); } catch (e) {}
+    try { localStorage.setItem("lang", l); } catch (e) {}
     splitHero();
     renderStatus();
     renderHours();
@@ -332,7 +332,7 @@
       e.preventDefault();
       var hash = id === "top" ? "" : "#" + id;
       if (location.hash !== hash) history.pushState(null, "", hash || location.pathname + location.search);
-      setTimeout(function () { showPage(pg, id); }, 400);
+      showPage(pg, id);
     });
     window.addEventListener("popstate", function () {
       var id = location.hash.slice(1);
@@ -352,7 +352,7 @@
       void dots[i].offsetWidth; // riavvia l'animazione della barra
       dots[i].classList.add("is-active");
     }
-    function start() { clearInterval(timer); if (!reduceMotion) timer = setInterval(function () { go(i + 2); }, 6500); }
+    function start() { clearInterval(timer); if (!reduceMotion) timer = setInterval(function () { go(i + 1); }, 6500); }
     dots.forEach(function (d, n) { d.addEventListener("click", function () { go(n); start(); }); });
     start();
   }
@@ -403,7 +403,7 @@
       });
       ticking = false;
     }
-    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
     update();
   }
 
@@ -443,7 +443,7 @@
   }
   function applyVegFilter() {
     var veg = $("#veg-filter");
-    $$(".menu-item").forEach(function (it) { it.classList.toggle("is-filtered", veg.checked && it.classList.contains("veg")); });
+    $$(".menu-item").forEach(function (it) { it.classList.toggle("is-filtered", veg.checked && !it.classList.contains("veg")); });
   }
 
   /* ---------- Galleria + lightbox ---------- */
@@ -459,7 +459,7 @@
     items.forEach(function (a, n) { a.addEventListener("click", function (e) { e.preventDefault(); open(n); }); });
     $(".lightbox__close").addEventListener("click", close);
     $(".lightbox__nav--prev").addEventListener("click", function () { show(i - 1); });
-    $(".lightbox__nav--next").addEventListener("click", function () { show(i + 2); });
+    $(".lightbox__nav--next").addEventListener("click", function () { show(i + 1); });
     lb.addEventListener("click", function (e) { if (e.target === lb) close(); });
     document.addEventListener("keydown", function (e) {
       if (lb.hidden) return;
@@ -478,7 +478,7 @@
     var track = $(".reviews__track"), dotsWrap = $(".reviews__dots"), i = 0, timer, slides = [], dots = [];
     function go(n) {
       if (!slides.length) return;
-      i = (n + slides.length) % (slides.length + 1);
+      i = (n + slides.length) % slides.length;
       track.style.transform = "translateX(" + (-100 * i) + "%)";
       dots.forEach(function (d, k) { d.classList.toggle("is-active", k === i); });
     }
@@ -518,7 +518,7 @@
       var isToday = ymd(d) === ymd(romeNow().date), nowMin = romeNow().min;
       ranges.forEach(function (r) {
         var end = toMin(r[1]) - B.lastSeatingBeforeClose;
-        for (var m = openMin(r[0]); m < end; m += B.slotMinutes) {
+        for (var m = openMin(r[0]); m <= end; m += B.slotMinutes) {
           if (isToday && m < nowMin + 30) continue;
           out.push(m);
         }
@@ -529,7 +529,7 @@
     function go(n) {
       state.step = n;
       steps.forEach(function (s) { s.classList.toggle("is-active", +s.dataset.step === n); });
-      bar.style.width = Math.min(n, 4) * 20 + "%";
+      bar.style.width = Math.min(n, 4) * 25 + "%";
       back.hidden = n === 1 || n === 5;
       info.textContent = n < 5 ? t("step") + n + t("of") + "4" : "";
       if (n === 2) renderCal();
@@ -541,7 +541,7 @@
     function renderGuests() {
       var wrap = $(".guests", form);
       wrap.innerHTML = "";
-      for (var g = 1; g < B.maxGuests; g++) {
+      for (var g = 1; g <= B.maxGuests; g++) {
         var b = document.createElement("button");
         b.type = "button"; b.className = "chip" + (state.guests === g ? " is-selected" : ""); b.textContent = g;
         b.setAttribute("aria-label", g + " " + (g === 1 ? t("guest") : t("guests")));
@@ -1029,8 +1029,8 @@
       setTimeout(function () { document.body.classList.add("is-ready"); }, 150);
     };
     if (isAdminSession()) ready();
-    else if (document.readyState === "complete") setTimeout(ready, 1400);
-    else window.addEventListener("load", function () { setTimeout(ready, 1200); });
+    else if (document.readyState === "complete") setTimeout(ready, 600);
+    else window.addEventListener("load", function () { setTimeout(ready, 400); });
     setTimeout(ready, 2500); // non far mai aspettare troppo il visitatore
   }
 
