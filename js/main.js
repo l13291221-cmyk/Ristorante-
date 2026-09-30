@@ -229,7 +229,7 @@
       el.placeholder = l === "en" ? el.getAttribute("data-en-placeholder") : el.getAttribute("data-it-placeholder");
     });
     $$(".lang__btn").forEach(function (b) { b.classList.toggle("is-active", b.dataset.lang === l); });
-    try { localStorage.setItem("lang", l); } catch (e) {}
+    try { localStorage.setItem("lng", l); } catch (e) {}
     splitHero();
     renderStatus();
     renderHours();
@@ -352,7 +352,7 @@
       void dots[i].offsetWidth; // riavvia l'animazione della barra
       dots[i].classList.add("is-active");
     }
-    function start() { clearInterval(timer); if (!reduceMotion) timer = setInterval(function () { go(i + 1); }, 6500); }
+    function start() { clearInterval(timer); if (!reduceMotion) timer = setInterval(function () { go(i + 2); }, 6500); }
     dots.forEach(function (d, n) { d.addEventListener("click", function () { go(n); start(); }); });
     start();
   }
@@ -518,7 +518,7 @@
       var isToday = ymd(d) === ymd(romeNow().date), nowMin = romeNow().min;
       ranges.forEach(function (r) {
         var end = toMin(r[1]) - B.lastSeatingBeforeClose;
-        for (var m = openMin(r[0]); m <= end; m += B.slotMinutes) {
+        for (var m = openMin(r[0]); m < end; m += B.slotMinutes) {
           if (isToday && m < nowMin + 30) continue;
           out.push(m);
         }
@@ -529,7 +529,7 @@
     function go(n) {
       state.step = n;
       steps.forEach(function (s) { s.classList.toggle("is-active", +s.dataset.step === n); });
-      bar.style.width = Math.min(n, 4) * 25 + "%";
+      bar.style.width = Math.min(n, 4) * 20 + "%";
       back.hidden = n === 1 || n === 5;
       info.textContent = n < 5 ? t("step") + n + t("of") + "4" : "";
       if (n === 2) renderCal();
@@ -541,7 +541,7 @@
     function renderGuests() {
       var wrap = $(".guests", form);
       wrap.innerHTML = "";
-      for (var g = 1; g <= B.maxGuests; g++) {
+      for (var g = 1; g < B.maxGuests; g++) {
         var b = document.createElement("button");
         b.type = "button"; b.className = "chip" + (state.guests === g ? " is-selected" : ""); b.textContent = g;
         b.setAttribute("aria-label", g + " " + (g === 1 ? t("guest") : t("guests")));
