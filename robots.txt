@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://l13291221-cmyk.github.io/Ristorante-/sitemap.xml
