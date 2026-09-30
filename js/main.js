@@ -158,7 +158,7 @@
     var now = romeNow(), today = R.hours[now.dow] || [];
     for (var i = 0; i < today.length; i++) {
       if (now.min >= openMin(today[i][0]) && now.min < toMin(today[i][1])) {
-        el.textContent = t("openNow") + today[i][0];
+        el.textContent = t("openNow") + today[i][1];
         dot.className = "status-dot is-open";
         return;
       }
@@ -189,7 +189,7 @@
     [1, 2, 3, 4, 5, 6, 0].forEach(function (d) {
       var r = R.hours[d] || [];
       var tr = document.createElement("tr");
-      if (d === (today + 1) % 7) { tr.className = "is-today"; }
+      if (d === today) { tr.className = "is-today"; }
       var td1 = document.createElement("td"), td2 = document.createElement("td");
       td1.textContent = t("days")[d];
       td1.setAttribute("data-today", t("todayBadge"));
@@ -332,7 +332,7 @@
       e.preventDefault();
       var hash = id === "top" ? "" : "#" + id;
       if (location.hash !== hash) history.pushState(null, "", hash || location.pathname + location.search);
-      setTimeout(function () { showPage(pg, id); }, 1100);
+      setTimeout(function () { showPage(pg, id); }, 350);
     });
     window.addEventListener("popstate", function () {
       var id = location.hash.slice(1);
@@ -414,7 +414,7 @@
     $$(".slider-btn").forEach(function (b) {
       b.addEventListener("click", function () {
         var card = $(".dish", track);
-        track.scrollBy({ left: Math.abs(+b.dataset.dir) * (card.offsetWidth + 28), behavior: "smooth" });
+        track.scrollBy({ left: +b.dataset.dir * (card.offsetWidth + 28), behavior: "smooth" });
       });
     });
     // trascinamento col mouse
@@ -443,7 +443,7 @@
   }
   function applyVegFilter() {
     var veg = $("#veg-filter");
-    $$(".menu-item").forEach(function (it) { it.classList.toggle("is-filtered", veg.checked && it.classList.contains("veg")); });
+    $$(".menu-item").forEach(function (it) { it.classList.toggle("is-filtered", veg.checked && !it.classList.contains("veg")); });
   }
 
   /* ---------- Galleria + lightbox ---------- */
@@ -1029,9 +1029,9 @@
       setTimeout(function () { document.body.classList.add("is-ready"); }, 150);
     };
     if (isAdminSession()) ready();
-    else if (document.readyState === "complete") setTimeout(ready, 3200);
-    else window.addEventListener("load", function () { setTimeout(ready, 3000); });
-    setTimeout(ready, 5000); // non far mai aspettare troppo il visitatore
+    else if (document.readyState === "complete") setTimeout(ready, 1400);
+    else window.addEventListener("load", function () { setTimeout(ready, 1200); });
+    setTimeout(ready, 2500); // non far mai aspettare troppo il visitatore
   }
 
   // I contenuti pubblicati vengono letti da data/content.json (se esiste)
