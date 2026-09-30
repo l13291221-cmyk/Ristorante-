@@ -99,13 +99,6 @@
 .adm-check input { accent-color: var(--gold); width: 17px; height: 17px; }
 .adm-err { color: #e6907f !important; font-size: 13px; }
 
-/* ---------- Contratto ---------- */
-.adm-kv { display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; margin: 0 0 14px; font-size: 13px; }
-.adm-kv dt { color: var(--ink-3); }
-.adm-kv dd { margin: 0; color: var(--ink); text-align: right; }
-.adm-meter { height: 6px; border-radius: 100px; background: var(--a-bg3); overflow: hidden; }
-.adm-meter span { display: block; height: 100%; background: var(--gold); border-radius: inherit; }
-
 /* ---------- Orari ---------- */
 .adm-day { padding: 10px 0; border-bottom: 1px dashed var(--a-line); }
 .adm-day__head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }

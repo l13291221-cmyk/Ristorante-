@@ -197,7 +197,7 @@
      ========================================================================== */
   var TABS = [
     ["pagina", "Pagina"], ["dati", "Dati"], ["orari", "Orari"], ["menu", "Menù"],
-    ["recensioni", "Recensioni"], ["immagini", "Immagini"], ["scritte", "Scritte"], ["contratto", "Contratto"], ["sicurezza", "Sicurezza"], ["pubblica", "Pubblica"]
+    ["recensioni", "Recensioni"], ["immagini", "Immagini"], ["scritte", "Scritte"], ["sicurezza", "Sicurezza"], ["pubblica", "Pubblica"]
   ];
   var currentTab = "pagina";
 
@@ -271,7 +271,7 @@
     $$(".adm__tabs button", ui.panel).forEach(function (b) { b.classList.toggle("is-active", b.dataset.tab === name); });
     ui.body.innerHTML = "";
     ui.body.scrollTop = 0;
-    ({ pagina: tabPage, dati: tabData, orari: tabHours, menu: tabMenu, recensioni: tabReviews, immagini: tabImages, scritte: tabUI, contratto: tabContract, sicurezza: tabSecurity, pubblica: tabPublish })[name]();
+    ({ pagina: tabPage, dati: tabData, orari: tabHours, menu: tabMenu, recensioni: tabReviews, immagini: tabImages, scritte: tabUI, sicurezza: tabSecurity, pubblica: tabPublish })[name]();
     var active = $(".adm__tabs .is-active", ui.panel);
     if (active && active.scrollIntoView) active.scrollIntoView({ block: "nearest", inline: "center" });
   }
@@ -576,49 +576,6 @@
       grid.appendChild(t);
     });
     s.appendChild(grid);
-  }
-
-  /* ---------- Scheda: Contratto (solo lettura, dati in config.js) ---------- */
-  function addMonths(d, n) {
-    var t = new Date(d.getFullYear(), d.getMonth() + n, 1);
-    t.setDate(Math.min(d.getDate(), new Date(t.getFullYear(), t.getMonth() + 1, 0).getDate()));
-    return t;
-  }
-  function monthsBetween(a, b) {
-    var m = (b.getFullYear() - a.getFullYear()) * 12 + b.getMonth() - a.getMonth();
-    return addMonths(a, m) > b ? m - 1 : m;
-  }
-  function fmtMonths(n) {
-    var y = Math.floor(n / 12), m = n % 12, out = [];
-    if (y) out.push(y + (y === 1 ? " anno" : " anni"));
-    if (m || !y) out.push(m + (m === 1 ? " mese" : " mesi"));
-    return out.join(" e ");
-  }
-  function tabContract() {
-    var c = A.DEFAULTS.config.contract || {}, months = parseInt(c.months, 10) || 100;
-    var fmtDate = function (d) { return d.toLocaleDateString("it-IT", { day: "numeric", month: "long", year: "numeric" }); };
-    var s = section("Vincolo di pagamento", "Il sito è venduto con un vincolo di <b>" + fmtMonths(months) + "</b>: per tutta la durata il pagamento è dovuto come previsto dal contratto firmato.");
-    var p = /^(\d{4})-(\d{2})-(\d{2})$/.exec(c.start || "");
-    if (!p) {
-      s.appendChild(el('<p class="adm-note">Data di inizio non ancora impostata: la inserisce chi ti ha venduto il sito.</p>'));
-    } else {
-      var start = new Date(+p[1], p[2] - 1, +p[3]), end = addMonths(start, months);
-      var now = new Date(), today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-      var done = today < start ? 0 : Math.min(months, monthsBetween(start, today));
-      var pct = Math.max(0, Math.min(100, Math.round((today - start) / (end - start) * 100)));
-      var state = today < start ? "Inizia il " + fmtDate(start)
-        : today >= end ? "Concluso il " + fmtDate(end)
-        : "Mancano " + fmtMonths(months - done);
-      s.appendChild(el('<dl class="adm-kv">' +
-        "<dt>Inizio</dt><dd>" + fmtDate(start) + "</dd>" +
-        "<dt>Fine del vincolo</dt><dd>" + fmtDate(end) + "</dd>" +
-        (c.payment ? "<dt>Pagamento</dt><dd>" + esc(c.payment) + "</dd>" : "") +
-        "<dt>Stato</dt><dd><b>" + state + "</b></dd></dl>"));
-      s.appendChild(el('<div class="adm-meter" role="progressbar" aria-label="Vincolo trascorso" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '"><span style="width:' + pct + '%"></span></div>'));
-    }
-    section("Assistenza e disdetta", "Per domande sul pagamento o per la disdetta anticipata contatta " +
-      (c.seller ? "<b>" + esc(c.seller) + "</b>" : "chi ti ha venduto il sito") +
-      ". La disdetta prima della fine del vincolo segue quanto previsto dal contratto.");
   }
 
   /* ---------- Scheda: Sicurezza ---------- */

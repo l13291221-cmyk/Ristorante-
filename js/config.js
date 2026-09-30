@@ -36,16 +36,6 @@ window.RESTAURANT = {
      Se false, l'area admin resta raggiungibile aggiungendo #admin all'indirizzo. */
   showAdminButton: true,
 
-  /* Contratto di vendita del sito: lo compila chi vende il sito, alla consegna.
-     Vincolo di pagamento di 8 anni e 4 mesi dalla data di inizio.
-     Il cliente lo vede nel pannello amministratore (scheda "Contratto") ma da lì non può cambiarlo. */
-  contract: {
-    start: "",       // data di firma del contratto "AAAA-MM-GG" (vuoto = non ancora impostata)
-    months: 100,     // durata del vincolo in mesi: 100 = 8 anni e 4 mesi
-    payment: "",     // importo e cadenza del pagamento, es. "49 € al mese"
-    seller: ""       // chi ha venduto il sito: nome e telefono/email per assistenza e disdetta
-  },
-
   /* Orari: 0 = domenica, 1 = lunedì ... 6 = sabato.
      Ogni giorno è una lista di fasce ["HH:MM","HH:MM"]. Lista vuota = chiuso. */
   hours: {
